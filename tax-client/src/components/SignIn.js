@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from "./Modal";
 
 function SignIn() {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,25 +15,23 @@ function SignIn() {
   return (
     <div>
       <button onClick={handleOpen}>Sign In</button>
-      {isVisible && (
-        <div>
-          <h2>Sign In</h2>
-          <form>
-            <label>
-              Username:
-              <input type="text" name="username" />
-            </label>
-            <br />
-            <label>
-              Password:
-              <input type="password" name="password" />
-            </label>
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-          <button onClick={handleClose}>Close</button>
-        </div>
-      )}
+      <Modal isVisible={isVisible}>
+        <h2>Sign In</h2>
+        <form>
+          <label>
+            Username:
+            <input type="text" name="username" />
+          </label>
+          <br />
+          <label>
+            Password:
+            <input type="password" name="password" />
+          </label>
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
+        <button onClick={handleClose}>Close</button>
+      </Modal>
     </div>
   );
 }
