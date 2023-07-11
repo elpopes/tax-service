@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SignInModal() {
+function SignIn() {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleOpen = () => {
@@ -37,4 +37,4 @@ function SignInModal() {
   );
 }
 
-export default SignInModal;
+export default SignIn;
