@@ -1,5 +1,8 @@
 import React from "react";
 import useUser from "../hooks/useUser";
+import ClientDashboard from "./ClientDashboard";
+import PreparerDashboard from "./PreparerDashboard";
+import AdminDashboard from "./AdminDashboard";
 
 function Dashboard() {
   const user = useUser();
