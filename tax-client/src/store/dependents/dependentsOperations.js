@@ -1,17 +1,47 @@
-export const RECEIVE_DEPENDENTS = "dependents/RECEIVE_DEPENDENTS";
-export const receiveDependents = (dependents) => ({
-  type: RECEIVE_DEPENDENTS,
-  dependents,
-});
+import {
+  receiveDependent,
+  receiveDependents,
+  removeDependent,
+} from "./dependentsActions";
 
-export const RECEIVE_DEPENDENT = "dependents/RECEIVE_DEPENDENT";
-export const receiveDependent = (dependent) => ({
-  type: RECEIVE_DEPENDENT,
-  dependent,
-});
+export const fetchDependents = () => async (dispatch) => {
+  const res = await fetch("api/dependents");
+  if (res.ok) {
+    const dependents = await res.json();
+    dispatch(receiveDependents(dependents));
+  }
+};
 
-export const REMOVE_DEPENDENT = "dependents/REMOVE_DEPENDENT";
-export const removeDependent = (dependentId) => ({
-  type: REMOVE_DEPENDENT,
-  dependentId,
-});
+export const fetchDependent = (dependentId) => async (dispatch) => {
+  const res = await fetch(`api/dependents/${dependentId}`);
+  if (res.ok) {
+    const dependent = await res.json();
+    dispatch(receiveDependent(dependent));
+  }
+};
+
+export const createDependent = (dependent) => (dispatch) => {
+  return fetch("/api/dependents", {
+    method: "POST",
+    body: JSON.stringify(dependent),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.json())
+    .then((dependent) => dispatch(receiveDependent(dependent)));
+};
+
+export const updateDependent = (dependent) => (dispatch) => {
+  return fetch(`/api/dependents/${dependent.id}`, {
+    method: "PATCH",
+    body: JSON.stringify(dependent),
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.json())
+    .then((dependent) => dispatch(receiveDependent(dependent)));
+};
+
+export const deleteDependent = (dependentId) => (dispatch) => {
+  return fetch(`/api/dependents/${dependentId}`, {
+    method: "DELETE",
+  }).then(() => dispatch(removeDependent(dependentId)));
+};
