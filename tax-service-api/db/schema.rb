@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_19_195754) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_19_200353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "full_name", null: false
+    t.integer "filing_status"
+    t.date "dob"
+    t.string "ssn"
+    t.bigint "driver_license_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_license_id"], name: "index_clients_on_driver_license_id"
+    t.index ["user_id"], name: "index_clients_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
@@ -25,4 +38,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_195754) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "clients", "users"
 end
