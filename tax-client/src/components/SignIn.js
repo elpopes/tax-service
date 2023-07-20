@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+import SignUp from "./SignUp";
 
 function SignIn() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isSignUpVisible, setIsSignUpVisible] = useState(false);
 
   const handleOpen = () => {
     setIsVisible(true);
@@ -10,6 +12,10 @@ function SignIn() {
 
   const handleClose = () => {
     setIsVisible(false);
+  };
+
+  const handleSignUpOpen = () => {
+    setIsSignUpVisible(true);
   };
 
   return (
@@ -31,6 +37,8 @@ function SignIn() {
           <input type="submit" value="Submit" />
         </form>
         <button onClick={handleClose}>Close</button>
+        <button onClick={handleSignUpOpen}>Sign Up</button>
+        <SignUp isVisible={isSignUpVisible} />
       </Modal>
     </div>
   );
