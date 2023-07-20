@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createUser } from "../store/user/actions";
+import { createUser } from "../store/users/usersOperations";
 import Modal from "./Modal";
 
 function SignUp({ isVisible }) {
