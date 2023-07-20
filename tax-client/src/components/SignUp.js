@@ -4,13 +4,20 @@ import { createUser } from "../store/users/usersOperations";
 import Modal from "./Modal";
 
 function SignUp({ isVisible }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const user = { username, password };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const user = {
+      email: email,
+      password: password,
+      role: role,
+    };
+
     dispatch(createUser(user));
   };
 
@@ -19,12 +26,12 @@ function SignUp({ isVisible }) {
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Username:
+          Email:
           <input
             type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </label>
         <br />
@@ -36,6 +43,16 @@ function SignUp({ isVisible }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </label>
+        <br />
+        <label>
+          Role:
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="">Select a role...</option>
+            <option value="client">Client</option>
+            <option value="tax_professional">Tax Professional</option>
+            <option value="admin">Admin</option>
+          </select>
         </label>
         <br />
         <input type="submit" value="Submit" />
