@@ -20,7 +20,7 @@ export const fetchUser = (userId) => async (dispatch) => {
 export const createUser = (user) => (dispatch) => {
   return fetch(`${config.API_BASE_URL}/users`, {
     method: "POST",
-    body: JSON.stringify(user),
+    body: JSON.stringify({ user: user }),
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => {
