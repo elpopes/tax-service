@@ -71,6 +71,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    attr_encrypted (4.0.0)
+      encryptor (~> 3.0.0)
     aws-eventstream (1.2.0)
     aws-partitions (1.776.0)
     aws-sdk-core (3.174.0)
@@ -103,6 +105,7 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    encryptor (3.0.0)
     erubi (1.12.0)
     faraday (2.7.6)
       faraday-net_http (>= 2.0, < 3.1)
@@ -207,6 +210,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  attr_encrypted
   aws-sdk-s3
   bcrypt (~> 3.1.7)
   bootsnap
