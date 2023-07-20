@@ -42,4 +42,8 @@ class User < ApplicationRecord
     def ensure_role
       self.role ||= :client
     end
+
+    def ensure_session_token
+        self.session_token ||= generate_unique_session_token
+    end
 end
