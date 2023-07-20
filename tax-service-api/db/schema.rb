@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_134732) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_20_135102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -20,10 +20,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_134732) do
     t.string "full_name", null: false
     t.integer "filing_status"
     t.date "dob"
-    t.string "ssn"
     t.bigint "driver_license_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.binary "ssn_encrypted"
     t.index ["driver_license_id"], name: "index_clients_on_driver_license_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
