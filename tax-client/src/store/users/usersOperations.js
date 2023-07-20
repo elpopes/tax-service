@@ -23,8 +23,20 @@ export const createUser = (user) => (dispatch) => {
     body: JSON.stringify(user),
     headers: { "Content-Type": "application/json" },
   })
-    .then((res) => res.json())
-    .then((user) => dispatch(receiveUser(user)));
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((json) => {
+          if (json.errors) {
+            const error = json.errors.join(", ");
+            throw new Error(error);
+          }
+          throw new Error(res.statusText);
+        });
+      }
+      return res.json();
+    })
+    .then((user) => dispatch(receiveUser(user)))
+    .catch((error) => console.log(error));
 };
 
 export const updateUser = (user) => (dispatch) => {
