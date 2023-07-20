@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
-      <h1>Test outside Provider</h1>
       <div className="App">
         <Navbar />
         <SignInModal />
