@@ -1,7 +1,8 @@
 import { receiveUser, receiveUsers, removeUser } from "./usersActions";
+import config from "../../config";
 
 export const fetchUsers = () => async (dispatch) => {
-  const res = await fetch("api/users");
+  const res = await fetch(`${config.API_BASE_URL}/users`);
   if (res.ok) {
     const users = await res.json();
     dispatch(receiveUsers(users));
@@ -9,7 +10,7 @@ export const fetchUsers = () => async (dispatch) => {
 };
 
 export const fetchUser = (userId) => async (dispatch) => {
-  const res = await fetch(`api/users/${userId}`);
+  const res = await fetch(`${config.API_BASE_URL}/users/${userId}`);
   if (res.ok) {
     const user = await res.json();
     dispatch(receiveUser(user));
@@ -17,7 +18,7 @@ export const fetchUser = (userId) => async (dispatch) => {
 };
 
 export const createUser = (user) => (dispatch) => {
-  return fetch("/api/users", {
+  return fetch(`${config.API_BASE_URL}/users`, {
     method: "POST",
     body: JSON.stringify(user),
     headers: { "Content-Type": "application/json" },
@@ -27,7 +28,7 @@ export const createUser = (user) => (dispatch) => {
 };
 
 export const updateUser = (user) => (dispatch) => {
-  return fetch(`/api/users/${user.id}`, {
+  return fetch(`${config.API_BASE_URL}/users/${user.id}`, {
     method: "PATCH",
     body: JSON.stringify(user),
     headers: { "Content-Type": "application/json" },
@@ -37,7 +38,7 @@ export const updateUser = (user) => (dispatch) => {
 };
 
 export const deleteUser = (userId) => (dispatch) => {
-  return fetch(`/api/users/${userId}`, {
+  return fetch(`${config.API_BASE_URL}/users/${userId}`, {
     method: "DELETE",
   }).then(() => dispatch(removeUser(userId)));
 };
