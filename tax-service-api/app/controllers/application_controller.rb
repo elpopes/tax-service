@@ -12,4 +12,15 @@ class ApplicationController < ActionController::API
             nil
         end
     end
+
+    def authenticate_user
+        header = request.headers['Authorization']
+        header = header.split(' ').last if header
+        begin
+            @decoded = decoded_token(header)
+            @current_user = User.find_by(id: @decoded["user_id"])
+        rescue JWT::DecodeError
+            render json: {message: "Invalid token"}, status: :unauthorized
+        end
+    end
 end
