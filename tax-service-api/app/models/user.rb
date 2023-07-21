@@ -3,10 +3,10 @@ class User < ApplicationRecord
     enum role: { client: 0, tax_professional: 1, admin: 2 }
   
     # Callbacks
-    after_initialize :ensure_role, :ensure_session_token
+    after_initialize :ensure_role
   
     # Validations
-    validates :email, :session_token, presence: true, uniqueness: true
+    validates :email, presence: true, uniqueness: true
     validates :password_digest, presence: true
     validates :password, length: {minimum: 6, allow_nil: true}
   
@@ -27,23 +27,9 @@ class User < ApplicationRecord
       self.password_digest = BCrypt::Password.create(password)
     end
   
-    def reset_session_token!
-      self.session_token = generate_unique_session_token
-      self.save!
-      self.session_token
-    end
-  
     private
-  
-    def generate_unique_session_token
-      self.session_token ||= SecureRandom::urlsafe_base64
-    end
   
     def ensure_role
       self.role ||= :client
-    end
-
-    def ensure_session_token
-        self.session_token ||= generate_unique_session_token
     end
 end
