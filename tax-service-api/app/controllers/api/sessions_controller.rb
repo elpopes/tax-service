@@ -8,17 +8,43 @@ module Api
         )
   
         if @user
-          login!(@user)
-          render "api/users/show"
+          token = encode_token({user_id: @user.id})
+          refresh_token = @user.refresh_tokens.create!
+          render json: {
+            user: @user.as_json(only: [:id, :email, :role]), 
+            token: token, 
+            refresh_token: refresh_token.token
+          }, status: :created
         else
-          render json: ["Invalid credentials"], status: 401
+          render json: { error: "Invalid credentials" }, status: 401
         end
       end
   
       # DELETE /api/sessions
       def destroy
-        logout!
-        render json: { message: 'Logout successful.' }
+        refresh_token = RefreshToken.find_by(token: params[:refresh_token])
+        if refresh_token && refresh_token.user == current_user
+          refresh_token.destroy
+          render json: { message: 'Logout successful.' }
+        else
+          render json: { error: 'Invalid refresh token' }, status: :unauthorized
+        end
+      end
+  
+      # POST /api/sessions/refresh
+      def refresh
+        refresh_token = RefreshToken.find_by(token: params[:refresh_token])
+        if refresh_token&.valid_token?
+          @user = refresh_token.user
+          token = encode_token({user_id: @user.id})
+          render json: {
+            user: @user.as_json(only: [:id, :email, :role]), 
+            token: token, 
+            refresh_token: refresh_token.token
+          }, status: :ok
+        else
+          render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
+        end
       end
     end
   end

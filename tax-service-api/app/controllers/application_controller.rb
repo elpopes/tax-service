@@ -4,7 +4,6 @@ class ApplicationController < ActionController::API
         JWT.encode(payload, ENV['JWT_SECRET'])
     end
     
-
     def decoded_token(token)
         begin
             JWT.decode(token, ENV['JWT_SECRET'], true, algorithm: 'HS256')[0]
@@ -13,13 +12,16 @@ class ApplicationController < ActionController::API
         end
     end
 
-    def authenticate_user
+    def current_user
         header = request.headers['Authorization']
         header = header.split(' ').last if header
-        begin
-            @decoded = decoded_token(header)
-            @current_user = User.find_by(id: @decoded["user_id"])
-        rescue JWT::DecodeError
+        decoded = decoded_token(header)
+        User.find_by(id: decoded["user_id"]) if decoded
+    end
+
+    def authenticate_user
+        @current_user = current_user
+        unless @current_user
             render json: {message: "Invalid token"}, status: :unauthorized
         end
     end
