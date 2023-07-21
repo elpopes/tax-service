@@ -2,6 +2,9 @@ class User < ApplicationRecord
     # Enums
     enum role: { client: 0, tax_professional: 1, admin: 2 }
   
+    # Associations
+    has_many :refresh_tokens
+  
     # Callbacks
     after_initialize :ensure_role
   
