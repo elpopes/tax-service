@@ -32,20 +32,26 @@ module Api
       end
   
       # POST /api/sessions/refresh
-      def refresh
+      # POST /api/sessions/refresh
+    def refresh
         refresh_token = RefreshToken.find_by(token: params[:refresh_token])
         if refresh_token&.valid_token?
-          @user = refresh_token.user
-          token = encode_token({user_id: @user.id})
-          render json: {
-            user: @user.as_json(only: [:id, :email, :role]), 
-            token: token, 
-            refresh_token: refresh_token.token
-          }, status: :ok
+            @user = refresh_token.user
+            token = encode_token({user_id: @user.id})
+        
+            # Create new refresh token and invalidate the old one
+            new_refresh_token = @user.refresh_tokens.create!
+            refresh_token.destroy
+        
+            render json: {
+                user: @user.as_json(only: [:id, :email, :role]), 
+                token: token, 
+                refresh_token: new_refresh_token.token
+            }, status: :ok
         else
-          render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
+            render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
         end
-      end
     end
+  
   end
   
