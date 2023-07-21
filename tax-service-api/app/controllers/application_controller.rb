@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::API
     def encode_token(payload)
+        payload[:exp] = Time.now.to_i + 4 * 3600 # Expires in 4 hours
         JWT.encode(payload, ENV['JWT_SECRET'])
     end
+    
 
     def decoded_token(token)
         begin

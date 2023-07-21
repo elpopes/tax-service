@@ -19,7 +19,8 @@ module Api
       def create
         @user = User.new(user_params)
         if @user.save
-          render_user(@user, :created)
+          token = encode_token({user_id: @user.id})
+          render json: {user: @user.as_json(only: [:id, :email, :role]), token: token}, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
