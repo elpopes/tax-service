@@ -52,6 +52,24 @@ module Api
             render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
         end
     end
+
+    # DELETE /api/sessions/:id
+    def revoke
+        refresh_token = RefreshToken.find_by(token: params[:id])
+        if refresh_token && refresh_token.user == current_user
+          refresh_token.destroy
+          render json: { message: 'Session revoked.' }
+        else
+          render json: { error: 'Invalid session.' }, status: :unauthorized
+        end
+    end
+      
+      # DELETE /api/sessions
+      def revoke_all
+        current_user.refresh_tokens.destroy_all
+        render json: { message: 'All sessions revoked.' }
+      end
+    end
   
 end
   
