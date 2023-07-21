@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   namespace :api do
+    post '/refresh', to: 'sessions#refresh'
     resources :users, only: [:index, :show, :create, :update, :destroy]
   end
 end
