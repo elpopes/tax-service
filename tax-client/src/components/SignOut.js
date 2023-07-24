@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { signOut } from "../store/sessions/sessionsOperations";
+import Button from "./Button";
 
 const SignOut = () => {
   const dispatch = useDispatch();
@@ -9,7 +10,7 @@ const SignOut = () => {
     dispatch(signOut());
   };
 
-  return <button onClick={handleSignOut}>Sign Out</button>;
+  return <Button onClick={handleSignOut}>Sign Out</Button>;
 };
 
 export default SignOut;
