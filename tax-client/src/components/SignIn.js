@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import SignUp from "./SignUp";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../store/sessions/sessionsOperations";
+import { getSessionsError } from "../store/sessions/sessionsSelectors";
 
 function SignIn() {
   const [isVisible, setIsVisible] = useState(false);
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const error = useSelector(getSessionsError);
 
   const dispatch = useDispatch();
 
@@ -35,6 +37,7 @@ function SignIn() {
       <button onClick={handleOpen}>Sign In</button>
       <Modal isVisible={isVisible}>
         <h2>Sign In</h2>
+        {error && <p>{error}</p>}
         <form onSubmit={handleSubmit}>
           <label>
             Email:
