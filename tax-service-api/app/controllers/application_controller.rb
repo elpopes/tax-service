@@ -14,10 +14,15 @@ class ApplicationController < ActionController::API
 
     def current_user
         header = request.headers['Authorization']
-        header = header.split(' ').last if header
-        decoded = decoded_token(header)
-        User.find_by(id: decoded["user_id"]) if decoded
+        if header
+            token = header.split(' ').last
+            if token
+                decoded = decoded_token(token)
+                User.find_by(id: decoded["user_id"]) if decoded
+            end
+        end
     end
+    
 
     def authenticate_user
         @current_user = current_user
