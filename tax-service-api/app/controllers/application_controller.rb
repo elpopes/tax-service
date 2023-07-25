@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
     def decoded_token(token)
         begin
             JWT.decode(token, ENV['JWT_SECRET'], true, algorithm: 'HS256')[0]
-        rescue JWT::ExpiredSignature
+        rescue JWT::ExpiredSignature, JWT::DecodeError
             nil
         end
     end
@@ -18,10 +18,11 @@ class ApplicationController < ActionController::API
             token = header.split(' ').last
             if token
                 decoded = decoded_token(token)
-                User.find_by(id: decoded["user_id"]) if decoded
+                return User.find_by(id: decoded["user_id"]) if decoded
             end
         end
-    end
+        nil
+    end    
     
 
     def authenticate_user
