@@ -66,10 +66,14 @@ module Api
     end
       
       # DELETE /api/sessions
-      def revoke_all
+    def revoke_all
+        unless current_user
+          render json: { error: 'Not authenticated' }, status: :unauthorized
+          return
+        end
+      
         current_user.refresh_tokens.destroy_all
         render json: { message: 'All sessions revoked.' }
-      end
     end
   
 end
