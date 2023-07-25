@@ -55,6 +55,10 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "tax_service_api_production"
 
+  # Don't forget to update this with the actual production host
+  config.action_mailer.default_url_options = { host: 'sidney-kahan.herokuapp.com' }
+
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
