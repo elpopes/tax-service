@@ -29,7 +29,10 @@ export const signOutUser = () => async (dispatch, getState) => {
 
     const response = await fetch(`${config.API_BASE_URL}/sessions`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${state.sessions.token}`,
+      },
       body: JSON.stringify({ refresh_token: refreshToken }),
     });
 
