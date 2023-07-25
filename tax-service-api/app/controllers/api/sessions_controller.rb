@@ -1,5 +1,7 @@
 module Api
     class SessionsController < ApplicationController
+        before_action :current_user
+        skip_before_action :current_user, only: [:create, :refresh]
       # POST /api/sessions
       def create
         @user = User.find_by_credentials(
@@ -31,7 +33,6 @@ module Api
         end
       end
   
-      # POST /api/sessions/refresh
       # POST /api/sessions/refresh
     def refresh
         refresh_token = RefreshToken.find_by(token: params[:refresh_token])
