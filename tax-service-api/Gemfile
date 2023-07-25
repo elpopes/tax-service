@@ -43,6 +43,12 @@ gem "rack-cors"
 
 gem "devise"
 
+gem 'omniauth-google-oauth2'
+
+gem 'devise-two-factor'
+
+gem 'google-authenticator-rails'
+
 gem "rack-attack"
 
 gem 'active_model_serializers'
