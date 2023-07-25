@@ -5,7 +5,7 @@ export const signInUser =
   ({ email, password }) =>
   async (dispatch) => {
     try {
-      const response = await fetch(`${config.API_BASE_URL}/api/sessions`, {
+      const response = await fetch(`${config.API_BASE_URL}/sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user: { email, password } }),
@@ -27,7 +27,7 @@ export const signOutUser = () => async (dispatch, getState) => {
     const state = getState();
     const refreshToken = state.sessions.refresh_token;
 
-    const response = await fetch(`${config.API_BASE_URL}/api/sessions`, {
+    const response = await fetch(`${config.API_BASE_URL}/sessions`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh_token: refreshToken }),
