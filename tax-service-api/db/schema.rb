@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_21_143654) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_183446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -26,6 +26,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_143654) do
     t.binary "ssn_encrypted"
     t.index ["driver_license_id"], name: "index_clients_on_driver_license_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
+  create_table "jwt_blacklists", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "expired_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_blacklists_on_jti"
   end
 
   create_table "refresh_tokens", force: :cascade do |t|
