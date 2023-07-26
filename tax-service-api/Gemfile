@@ -43,6 +43,8 @@ gem "rack-cors"
 
 gem "devise"
 
+gem 'devise-jwt'
+
 gem 'omniauth-google-oauth2'
 
 gem 'devise-two-factor'
