@@ -167,7 +167,7 @@ Devise.setup do |config|
 #   config.revoke_jwt_on_expiration = true
 
   config.warden do |manager|
-    manager.strategies.add(:jwt_strategy, Warden::Strategies::JwtStrategy)
+    manager.strategies.add(:jwt_strategy, Warden::Strategies::JWT)
     manager.default_strategies(:scope => :user).unshift :jwt_strategy
   end
   
