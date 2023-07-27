@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::API
+    include ActionController::MimeResponds
+    include ActionController::Cookies
+    include Devise::Controllers::Helpers
+
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
     def encode_token(payload)
         payload[:exp] = Time.now.to_i + 4 * 3600 # Expires in 4 hours
         JWT.encode(payload, ENV['JWT_SECRET'])
@@ -31,4 +37,11 @@ class ApplicationController < ActionController::API
             render json: {message: "Invalid token"}, status: :unauthorized
         end
     end
+
+    protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+    end
+
 end
