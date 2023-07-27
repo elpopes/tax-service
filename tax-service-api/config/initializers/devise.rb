@@ -164,10 +164,10 @@ Devise.setup do |config|
       jwt.expiration_time = 1.day.to_i
   end
 
-  config.revoke_jwt_on_expiration = true
+#   config.revoke_jwt_on_expiration = true
 
   config.warden do |manager|
-    manager.strategies.add(:jwt, Devise::Strategies::Jwt)
+    manager.strategies.add(:jwt, Devise::JWT)
     manager.default_strategies(scope: :user).unshift :jwt
   end
 
