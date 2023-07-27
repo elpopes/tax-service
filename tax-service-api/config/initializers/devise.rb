@@ -153,6 +153,17 @@ Devise.setup do |config|
   # before confirming their account.
   # config.confirm_within = 3.days
 
+  config.jwt do |jwt|
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+  end
+
+  config.revoke_jwt_on_expiration = true
+
+  config.warden do |manager|
+    manager.strategies.add(:jwt, Devise::Strategies::Jwt)
+    manager.default_strategies(scope: :user).unshift :jwt
+  end
+
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
