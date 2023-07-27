@@ -167,9 +167,10 @@ Devise.setup do |config|
 #   config.revoke_jwt_on_expiration = true
 
   config.warden do |manager|
-    manager.strategies.add(:jwt, Devise::JWT)
-    manager.default_strategies(scope: :user).unshift :jwt
+    manager.strategies.add(:jwt_strategy, Warden::Strategies::JWTStrategy)
+    manager.default_strategies(:scope => :user).unshift :jwt_strategy
   end
+  
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
