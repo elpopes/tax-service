@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   namespace :api do
+    devise_for :users
     post '/sessions', to: 'sessions#create'
     delete '/sessions/:id', to: 'sessions#revoke'
     delete '/sessions', to: 'sessions#revoke_all'
