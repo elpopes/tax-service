@@ -164,6 +164,7 @@ Devise.setup do |config|
       jwt.expiration_time = 1.day.to_i
   end
 
+  config.navigational_formats = ['*/*', :html, :json]
 #   config.revoke_jwt_on_expiration = true
 
 #   config.warden do |manager|
