@@ -2,7 +2,7 @@ require 'warden'
 
 module Warden
   module Strategies
-    class JWT < Base
+    class JWTStrategy < Base
       def valid?
         token.present?
       end
@@ -21,11 +21,12 @@ module Warden
 
       def token
         bearer = request.headers['Authorization']&.split(' ')&.last
+        bearer
       end
 
       def decode_token
-        JWT.decode(token, ENV['DEVISE_JWT_SECRET_KEY'], true, { algorithm: 'HS256' })
-      rescue JWT::DecodeError
+        ::JWT.decode(token, ENV['DEVISE_JWT_SECRET_KEY'], true, { algorithm: 'HS256' })
+      rescue ::JWT::DecodeError
         nil
       end
       
@@ -33,4 +34,4 @@ module Warden
   end
 end
 
-Warden::Strategies.add(:jwt, Warden::Strategies::JWT)
+Warden::Strategies.add(:jwt_strategy, Warden::Strategies::JWTStrategy)
