@@ -5,7 +5,7 @@ module Api
 
       # POST /api/sessions
         def create
-        @user = User.find_by(email: params[:user][:email])
+            @user = User.find_by(email: params[:user][:email])
 
             if @user&.valid_password?(params[:user][:password])
                 token = encode_token({user_id: @user.id})
@@ -57,22 +57,22 @@ module Api
         def revoke
             refresh_token = RefreshToken.find_by(token: params[:id])
             if refresh_token && refresh_token.user == current_user
-            refresh_token.destroy
-            render json: { message: 'Session revoked.' }
+                refresh_token.destroy
+                render json: { message: 'Session revoked.' }
             else
-            render json: { error: 'Invalid session.' }, status: :unauthorized
+                render json: { error: 'Invalid session.' }, status: :unauthorized
             end
         end
         
         # DELETE /api/sessions
         def revoke_all
             unless current_user
-            render json: { error: 'Not authenticated' }, status: :unauthorized
-            return
+                render json: { error: 'Not authenticated' }, status: :unauthorized
+                return
             end
         
             current_user.refresh_tokens.destroy_all
-            render json: { message: 'All sessions revoked.' }
+                render json: { message: 'All sessions revoked.' }
         end
     end
 end
