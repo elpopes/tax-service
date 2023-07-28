@@ -4,6 +4,7 @@ module Api
       respond_to :json
   
       def create
+        puts sign_up_params
         build_resource(sign_up_params)
   
         resource.save
@@ -27,9 +28,11 @@ module Api
   
       protected
   
-      def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :role])
-      end
+        def configure_permitted_parameters
+            devise_parameter_sanitizer.permit(:sign_up) do |user|
+                user.permit(:email, :password, :role)
+            end
+        end
       
     end
   end
