@@ -2,36 +2,35 @@ module Api
     class SessionsController < ApplicationController
         before_action :current_user
         skip_before_action :current_user, only: [:create, :refresh]
+
       # POST /api/sessions
-      def create
-        @user = User.find_by_credentials(
-          params[:user][:email],
-          params[:user][:password]
-        )
-  
-        if @user
-          token = encode_token({user_id: @user.id})
-          refresh_token = @user.refresh_tokens.create!
-          render json: {
-            user: @user.as_json(only: [:id, :email, :role]), 
-            token: token, 
-            refresh_token: refresh_token.token
-          }, status: :created
-        else
-          render json: { error: "Invalid credentials" }, status: 401
+        def create
+        @user = User.find_by(email: params[:user][:email])
+
+            if @user&.valid_password?(params[:user][:password])
+                token = encode_token({user_id: @user.id})
+                refresh_token = @user.refresh_tokens.create!
+                render json: {
+                user: @user.as_json(only: [:id, :email, :role]), 
+                token: token, 
+                refresh_token: refresh_token.token
+                }, status: :created
+            else
+                render json: { error: "Invalid credentials" }, status: 401
+            end
         end
-      end
+
   
       # DELETE /api/sessions
-      def destroy
-        refresh_token = RefreshToken.find_by(token: params[:refresh_token])
-        if refresh_token && refresh_token.user == current_user
-          refresh_token.destroy
-          render json: { message: 'Logout successful.' }
-        else
-          render json: { error: 'Invalid refresh token' }, status: :unauthorized
+        def destroy
+            refresh_token = RefreshToken.find_by(token: params[:refresh_token])
+            if refresh_token && refresh_token.user == current_user
+                refresh_token.destroy
+                render json: { message: 'Logout successful.' }
+            else
+                render json: { error: 'Invalid refresh token' }, status: :unauthorized
+            end
         end
-      end
   
       # POST /api/sessions/refresh
         def refresh
