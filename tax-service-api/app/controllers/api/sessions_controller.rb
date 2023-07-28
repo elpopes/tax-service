@@ -1,6 +1,7 @@
 module Api
     class SessionsController < ApplicationController
         before_action :current_user
+        respond_to :json
         skip_before_action :current_user, only: [:create, :refresh]
 
       # POST /api/sessions

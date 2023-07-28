@@ -1,6 +1,7 @@
 module Api
     class RegistrationsController < Devise::RegistrationsController
       before_action :configure_permitted_parameters
+      respond_to :json
   
       def create
         build_resource(sign_up_params)
