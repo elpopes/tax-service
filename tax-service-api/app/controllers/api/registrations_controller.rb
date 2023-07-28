@@ -7,33 +7,25 @@ module Api
         puts sign_up_params
         build_resource(sign_up_params)
   
-        resource.save
-        yield resource if block_given?
-        if resource.persisted?
+        if resource.save
           if resource.active_for_authentication?
-            set_flash_message! :notice, :signed_up
             sign_up(resource_name, resource)
-            respond_with resource, location: after_sign_up_path_for(resource)
+            render json: resource, status: :created
           else
-            set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
-            expire_data_after_sign_in!
-            respond_with resource, location: after_inactive_sign_up_path_for(resource)
+            render json: { errors: resource.errors.full_messages }, status: :not_acceptable
           end
         else
           clean_up_passwords resource
-          set_minimum_password_length
-          respond_with resource
+          render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
         end
       end
   
       protected
   
         def configure_permitted_parameters
-            devise_parameter_sanitizer.permit(:sign_up) do |user|
-                user.permit(:email, :password, :role)
-            end
+            devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :role])
         end
-      
+  
     end
-  end
+end
   
