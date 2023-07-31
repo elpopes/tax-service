@@ -60,7 +60,7 @@
 }
 
 .form-input {
-  margin-top: 5px; /* add space between label and input */
+  margin-top: 5px;
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -76,7 +76,7 @@
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
-  font-weight: bold; /* make the text bold */
+  font-weight: bold;
   width: 100%;
 }
 
