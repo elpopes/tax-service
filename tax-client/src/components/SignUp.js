@@ -23,18 +23,18 @@ function SignUp({ isVisible }) {
 
   return (
     <Modal isVisible={isVisible}>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className="modal-title">Sign Up</h2>
+      <form className="signin-form" onSubmit={handleSubmit}>
         <label>
           Email:
           <input
-            type="text"
+            type="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="form-input"
           />
         </label>
-        <br />
         <label>
           Password:
           <input
@@ -42,20 +42,23 @@ function SignUp({ isVisible }) {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="form-input"
           />
         </label>
-        <br />
         <label>
           Role:
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="form-input"
+          >
             <option value="">Select a role...</option>
             <option value="client">Client</option>
             <option value="tax_professional">Tax Professional</option>
             <option value="admin">Admin</option>
           </select>
         </label>
-        <br />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" className="submit-btn" />
       </form>
     </Modal>
   );
