@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { createUser } from "../store/users/usersOperations";
 import Modal from "./Modal";
 
-function SignUp({ isVisible }) {
+function SignUp({ isVisible, handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
@@ -19,6 +19,7 @@ function SignUp({ isVisible }) {
     };
 
     dispatch(createUser(user));
+    handleClose(); // Close the modal after submitting the form
   };
 
   return (
@@ -60,6 +61,9 @@ function SignUp({ isVisible }) {
         </label>
         <input type="submit" value="Submit" className="submit-btn" />
       </form>
+      <button className="close-btn" onClick={handleClose}>
+        X
+      </button>
     </Modal>
   );
 }

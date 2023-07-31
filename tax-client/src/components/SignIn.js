@@ -26,6 +26,10 @@ function SignIn() {
     setIsSignUpVisible(true);
   };
 
+  const handleSignUpClose = () => {
+    setIsSignUpVisible(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(signInUser({ email, password }));
@@ -69,7 +73,7 @@ function SignIn() {
         <button className="signUp-link" onClick={handleSignUpOpen}>
           Sign Up
         </button>
-        <SignUp isVisible={isSignUpVisible} />
+        <SignUp isVisible={isSignUpVisible} handleClose={handleSignUpClose} />
       </Modal>
     </div>
   );
