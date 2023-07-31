@@ -16,40 +16,17 @@
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
+  max-width: 800px; /* try increasing this */
+  width: 80%; /* try adding this line to make modal responsive */
   max-height: 90%;
   overflow: auto;
+  position: relative; /* so that close button is positioned correctly */
 }
 
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.modal-content h2 {
+.modal-title {
   text-align: center;
   padding-bottom: 20px;
   font-size: 2em;
-}
-
-.modal-content form label {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.modal-content form input[type="submit"] {
-  background-color: goldenrod;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.modal-content form input[type="submit"]:hover {
-  background-color: darkgoldenrod;
 }
 
 .signin-form {
@@ -57,6 +34,13 @@
   flex-direction: column;
   gap: 15px;
   align-items: center;
+}
+
+.signin-form label {
+  display: flex;
+  flex-direction: column; /* make the input under the label */
+  align-items: flex-start;
+  width: 100%;
 }
 
 .form-input {
@@ -91,11 +75,16 @@
   background: none;
   border: none;
   font-size: 1.2em;
+  color: #000; /* making the color black for visibility */
 }
 
 .signUp-link {
   color: blue;
-  text-decoration: underline;
+  text-decoration: none; /* remove underline */
   background: none;
   border: none;
+  cursor: pointer; /* change cursor to pointer when hovering */
+  display: block; /* make it a block so it's easier to center */
+  text-align: center; /* center the text */
+  margin: 20px 0; /* add some space around it */
 }
