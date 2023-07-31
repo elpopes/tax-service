@@ -38,14 +38,14 @@
 
 .signin-form label {
   display: flex;
-  flex-direction: column; /* make the input under the label */
+  flex-direction: column;
   align-items: flex-start;
   width: 100%;
 }
 
 .form-input {
   margin-top: 5px;
-  width: 100%;
+  width: 80%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -55,13 +55,14 @@
 
 .submit-btn {
   background-color: goldenrod;
-  color: white;
+  color: black;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
-  width: 100%;
+  width: 80%;
+  align-self: center;
 }
 
 .submit-btn:hover {
