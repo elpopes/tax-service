@@ -34,11 +34,13 @@ function SignIn() {
 
   return (
     <div>
-      <button onClick={handleOpen}>Sign In</button>
-      <Modal isVisible={isVisible}>
-        <h2>Sign In</h2>
-        {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit}>
+      <button className="signIn-btn" onClick={handleOpen}>
+        Sign In
+      </button>
+      <Modal isVisible={isVisible} handleClose={handleClose}>
+        <h2 className="modal-title">Sign In</h2>
+        {error && <p className="error-message">{error}</p>}
+        <form className="signin-form" onSubmit={handleSubmit}>
           <label>
             Email:
             <input
@@ -46,9 +48,9 @@ function SignIn() {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="form-input"
             />
           </label>
-          <br />
           <label>
             Password:
             <input
@@ -56,13 +58,17 @@ function SignIn() {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="form-input"
             />
           </label>
-          <br />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" className="submit-btn" />
         </form>
-        <button onClick={handleClose}>Close</button>
-        <button onClick={handleSignUpOpen}>Sign Up</button>
+        <button className="close-btn" onClick={handleClose}>
+          X
+        </button>
+        <button className="signUp-link" onClick={handleSignUpOpen}>
+          Sign Up
+        </button>
         <SignUp isVisible={isSignUpVisible} />
       </Modal>
     </div>
