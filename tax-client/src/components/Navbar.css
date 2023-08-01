@@ -1,0 +1,15 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: gold;
+  color: black;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.contact-info {
+  text-align: center;
+}
