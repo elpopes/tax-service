@@ -1,5 +1,4 @@
 import React from "react";
-import SignOut from "./SignOut";
 import UserDisplay from "./UserDisplay";
 
 class Navbar extends React.Component {
@@ -8,7 +7,6 @@ class Navbar extends React.Component {
       <div>
         <p>Navbar</p>
         <UserDisplay />
-        <SignOut />
       </div>
     );
   }
