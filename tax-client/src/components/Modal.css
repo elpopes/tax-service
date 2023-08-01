@@ -16,15 +16,16 @@
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  max-width: 800px; /* try increasing this */
-  width: 80%; /* try adding this line to make modal responsive */
+  max-width: 800px;
+  width: 80%;
   max-height: 90%;
   overflow: auto;
-  position: relative; /* so that close button is positioned correctly */
+  position: relative;
 }
 
 .modal-title {
   text-align: center;
+  padding-top: 20px;
   padding-bottom: 20px;
   font-size: 2em;
 }
@@ -76,16 +77,20 @@
   background: none;
   border: none;
   font-size: 1.2em;
-  color: #000; /* making the color black for visibility */
+  color: #000;
+}
+
+.close-btn:hover {
+  cursor: pointer;
 }
 
 .signUp-link {
   color: blue;
-  text-decoration: none; /* remove underline */
+  text-decoration: none;
   background: none;
   border: none;
-  cursor: pointer; /* change cursor to pointer when hovering */
-  display: block; /* make it a block so it's easier to center */
-  text-align: center; /* center the text */
-  margin: 20px 0; /* add some space around it */
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  margin: 20px 0;
 }
