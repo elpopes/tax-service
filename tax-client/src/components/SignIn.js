@@ -3,13 +3,17 @@ import Modal from "./Modal";
 import SignUp from "./SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../store/sessions/sessionsOperations";
-import { getSessionsError } from "../store/sessions/sessionsSelectors";
+import {
+  getSessionsError,
+  selectUser,
+} from "../store/sessions/sessionsSelectors";
 
 function SignIn() {
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const error = useSelector(getSessionsError);
+  const user = useSelector(selectUser);
 
   const dispatch = useDispatch();
 
@@ -26,9 +30,11 @@ function SignIn() {
     dispatch(signInUser({ email, password }));
   };
 
+  const showModal = user ? false : true;
+
   return (
     <div>
-      <Modal isVisible={true}>
+      <Modal isVisible={showModal}>
         <h2 className="modal-title">Sign In</h2>
         {error && <p className="error-message">{error}</p>}
         <form className="signin-form" onSubmit={handleSubmit}>
