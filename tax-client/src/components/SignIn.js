@@ -6,21 +6,12 @@ import { signInUser } from "../store/sessions/sessionsOperations";
 import { getSessionsError } from "../store/sessions/sessionsSelectors";
 
 function SignIn() {
-  const [isVisible, setIsVisible] = useState(false);
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const error = useSelector(getSessionsError);
 
   const dispatch = useDispatch();
-
-  const handleOpen = () => {
-    setIsVisible(true);
-  };
-
-  const handleClose = () => {
-    setIsVisible(false);
-  };
 
   const handleSignUpOpen = () => {
     setIsSignUpVisible(true);
@@ -33,15 +24,11 @@ function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(signInUser({ email, password }));
-    setIsVisible(false);
   };
 
   return (
     <div>
-      <button className="signIn-btn" onClick={handleOpen}>
-        Sign In
-      </button>
-      <Modal isVisible={isVisible} handleClose={handleClose}>
+      <Modal isVisible={true}>
         <h2 className="modal-title">Sign In</h2>
         {error && <p className="error-message">{error}</p>}
         <form className="signin-form" onSubmit={handleSubmit}>
@@ -67,9 +54,6 @@ function SignIn() {
           </label>
           <input type="submit" value="Submit" className="submit-btn" />
         </form>
-        <button className="close-btn" onClick={handleClose}>
-          X
-        </button>
         <button className="signUp-link" onClick={handleSignUpOpen}>
           Sign Up
         </button>
