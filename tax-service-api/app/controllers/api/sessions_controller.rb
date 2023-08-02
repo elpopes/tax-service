@@ -24,13 +24,13 @@ module Api
   
       # DELETE /api/sessions
         def destroy
-            refresh_token = RefreshToken.find_by(token: params[:refresh_token])
-            if refresh_token && refresh_token.user == current_user
-                refresh_token.destroy
-                render json: { message: 'Logout successful.' }
-            else
-                render json: { error: 'Invalid refresh token' }, status: :unauthorized
+            unless current_user
+                render json: { error: 'Not authenticated' }, status: :unauthorized
+                return
             end
+
+            current_user.refresh_tokens.destroy_all
+            render json: { message: 'All sessions revoked.' }
         end
   
       # POST /api/sessions/refresh
@@ -65,16 +65,6 @@ module Api
             end
         end
         
-        # DELETE /api/sessions
-        def revoke_all
-            unless current_user
-                render json: { error: 'Not authenticated' }, status: :unauthorized
-                return
-            end
-        
-            current_user.refresh_tokens.destroy_all
-                render json: { message: 'All sessions revoked.' }
-        end
     end
 end
   

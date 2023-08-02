@@ -21,6 +21,7 @@ export const signInUser =
       dispatch(sessionError(error.message));
     }
   };
+
 export const signOutUser = () => async (dispatch, getState) => {
   try {
     const state = getState();
