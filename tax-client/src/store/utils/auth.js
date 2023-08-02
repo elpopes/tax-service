@@ -1,6 +1,6 @@
-function isTokenValid() {
-  const token = localStorage.getItem("token");
+import jwtDecode from "jwt-decode";
 
+export function isTokenValid(token) {
   if (!token) {
     return false;
   }
