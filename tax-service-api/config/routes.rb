@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       # Login and logout routes
       post '/sessions', to: 'sessions#create'
       delete '/sessions/:id', to: 'sessions#revoke'
-      delete '/sessions', to: 'sessions#revoke_all'
+      delete '/sessions', to: 'sessions#destroy'
       post '/refresh', to: 'sessions#refresh'
   
       # User management (excluding creation)
