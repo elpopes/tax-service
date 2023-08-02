@@ -7,7 +7,7 @@ import SignIn from "./SignIn";
 
 function UserDisplay() {
   const user = useSelector(selectUser);
-  const token = useSelector((state) => state.session.token);
+  const token = useSelector((state) => state.sessions.token);
 
   const isUserLoggedIn = user && isTokenValid(token);
 
