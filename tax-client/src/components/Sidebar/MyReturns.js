@@ -8,13 +8,12 @@ const MyReturns = () => {
   };
 
   return (
-    <div>
+    <div className="main-component">
       <h3 onClick={handleExpandClick}>My Returns</h3>
       {expanded && (
-        <ul>
+        <ul className="subcomponents">
           <li>View Return</li>
           <li>Digital Signature</li>
-          {/* Add more subitems as needed */}
         </ul>
       )}
     </div>
