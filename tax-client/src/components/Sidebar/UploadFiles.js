@@ -8,10 +8,10 @@ const UploadFiles = () => {
   };
 
   return (
-    <div>
+    <div className="main-component">
       <h3 onClick={handleExpandClick}>Upload Files</h3>
       {expanded && (
-        <ul>
+        <ul className="subcomponents">
           <li>Upload W2s</li>
         </ul>
       )}
