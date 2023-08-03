@@ -15,8 +15,8 @@ class Navbar extends React.Component {
         <SearchBar />
         <ContactInfo />
         <div className="options-container">
-          <Button>Support</Button>
-          <Button>Notifications</Button>
+          <Button className="navbar-button">Support</Button>
+          <Button className="navbar-button">Notifications</Button>
         </div>
         <UserDisplay />
       </div>

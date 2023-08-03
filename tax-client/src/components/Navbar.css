@@ -21,3 +21,20 @@
   border: none;
   border-radius: 5px;
 }
+
+.navbar-button {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 18px;
+  color: black;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.navbar-button:hover {
+  background-color: black;
+  color: white;
+  transition: 0.3s;
+}
