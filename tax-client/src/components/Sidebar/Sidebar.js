@@ -5,13 +5,6 @@ import BankProducts from "./BankProducts";
 import MyProperties from "./MyProperties";
 import MyDependents from "./MyDependents";
 
-import React from "react";
-import UploadFiles from "./UploadFiles";
-import MyReturns from "./MyReturns";
-import BankProducts from "./BankProducts";
-import MyProperties from "./MyProperties";
-import MyDependents from "./MyDependents";
-
 const Sidebar = () => {
   return (
     <div>
