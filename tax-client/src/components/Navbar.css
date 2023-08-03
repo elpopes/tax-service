@@ -2,12 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 70px;
   background-color: gold;
   color: black;
   padding: 10px;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   border-bottom: 1px solid black;
 }
 
