@@ -3,6 +3,7 @@ import "./Navbar.css";
 import UserDisplay from "./UserDisplay";
 import SearchBar from "./SearchBar";
 import ContactInfo from "./ContactInfo";
+import Button from "./Button";
 
 class Navbar extends React.Component {
   render() {
@@ -14,8 +15,8 @@ class Navbar extends React.Component {
         <SearchBar />
         <ContactInfo />
         <div className="options-container">
-          <p className="option">Support</p>
-          <p className="option">Notifications</p>
+          <Button>Support</Button>
+          <Button>Notifications</Button>
         </div>
         <UserDisplay />
       </div>

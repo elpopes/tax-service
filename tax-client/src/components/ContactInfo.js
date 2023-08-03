@@ -1,5 +1,4 @@
 import React from "react";
-import "./ContactInfo.css";
 
 class ContactInfo extends React.Component {
   render() {
