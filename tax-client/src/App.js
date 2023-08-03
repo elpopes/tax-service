@@ -10,7 +10,7 @@ function App() {
     <>
       <div className="App">
         <Navbar />
-        <Sidebar /> {/* Render the Sidebar component */}
+        <Sidebar />
         <SignInModal />
         <Home />
         <Footer />
