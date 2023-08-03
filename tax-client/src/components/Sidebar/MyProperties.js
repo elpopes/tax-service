@@ -8,10 +8,10 @@ const MyProperties = () => {
   };
 
   return (
-    <div>
+    <div className="main-component">
       <h3 onClick={handleExpandClick}>My Properties</h3>
       {expanded && (
-        <ul>
+        <ul className="subcomponents">
           <li>Property 1</li>
           <li>Property 2</li>
         </ul>
