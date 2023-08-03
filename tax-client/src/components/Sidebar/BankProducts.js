@@ -8,13 +8,12 @@ const BankProducts = () => {
   };
 
   return (
-    <div>
+    <div className="main-component">
       <h3 onClick={handleExpandClick}>Bank Products</h3>
       {expanded && (
-        <ul>
+        <ul className="subcomponents">
           <li>Product 1</li>
           <li>Product 2</li>
-          {/* Add more subitems as needed */}
         </ul>
       )}
     </div>
