@@ -8,10 +8,10 @@ const MyDependents = () => {
   };
 
   return (
-    <div>
+    <div className="main-component">
       <h3 onClick={handleExpandClick}>My Dependents</h3>
       {expanded && (
-        <ul>
+        <ul className="subcomponents">
           <li>Dependent 1</li>
           <li>Dependent 2</li>
         </ul>
