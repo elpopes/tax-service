@@ -1,9 +1,9 @@
 import React from "react";
 
 const userData = {
-  name: "John Doe",
-  email: "john@example.com",
-  dateOfBirth: "2000-01-01",
+  name: "Lorenzo Tijerina",
+  email: "lorenzotijerina@gmail.com",
+  dateOfBirth: "08-28-1975",
 };
 
 function UserProfile() {

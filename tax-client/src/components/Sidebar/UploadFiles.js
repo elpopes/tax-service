@@ -13,6 +13,10 @@ const UploadFiles = () => {
       {expanded && (
         <ul className="subcomponents">
           <li>Upload W2s</li>
+          <li>Upload </li>
+          <li>Upload W2s</li>
+          <li>Upload W2s</li>
+          <li>Upload W2s</li>
         </ul>
       )}
     </div>

@@ -3,9 +3,9 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   grid-gap: 20px;
-  padding: 20px;
+  padding: 20px 80px;
   margin-left: 350px;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .client-dashboard__header {
