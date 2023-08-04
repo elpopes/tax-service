@@ -5,12 +5,13 @@ import Status from "./Status";
 import Uploads from "./Uploads";
 import History from "./History";
 import Support from "./Support";
+import "./ClientDashboard.css";
 
 const ClientDashboard = ({ user }) => {
   return (
     <div className="client-dashboard">
       <div className="client-dashboard__header">
-        <h2>Welcome, {user.name}</h2>
+        <h2>Welcome, {user.email}</h2>
       </div>
       <div className="client-dashboard__top-row">
         <UserProfile user={user} />

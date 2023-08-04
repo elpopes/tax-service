@@ -11,7 +11,7 @@ function App() {
     <>
       <div className="App">
         <Navbar />
-        {/* <Sidebar /> */}
+        <Sidebar />
         <SignInModal />
         <Dashboard />
         {/* <Home /> */}
