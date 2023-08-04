@@ -10,7 +10,7 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const date = new Date();
   const currentYear =
-    date.getMonth() >= 9 ? date.getFullYear() : date.getFullYear() - 1;
+    date.getMonth() >= 7 ? date.getFullYear() : date.getFullYear() - 1;
   const [selectedYear, setSelectedYear] = useState({
     value: currentYear,
     label: currentYear.toString(),

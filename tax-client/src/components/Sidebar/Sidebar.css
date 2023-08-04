@@ -17,26 +17,20 @@
   font-size: 20px;
 }
 
-.sidebar select {
-  width: auto;
-  padding: 10px;
-  margin-bottom: 20px;
-  appearance: none;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='5'><path fill='%232C3C3B' d='M0 0h10L5 5z'/></svg>")
-    no-repeat;
-  background-position: right 10px top 50%;
-  background-size: 10px;
-}
-
 .sidebar .main-component h3 {
   margin: 20px 0;
   font-size: 18px;
+  cursor: pointer;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='5'><path fill='%232C3C3B' d='M0 0h10L5 5z'/></svg>")
+    no-repeat right;
+}
+
+.sidebar .subcomponents li {
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .sidebar .subcomponents {
-  padding-left: 20px;
-}
-
-.sidebar .section {
+  padding-left: 30px;
   margin-bottom: 20px;
 }
