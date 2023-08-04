@@ -11,18 +11,24 @@ const ClientDashboard = ({ user }) => {
   return (
     <div className="client-dashboard">
       <div className="client-dashboard__header">
-        <h2>Welcome, {user.email}</h2>
+        <h2>Welcome, {user.name}</h2>
       </div>
-      <div className="client-dashboard__top-row">
+      <div className="client-dashboard__item">
         <UserProfile user={user} />
+      </div>
+      <div className="client-dashboard__item">
         <Notifications user={user} />
       </div>
-      <div className="client-dashboard__middle-row">
+      <div className="client-dashboard__item">
         <Status user={user} />
+      </div>
+      <div className="client-dashboard__item">
         <Uploads user={user} />
       </div>
-      <div className="client-dashboard__bottom-row">
+      <div className="client-dashboard__item">
         <History user={user} />
+      </div>
+      <div className="client-dashboard__item">
         <Support user={user} />
       </div>
     </div>

@@ -1,6 +1,6 @@
 .client-dashboard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 20px;
   padding: 20px 80px;
@@ -21,6 +21,11 @@
 
 .client-dashboard__header h2 {
   font-size: 32px;
+}
+
+.client-dashboard__item {
+  border: 1px solid #969595;
+  padding: 20px;
 }
 
 @media (max-width: 800px) {
