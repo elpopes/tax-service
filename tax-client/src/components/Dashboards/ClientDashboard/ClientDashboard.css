@@ -1,11 +1,11 @@
 .client-dashboard {
+  margin-left: 400px; /* Adjust this to fit the sidebar */
+  margin-right: 100px;
+  padding: 20px;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  grid-gap: 20px;
-  padding: 20px 80px;
-  margin-left: 350px;
-  font-size: 25px;
+  grid-template-columns: 1fr 1fr; /* Two equally sized columns */
+  grid-template-rows: 1fr 1fr 1fr; /* Three equally sized rows */
+  gap: 20px;
 }
 
 .client-dashboard__header {
@@ -26,6 +26,7 @@
 .client-dashboard__item {
   border: 1px solid #969595;
   padding: 20px;
+  font-size: 30px;
 }
 
 @media (max-width: 800px) {
