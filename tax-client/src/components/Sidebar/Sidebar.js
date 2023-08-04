@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Select from "react-select";
 import UploadFiles from "./UploadFiles";
 import MyReturns from "./MyReturns";
 import BankProducts from "./BankProducts";
@@ -10,24 +11,24 @@ const Sidebar = () => {
   const date = new Date();
   const currentYear =
     date.getMonth() >= 9 ? date.getFullYear() : date.getFullYear() - 1;
-  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedYear, setSelectedYear] = useState({
+    value: currentYear,
+    label: currentYear.toString(),
+  });
 
-  const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
+  const years = Array.from({ length: 5 }, (_, i) => ({
+    value: currentYear - i,
+    label: (currentYear - i).toString(),
+  }));
 
-  const handleChange = (e) => {
-    setSelectedYear(e.target.value);
+  const handleChange = (selectedOption) => {
+    setSelectedYear(selectedOption);
   };
 
   return (
     <div className="sidebar">
-      <h2>Tax Year: {selectedYear}</h2>
-      <select value={selectedYear} onChange={handleChange}>
-        {years.map((year) => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
+      <h2>Tax Year: {selectedYear.label}</h2>
+      <Select value={selectedYear} onChange={handleChange} options={years} />
       <UploadFiles />
       <MyReturns />
       <BankProducts />
