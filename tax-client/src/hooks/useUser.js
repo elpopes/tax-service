@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCurrentUser } from "../api";
+import { getUser } from "../store/users/usersSelectors";
 
 function useUser() {
   const [user, setUser] = useState(null);
@@ -8,7 +8,7 @@ function useUser() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const user = await getCurrentUser();
+        const user = await getUser();
         setUser(user);
       } catch (error) {
         console.error("Error fetching current user: ", error);

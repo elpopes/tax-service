@@ -1,11 +1,11 @@
 import React from "react";
-import useUser from "../hooks/useUser";
-import ClientDashboard from "./ClientDashboard";
+import { useSelector } from "react-redux";
+import ClientDashboard from "./ClientDashboard/ClientDashboard";
 import PreparerDashboard from "./PreparerDashboard";
 import AdminDashboard from "./AdminDashboard";
 
 function Dashboard() {
-  const user = useUser();
+  const user = useSelector((state) => state.sessions.user);
 
   switch (user.role) {
     case "client":
