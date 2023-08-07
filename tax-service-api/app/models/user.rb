@@ -7,6 +7,7 @@ class User < ApplicationRecord
   
     # Associations
     has_many :refresh_tokens
+    has_one :client
   
     # Callbacks
     after_initialize :ensure_role
