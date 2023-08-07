@@ -54,3 +54,20 @@ export const deleteUser = (userId) => (dispatch) => {
     method: "DELETE",
   }).then(() => dispatch(removeUser(userId)));
 };
+
+export const fetchUserProfile = () => async (dispatch, getState) => {
+  const token = getState().sessions.token;
+
+  const res = await fetch(`${config.API_BASE_URL}/users/profile`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (res.ok) {
+    const profile = await res.json();
+    dispatch(receiveUser(profile));
+  }
+};
