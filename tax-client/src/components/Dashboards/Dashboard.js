@@ -7,6 +7,10 @@ import AdminDashboard from "./AdminDashboard";
 function Dashboard() {
   const user = useSelector((state) => state.sessions.user);
 
+  if (!user || !user.role) {
+    return <div>Loading...</div>;
+  }
+
   switch (user.role) {
     case "client":
       return <ClientDashboard user={user} />;
