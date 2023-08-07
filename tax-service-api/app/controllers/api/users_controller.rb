@@ -3,6 +3,22 @@ module Api
         before_action :authenticate_user!
         before_action :set_user, only: [:show, :update, :destroy]
         respond_to :json
+
+        def profile
+            client = current_user.client
+            if client
+                ssn_last_four = client.ssn_encrypted[-4..] if client.ssn_encrypted
+                render json: {
+                    name: client.full_name,
+                    email: current_user.email,
+                    dateOfBirth: client.dob.strftime('%m-%d-%Y'),
+                    ssnLastFour: ssn_last_four
+                }, status: :ok
+            else
+                render json: { error: 'User profile not found' }, status: :not_found
+            end
+        end
+          
   
       # GET /users
       def index
