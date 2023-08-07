@@ -11,9 +11,13 @@ Rails.application.routes.draw do
       delete '/sessions/:id', to: 'sessions#revoke'
       delete '/sessions', to: 'sessions#destroy'
       post '/refresh', to: 'sessions#refresh'
-  
+      
       # User management (excluding creation)
-      resources :users, only: [:index, :show, :update, :destroy]
+      resources :users, only: [:index, :show, :update, :destroy] do
+        collection do
+          get :profile
+        end
+      end
     end
-  end
+end
   
