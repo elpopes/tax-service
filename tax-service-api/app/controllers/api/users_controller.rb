@@ -5,17 +5,19 @@ module Api
         respond_to :json
 
         def profile
-            client = current_user.client
-            if client
-                ssn_last_four = client.ssn_encrypted[-4..] if client.ssn_encrypted
-                render json: {
-                    name: client.full_name,
-                    email: current_user.email,
-                    dateOfBirth: client.dob.strftime('%m-%d-%Y'),
-                    ssnLastFour: ssn_last_four
-                }, status: :ok
+            if current_user.nil?
+              render json: { error: 'No user is currently logged in.' }, status: :unauthorized
+            elsif current_user.client.nil?
+              render json: { error: 'The logged-in user does not have an associated client.' }, status: :not_found
             else
-                render json: { error: 'User profile not found' }, status: :not_found
+              client = current_user.client
+              ssn_last_four = client.ssn_encrypted[-4..] if client.ssn_encrypted
+              render json: {
+                  name: client.full_name,
+                  email: current_user.email,
+                  dateOfBirth: client.dob.strftime('%m-%d-%Y'),
+                  ssnLastFour: ssn_last_four
+              }, status: :ok
             end
         end
           
