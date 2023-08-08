@@ -12,7 +12,7 @@ function UserProfile() {
   }, [dispatch]);
 
   // Retrieve the user data from the Redux store
-  const userData = useSelector((state) => state.users.current); // Adjust this selector based on your Redux state shape
+  const userData = useSelector((state) => state.users);
 
   if (!userData) {
     return <div>Loading...</div>;
