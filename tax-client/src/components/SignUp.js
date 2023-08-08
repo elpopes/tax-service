@@ -7,6 +7,7 @@ function SignUp({ isVisible, handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [ssnLastFour, setSsnLastFour] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -16,10 +17,11 @@ function SignUp({ isVisible, handleClose }) {
       email: email,
       password: password,
       role: role,
+      ssn_last_four: ssnLastFour,
     };
 
     dispatch(createUser(user));
-    handleClose(); // Close the modal after submitting the form
+    handleClose();
   };
 
   return (
@@ -58,6 +60,17 @@ function SignUp({ isVisible, handleClose }) {
             <option value="tax_professional">Tax Professional</option>
             <option value="admin">Admin</option>
           </select>
+        </label>
+        <label>
+          Last Four Digits of SSN:
+          <input
+            type="text"
+            name="ssnLastFour"
+            maxLength="4"
+            value={ssnLastFour}
+            onChange={(e) => setSsnLastFour(e.target.value)}
+            className="form-input"
+          />
         </label>
         <input type="submit" value="Submit" className="submit-btn" />
       </form>
