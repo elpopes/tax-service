@@ -8,6 +8,7 @@ class User < ApplicationRecord
     # Associations
     has_many :refresh_tokens
     has_one :client
+    accepts_nested_attributes_for :client
   
     # Callbacks
     after_initialize :ensure_role
