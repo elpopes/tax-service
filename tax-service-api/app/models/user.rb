@@ -12,21 +12,19 @@ class User < ApplicationRecord
   
     # Callbacks
     after_initialize :ensure_role
+    after_create :create_associated_client
   
     # Validations
     validates :email, presence: true, uniqueness: true
     validates :password, length: {minimum: 6, allow_nil: true}
   
-    after_create :create_associated_client
-
     private
 
     def create_associated_client
-        create_client!
+        create_client! if client?
     end
   
     def ensure_role
         self.role ||= :client
     end
-  end
-  
+end
