@@ -1,4 +1,9 @@
-import { receiveUser, receiveUsers, removeUser } from "./usersActions";
+import {
+  receiveUser,
+  receiveUsers,
+  removeUser,
+  registrationError,
+} from "./usersActions";
 import config from "../../config";
 
 export const fetchUsers = () => async (dispatch) => {
@@ -23,20 +28,19 @@ export const createUser = (user) => (dispatch) => {
     body: JSON.stringify({ user: user }),
     headers: { "Content-Type": "application/json" },
   })
-    .then((res) => {
-      if (!res.ok) {
-        return res.json().then((json) => {
-          if (json.errors) {
-            const error = json.errors.join(", ");
-            throw new Error(error);
-          }
-          throw new Error(res.statusText);
-        });
+    .then((res) => res.json())
+    .then((json) => {
+      if (!json.errors) {
+        dispatch(receiveUser(json.user));
+      } else {
+        const errorMessage = json.errors.join(", ");
+        dispatch(registrationError(errorMessage));
+        throw new Error(errorMessage);
       }
-      return res.json();
     })
-    .then((user) => dispatch(receiveUser(user)))
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.error("Registration error:", error);
+    });
 };
 
 export const updateUser = (user) => (dispatch) => {
