@@ -7,6 +7,7 @@ function UserProfile() {
 
   // When the component mounts, fetch the user profile
   useEffect(() => {
+    console.log("Fetching user profile from UserProfile...");
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
