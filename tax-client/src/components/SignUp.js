@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../store/users/usersOperations";
 import Modal from "./Modal";
 
@@ -10,7 +10,9 @@ function SignUp({ isVisible, handleClose }) {
   const [ssnLastFour, setSsnLastFour] = useState("");
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const registrationError = useSelector((state) => state.users.error);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -20,13 +22,20 @@ function SignUp({ isVisible, handleClose }) {
       ssn_last_four: ssnLastFour,
     };
 
-    dispatch(createUser(user));
-    handleClose();
+    try {
+      await dispatch(createUser(user));
+      handleClose();
+    } catch (error) {
+      console.error("Registration error: ", error);
+    }
   };
 
   return (
     <Modal isVisible={isVisible}>
       <h2 className="modal-title">Sign Up</h2>
+      {registrationError && (
+        <div className="error-message">{registrationError}</div>
+      )}
       <form className="signin-form" onSubmit={handleSubmit}>
         <label>
           Email:
