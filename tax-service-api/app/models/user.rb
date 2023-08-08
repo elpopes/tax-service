@@ -17,10 +17,16 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true
     validates :password, length: {minimum: 6, allow_nil: true}
   
+    after_create :create_associated_client
+
     private
+
+    def create_associated_client
+        create_client!
+    end
   
     def ensure_role
-      self.role ||= :client
+        self.role ||= :client
     end
   end
   
