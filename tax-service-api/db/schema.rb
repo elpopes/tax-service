@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_230321) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_232146) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_230321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "session_token"
-    t.binary "ssn_last_four_encrypted"
+    t.binary "encrypted_ssn_last_four"
     t.string "encrypted_ssn_last_four_iv"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["encrypted_ssn_last_four_iv"], name: "index_users_on_encrypted_ssn_last_four_iv", unique: true
