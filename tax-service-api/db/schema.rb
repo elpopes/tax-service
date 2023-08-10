@@ -10,20 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_232146) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_10_154321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "full_name", null: false
     t.integer "filing_status"
     t.date "dob"
     t.bigint "driver_license_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.binary "ssn_encrypted"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "middle_name"
     t.index ["driver_license_id"], name: "index_clients_on_driver_license_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
@@ -55,6 +57,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_232146) do
     t.string "session_token"
     t.binary "encrypted_ssn_last_four"
     t.string "encrypted_ssn_last_four_iv"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "middle_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["encrypted_ssn_last_four_iv"], name: "index_users_on_encrypted_ssn_last_four_iv", unique: true
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
