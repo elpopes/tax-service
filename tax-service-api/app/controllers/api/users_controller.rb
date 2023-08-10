@@ -43,10 +43,11 @@ module Api
       def create
         @user = User.new(user_params)
         if @user.save
-          token = encode_token({user_id: @user.id})
-          render json: {user: @user.as_json(only: [:id, :email, :role]), token: token}, status: :created
+            token = encode_token({user_id: @user.id})
+            render json: {user: @user.as_json(only: [:id, :email, :role]), token: token}, status: :created
         else
-          render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+            Rails.logger.error "Failed to create user: #{@user.errors.full_messages.inspect}" 
+            render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
         end
       end
   
