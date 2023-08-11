@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import SignUp from "./SignUp";
+import { clearSessionsError } from "../store/sessions/sessionsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../store/sessions/sessionsOperations";
 import {
@@ -15,6 +16,9 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const error = useSelector(getSessionsError);
   const user = useSelector(selectUser);
+  const handleFocus = () => {
+    dispatch(clearSessionsError());
+  };
 
   const dispatch = useDispatch();
 
@@ -38,7 +42,11 @@ function SignIn() {
       <Modal isVisible={showModal}>
         <h2 className="modal-title">Sign In</h2>
         {error && <p className="error-message">{error}</p>}
-        <form className="signin-form" onSubmit={handleSubmit}>
+        <form
+          className="signin-form"
+          onSubmit={handleSubmit}
+          onFocus={handleFocus}
+        >
           <label>
             Email:
             <input
