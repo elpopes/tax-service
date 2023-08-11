@@ -7,6 +7,7 @@ import {
   getSessionsError,
   selectUser,
 } from "../store/sessions/sessionsSelectors";
+import Button from "./Button";
 
 function SignIn() {
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);
@@ -60,9 +61,9 @@ function SignIn() {
           </label>
           <input type="submit" value="Submit" className="submit-btn" />
         </form>
-        <button className="signUp-link" onClick={handleSignUpOpen}>
+        <Button className="signUp-link" onClick={handleSignUpOpen}>
           Sign Up
-        </button>
+        </Button>
         <SignUp isVisible={isSignUpVisible} handleClose={handleSignUpClose} />
       </Modal>
     </div>
