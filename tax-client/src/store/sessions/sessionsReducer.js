@@ -2,6 +2,7 @@ import {
   SESSIONS_SIGN_IN,
   SESSIONS_SIGN_OUT,
   SESSIONS_ERROR,
+  CLEAR_SESSIONS_ERROR,
 } from "./sessionsActions";
 
 const initialState = {
@@ -26,6 +27,11 @@ const sessionsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case CLEAR_SESSIONS_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
