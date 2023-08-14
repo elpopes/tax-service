@@ -33,12 +33,14 @@ class User < ApplicationRecord
       
         client = create_client
         unless client.persisted?
+          Rails.logger.error("Client creation failed with errors: #{client.errors.full_messages}")
           client.errors.full_messages.each do |message|
             errors.add(:base, "Client: #{message}")
           end
           throw :abort
         end
     end
+   
       
 
     def ensure_role
