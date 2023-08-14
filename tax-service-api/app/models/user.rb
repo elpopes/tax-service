@@ -30,12 +30,15 @@ class User < ApplicationRecord
 
     def create_associated_client
         return unless client?
-        
-        client = create_client!
+      
+        client = create_client
         unless client.persisted?
-          raise "Client creation failed with errors: #{client.errors.full_messages.join(', ')}"
+          client.errors.full_messages.each do |message|
+            errors.add(:base, "Client: #{message}")
+          end
+          throw :abort
         end
-      end
+    end
       
 
     def ensure_role
