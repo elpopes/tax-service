@@ -15,6 +15,7 @@ module Api
             render json: { errors: resource.errors.full_messages }, status: :not_acceptable
           end
         else
+            puts "Resource: #{resource.inspect}"
             puts "Resource Errors: #{resource.errors.full_messages.inspect}"
             clean_up_passwords resource
             render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
