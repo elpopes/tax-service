@@ -28,15 +28,21 @@ export const createUser = (user) => (dispatch) => {
     body: JSON.stringify({ user: user }),
     headers: { "Content-Type": "application/json" },
   })
-    .then((res) => res.json())
-    .then((json) => {
-      if (!json.errors) {
-        dispatch(receiveUser(json.user));
-      } else {
-        const errorMessage = json.errors.join(", ");
-        dispatch(registrationError(errorMessage));
-        throw new Error(errorMessage);
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((json) => {
+          console.error("Server response on error:", json); // Log the entire response
+          const errorMessage = json.errors
+            ? json.errors.join(", ")
+            : "Registration failed";
+          dispatch(registrationError(errorMessage));
+          throw new Error(errorMessage);
+        });
       }
+      return res.json();
+    })
+    .then((json) => {
+      dispatch(receiveUser(json.user));
     })
     .catch((error) => {
       console.error("Registration error:", error);
