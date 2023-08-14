@@ -20,19 +20,18 @@ module Api
         end
       end
   
-      protected
-  
-      def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :role])
-      end
-  
-      private
-  
-      def sign_up_params
-        params.require(:user).permit(:email, :password, :role, :ssn_last_four)
-      end
-  
+        protected
+
+        def configure_permitted_parameters
+            devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :middle_name, :email, :password, :role, :ssn_last_four])
+        end
+
+        private
+
+        def sign_up_params
+            params.require(:user).permit(:first_name, :last_name, :middle_name, :email, :password, :role, :ssn_last_four)
+        end
     end
-  end
+end
   
   
