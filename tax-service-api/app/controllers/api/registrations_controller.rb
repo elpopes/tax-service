@@ -4,21 +4,14 @@ module Api
       respond_to :json
   
       def create
-        puts sign_up_params
-        build_resource(sign_up_params)
-  
-        if resource.save
-          if resource.active_for_authentication?
-            sign_up(resource_name, resource)
-            render json: resource, status: :created
-          else
-            render json: { errors: resource.errors.full_messages }, status: :not_acceptable
-          end
+        registration_service = UserRegistrationService.new(params)
+        result = registration_service.register
+      
+        if result[:success]
+          sign_up(resource_name, result[:user])
+          render json: result[:user], status: :created
         else
-            puts "Resource: #{resource.inspect}"
-            puts "Resource Errors: #{resource.errors.full_messages.inspect}"
-            clean_up_passwords resource
-            render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: result[:errors] }, status: :unprocessable_entity
         end
       end
   
