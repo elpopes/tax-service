@@ -1,32 +1,23 @@
 class UserRegistrationService
-    attr_reader :params, :user
+    attr_reader :params
   
     def initialize(params)
       @params = params
-      @user = User.new(sign_up_params)
     end
   
     def register
-      if @user.save
-        if @user.active_for_authentication?
-          handle_client_creation if @params[:user][:role] == 'client'
-          { success: true, user: @user }
-        else
-          { success: false, errors: @user.errors.full_messages }
-        end
+      user = User.new(user_params)
+      if user.save
+        { success: true, user: user }
       else
-        { success: false, errors: @user.errors.full_messages }
+        { success: false, errors: user.errors.full_messages }
       end
     end
   
     private
   
-    def sign_up_params
+    def user_params
       params.require(:user).permit(:first_name, :last_name, :middle_name, :email, :password, :role, :ssn_last_four)
-    end
-  
-    def handle_client_creation
-      # Logic for handling client creation including 'dob'
     end
   end
   
