@@ -27,7 +27,22 @@ class UserRegistrationService
     end
   
     def create_client(user, dob)
-      # Logic to create a client using the user and dob
+        client_params = {
+          user: user,
+          dob: dob,
+          ssn: user.ssn_last_four, # Assuming ssn_last_four is available in user, and you want to use it as SSN
+          first_name: user.first_name,
+          last_name: user.last_name,
+          middle_name: user.middle_name,
+          ssn_last_four: user.ssn_last_four # Assuming ssn_last_four is available in user
+        }
+      
+        client = Client.new(client_params)
+      
+        unless client.save
+          Rails.logger.error("Client creation failed for user #{user.id}: #{client.errors.full_messages}")
+        end
     end
+      
   end
   
