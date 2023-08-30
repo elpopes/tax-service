@@ -10,6 +10,8 @@ class UserRegistrationService
         user_params_without_dob = user_params.except(:dob) # Removing dob from user params
       
         Rails.logger.info("User Parameters: #{user_params_without_dob}")
+
+        binding.debug
       
         user = User.new(user_params_without_dob)
         
