@@ -42,6 +42,9 @@ module Api
       # POST /users
       def create
         @user = User.new(user_params)
+
+        binding.debug
+
         if @user.save
             token = encode_token({user_id: @user.id})
             render json: {user: @user.as_json(only: [:id, :email, :role]), token: token}, status: :created
