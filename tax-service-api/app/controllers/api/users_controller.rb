@@ -43,7 +43,7 @@ module Api
       def create
         @user = User.new(user_params)
 
-        binding.debug
+        debugger
 
         if @user.save
             token = encode_token({user_id: @user.id})

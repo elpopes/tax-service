@@ -11,7 +11,7 @@ class UserRegistrationService
       
         Rails.logger.info("User Parameters: #{user_params_without_dob}")
 
-        binding.debug
+        debugger
       
         user = User.new(user_params_without_dob)
         
