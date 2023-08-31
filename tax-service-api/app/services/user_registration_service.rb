@@ -45,8 +45,7 @@ class UserRegistrationService
           ssn_last_four: user.ssn_last_four 
         }
       
-        Rails.logger.debug("Creating client with parameters: #{client_params}") # Debugging line
-        client = Client.new(client_params)
+        debugger
       
         unless client.save
           Rails.logger.error("Client creation failed for user #{user.id}: #{client.errors.full_messages}")
