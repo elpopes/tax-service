@@ -21,9 +21,7 @@ class UserRegistrationService
           end
           { success: true, user: user }
         else
-          # Debugging: Print user errors if saving fails
-          Rails.logger.error("User saving failed: #{user.errors.full_messages}")
-          { success: false, errors: user.errors.full_messages }
+          debugger
         end
     end
       
