@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
     # Callbacks
     after_initialize :ensure_role
-    after_create :create_associated_client
+    # after_create :create_associated_client
 
     # Validations
     validates :email, presence: true, uniqueness: true
@@ -28,18 +28,18 @@ class User < ApplicationRecord
 
     private
 
-    def create_associated_client
-        return unless client?
+    # def create_associated_client
+    #     return unless client?
       
-        client = create_client
-        unless client.persisted?
-          Rails.logger.error("Client creation failed with errors: #{client.errors.full_messages}")
-          client.errors.full_messages.each do |message|
-            errors.add(:base, "Client: #{message}")
-          end
-          throw :abort
-        end
-    end
+    #     client = create_client
+    #     unless client.persisted?
+    #       Rails.logger.error("Client creation failed with errors: #{client.errors.full_messages}")
+    #       client.errors.full_messages.each do |message|
+    #         errors.add(:base, "Client: #{message}")
+    #       end
+    #       throw :abort
+    #     end
+    # end
    
       
 
