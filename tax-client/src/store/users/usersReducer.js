@@ -3,6 +3,7 @@ import {
   RECEIVE_USER,
   REMOVE_USER,
   REGISTRATION_ERROR,
+  CLEAR_REGISTRATION_ERROR,
 } from "./usersActions";
 
 const initialState = {
@@ -37,6 +38,11 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.error,
+      };
+    case CLEAR_REGISTRATION_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

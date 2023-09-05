@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../store/users/usersOperations";
+import { clearRegistrationError } from "../store/users/usersActions";
 import Modal from "./Modal";
 
 function SignUp({ isVisible, handleClose }) {
@@ -15,6 +16,11 @@ function SignUp({ isVisible, handleClose }) {
   const dispatch = useDispatch();
 
   const registrationError = useSelector((state) => state.users.error);
+
+  const enhancedHandleClose = () => {
+    dispatch(clearRegistrationError());
+    handleClose();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +38,7 @@ function SignUp({ isVisible, handleClose }) {
 
     try {
       await dispatch(createUser(user));
-      handleClose();
+      enhancedHandleClose();
     } catch (error) {
       console.error("Registration error: ", error);
     }
