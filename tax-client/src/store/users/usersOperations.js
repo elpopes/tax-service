@@ -22,32 +22,30 @@ export const fetchUser = (userId) => async (dispatch) => {
   }
 };
 
-export const createUser = (user) => (dispatch) => {
-  return fetch(`${config.API_BASE_URL}/users`, {
-    method: "POST",
-    body: JSON.stringify({ user: user }),
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((res) => {
-      if (!res.ok) {
-        return res.json().then((json) => {
-          console.error("Server response on error:", json); // Log the entire response
-          const errorMessage = json.errors
-            ? json.errors.join(", ")
-            : "Registration failed";
-          dispatch(registrationError(errorMessage));
-          throw new Error(errorMessage);
-        });
-      }
-      return res.json();
-    })
-    .then((json) => {
-      dispatch(receiveUser(json.user));
-    })
-    .catch((error) => {
-      console.error("Registration error:", error);
-      throw error; // Re-throw the error to propagate it back
+export const createUser = (user) => async (dispatch) => {
+  try {
+    const response = await fetch(`${config.API_BASE_URL}/users`, {
+      method: "POST",
+      body: JSON.stringify({ user: user }),
+      headers: { "Content-Type": "application/json" },
     });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      const errorMessage = json.errors
+        ? json.errors.join(", ")
+        : "Registration failed";
+      dispatch(registrationError(errorMessage));
+      throw new Error(errorMessage);
+    } else {
+      dispatch(receiveUser(json.user));
+      // Close modal and redirect to dashboard
+    }
+  } catch (error) {
+    console.error("Registration error:", error);
+    throw error;
+  }
 };
 
 export const updateUser = (user) => (dispatch) => {

@@ -12,7 +12,7 @@ module Api
             client = current_user.client
             
             if client.nil?
-              puts "DEBUG: No client associated with the current user." # <-- Adding the debug statement here
+              puts "DEBUG: No client associated with the current user." 
               render json: { error: 'The logged-in user does not have an associated client.' }, status: :not_found and return
             end
             
