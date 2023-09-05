@@ -46,6 +46,7 @@ export const createUser = (user) => (dispatch) => {
     })
     .catch((error) => {
       console.error("Registration error:", error);
+      throw error; // Re-throw the error to propagate it back
     });
 };
 
