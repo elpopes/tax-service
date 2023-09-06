@@ -1,9 +1,10 @@
 class UserRegistrationService
-    attr_reader :user_params, :client_params
+    attr_reader :user_params, :client_params, :dob
   
-    def initialize(user_params, client_params = nil)
+    def initialize(user_params, dob, client_params = nil)
       @user_params = user_params
       @client_params = client_params
+      @dob = dob
     end
   
     def register
@@ -40,9 +41,10 @@ class UserRegistrationService
     end
   
     def create_client(user)
+      client_data = { dob: dob }.merge(client_params.symbolize_keys)
       Client.new(
         user: user,
-        **client_params.symbolize_keys
+        **client_data
       )
     end
   
