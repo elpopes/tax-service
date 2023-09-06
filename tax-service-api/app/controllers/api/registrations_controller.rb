@@ -4,8 +4,7 @@ module Api
       respond_to :json
   
       def create
-        debugger
-        registration_service = UserRegistrationService.new(sign_up_params)
+        registration_service = UserRegistrationService.new(user_params, params[:user][:dob])
         result = registration_service.register
       
         if result[:success]
@@ -24,6 +23,10 @@ module Api
           
 
         private
+
+        def user_params
+            params.require(:user).permit(:first_name, :last_name, :middle_name, :email, :password, :role, :ssn_last_four).to_h
+          end
 
         def sign_up_params
             params.require(:user).permit(:first_name, :last_name, :middle_name, :email, :password, :role, :ssn_last_four, :dob)
