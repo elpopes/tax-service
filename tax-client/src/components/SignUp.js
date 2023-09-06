@@ -11,7 +11,6 @@ function SignUp({ isVisible, handleClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [dob, setDob] = useState("");
   const [ssnLastFour, setSsnLastFour] = useState("");
   const dispatch = useDispatch();
 
@@ -34,7 +33,6 @@ function SignUp({ isVisible, handleClose }) {
       password: password,
       role: role,
       ssn_last_four: ssnLastFour,
-      dob: dob,
     };
 
     try {
@@ -127,16 +125,6 @@ function SignUp({ isVisible, handleClose }) {
             value={ssnLastFour}
             onChange={(e) => setSsnLastFour(e.target.value)}
             className="form-input"
-          />
-        </label>
-        <label>
-          Date of Birth:
-          <input
-            type="date"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-            className="form-input"
-            required
           />
         </label>
         <input type="submit" value="Submit" className="submit-btn" />

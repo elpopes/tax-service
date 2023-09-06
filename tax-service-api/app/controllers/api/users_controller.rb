@@ -45,6 +45,7 @@ module Api
         
         if @user.save
           token = encode_token({ user_id: @user.id })
+          puts "Debug: Sending JSON response: #{ { user: @user.as_json(only: [:id, :email, :role]), token: token }.inspect }"
           render json: { user: @user.as_json(only: [:id, :email, :role]), token: token }, status: :created
         else
           Rails.logger.error "Failed to create user: #{@user.errors.full_messages.inspect}"
