@@ -1,43 +1,48 @@
 class UserRegistrationService
-    attr_reader :params
+    attr_reader :user_params, :client_params
   
-    def initialize(params)
-      @params = params
+    def initialize(user_params, client_params = nil)
+      @user_params = user_params
+      @client_params = client_params
     end
   
     def register
       user = build_user
-      debugger
-      return { success: false, errors: user.errors.full_messages } unless user.save
   
-      handle_client_creation(user) if user.client?
+      unless user.save
+        return { success: false, errors: user.errors.full_messages }
+      end
+  
+      if client_params
+        client_creation_result = handle_client_creation(user)
+  
+        unless client_creation_result[:success]
+          return client_creation_result
+        end
+      end
+  
       { success: true, user: user }
     end
   
     private
   
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :middle_name, :email, :password, :role, :ssn_last_four, :dob)
-    end
-  
     def build_user
-      User.new(user_params.except(:dob))
+      User.new(user_params)
     end
   
     def handle_client_creation(user)
-      client = create_client(user, user_params[:dob])
-      log_client_creation_failure(user, client) unless client.save
+      client = create_client(user)
+      unless client.save
+        log_client_creation_failure(user, client)
+        return { success: false, errors: client.errors.full_messages }
+      end
+      { success: true, client: client }
     end
   
-    def create_client(user, dob)
+    def create_client(user)
       Client.new(
         user: user,
-        dob: dob,
-        ssn: user.ssn_last_four,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        middle_name: user.middle_name,
-        ssn_last_four: user.ssn_last_four
+        **client_params.symbolize_keys
       )
     end
   
