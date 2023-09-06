@@ -7,6 +7,7 @@ class UserRegistrationService
   
     def register
       user = build_user
+      debugger
       return { success: false, errors: user.errors.full_messages } unless user.save
   
       handle_client_creation(user) if user.client?
