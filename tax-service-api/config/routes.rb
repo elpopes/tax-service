@@ -3,21 +3,21 @@ Rails.application.routes.draw do
     get 'home/index'
     
     namespace :api do
-      # Registrations, sessions and password management
-      devise_for :users, controllers: { registrations: 'api/registrations' }
+      # Skip registrations but keep other Devise functionalities intact
+      devise_for :users, skip: [:registrations], controllers: { sessions: 'api/sessions' }
   
-      # Login and logout routes
+      # Custom route for login and logout
       post '/sessions', to: 'sessions#create'
       delete '/sessions/:id', to: 'sessions#revoke'
       delete '/sessions', to: 'sessions#destroy'
       post '/refresh', to: 'sessions#refresh'
-      
-      # User management (excluding creation)
-      resources :users, only: [:index, :show, :update, :destroy] do
+  
+      # Custom route for user management
+      resources :users, only: [:index, :show, :create, :update, :destroy] do
         collection do
           get :profile
         end
       end
     end
-end
+  end
   
