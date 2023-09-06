@@ -4,7 +4,8 @@ module Api
       respond_to :json
   
       def create
-        registration_service = UserRegistrationService.new(params)
+        debugger
+        registration_service = UserRegistrationService.new(sign_up_params)
         result = registration_service.register
       
         if result[:success]

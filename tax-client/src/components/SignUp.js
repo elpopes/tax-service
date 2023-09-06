@@ -38,8 +38,12 @@ function SignUp({ isVisible, handleClose }) {
     };
 
     try {
-      await dispatch(createUser(user));
-      handleClose();
+      const response = await dispatch(createUser(user));
+      if (response.errors) {
+        console.error("Registration errors: ", response.errors);
+      } else {
+        handleClose();
+      }
     } catch (error) {
       console.error("Registration error: ", error);
     }
