@@ -5,6 +5,9 @@ import SignInModal from "./components/SignIn";
 import Dashboard from "./components/Dashboards/Dashboard";
 // import Home from "./components/Home";
 import Footer from "./components/Footer";
+import EmailConfirmed from "./components/EmailConfirmation/EmailConfirmed";
+import EmailConfirmationFailure from "./components/EmailConfirmation/EmailConfirmationFailure";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -13,6 +16,14 @@ function App() {
         <Navbar />
         <Sidebar />
         <SignInModal />
+        <Routes>
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/email-confirmed" component={EmailConfirmed} />
+          <Route
+            path="/email-confirmation-failure"
+            component={EmailConfirmationFailure}
+          />
+        </Routes>
         <Dashboard />
         {/* <Home /> */}
         <Footer />
