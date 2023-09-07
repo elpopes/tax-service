@@ -4,7 +4,10 @@ Rails.application.routes.draw do
     
     namespace :api do
       # Skip registrations but keep other Devise functionalities intact
-      devise_for :users, skip: [:registrations], controllers: { sessions: 'api/sessions' }
+      devise_for :users, skip: [:registrations], controllers: { 
+        sessions: 'api/sessions',
+        confirmations: 'api/confirmations'
+      }
   
       # Custom route for login and logout
       post '/sessions', to: 'sessions#create'
