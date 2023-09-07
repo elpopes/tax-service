@@ -17,11 +17,11 @@ function App() {
         <Sidebar />
         <SignInModal />
         <Routes>
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/email-confirmed" component={EmailConfirmed} />
+          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/email-confirmed" element={<EmailConfirmed />} />
           <Route
             path="/email-confirmation-failure"
-            component={EmailConfirmationFailure}
+            element={<EmailConfirmationFailure />}
           />
         </Routes>
         <Dashboard />
