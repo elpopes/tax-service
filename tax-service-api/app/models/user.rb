@@ -6,7 +6,7 @@ class User < ApplicationRecord
     enum role: { client: 0, tax_professional: 1, admin: 2 }
 
     # Devise modules
-    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
+    devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
 
     # attr_encrypted setup
     attr_encrypted :ssn_last_four, key: ENV['ATTR_ENCRYPTION_KEY'], attribute: 'encrypted_ssn_last_four'
