@@ -8,6 +8,7 @@ class User < ApplicationRecord
     # Devise modules
     devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
 
+
     # attr_encrypted setup
     attr_encrypted :ssn_last_four, key: ENV['ATTR_ENCRYPTION_KEY'], attribute: 'encrypted_ssn_last_four'
 
