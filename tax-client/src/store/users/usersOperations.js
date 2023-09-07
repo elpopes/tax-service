@@ -37,14 +37,15 @@ export const createUser = (user) => async (dispatch) => {
         ? json.errors.join(", ")
         : "Registration failed";
       dispatch(registrationError(errorMessage));
-      throw new Error(errorMessage);
+      return { errors: errorMessage };
     } else {
       dispatch(receiveUser(json.user));
-      // Close modal and redirect to dashboard
+      return { user: json.user };
     }
   } catch (error) {
     console.error("Registration error:", error);
-    throw error;
+    dispatch(registrationError(error.message));
+    return { errors: error.message };
   }
 };
 
