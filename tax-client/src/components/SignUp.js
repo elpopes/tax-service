@@ -61,6 +61,7 @@ function SignUp({ isVisible, handleClose }) {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             className="form-input"
+            autoComplete="given-name"
             required
           />
         </label>
@@ -71,6 +72,7 @@ function SignUp({ isVisible, handleClose }) {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             className="form-input"
+            autoComplete="family-name"
             required
           />
         </label>
@@ -80,6 +82,7 @@ function SignUp({ isVisible, handleClose }) {
             type="text"
             value={middleName}
             onChange={(e) => setMiddleName(e.target.value)}
+            autoComplete="additional-name"
             className="form-input"
           />
         </label>
@@ -90,6 +93,7 @@ function SignUp({ isVisible, handleClose }) {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             className="form-input"
           />
         </label>
@@ -100,6 +104,7 @@ function SignUp({ isVisible, handleClose }) {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
             className="form-input"
           />
         </label>
