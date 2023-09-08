@@ -17,7 +17,7 @@ function App() {
         <Sidebar />
         {/* <SignInModal /> */}
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
+          {/* <Route exact path="/" element={<Dashboard />} /> */}
           <Route path="/email-confirmed" element={<EmailConfirmed />} />
           <Route
             path="/email-confirmation-failure"
