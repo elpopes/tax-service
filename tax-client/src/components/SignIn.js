@@ -68,7 +68,7 @@ function SignIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="form-input"
-              autoComplete="current-password"
+              autoComplete="password"
             />
           </label>
           <input type="submit" value="Submit" className="submit-btn" />
