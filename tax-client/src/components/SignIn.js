@@ -51,7 +51,7 @@ function SignIn() {
             Email:
             <input
               type="email"
-              id="signIn-email"
+              id="email"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -63,7 +63,7 @@ function SignIn() {
             Password:
             <input
               type="password"
-              id="signIn-password"
+              id="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
