@@ -13,7 +13,7 @@ module Api
             
             if client.nil?
               puts "DEBUG: No client associated with the current user." 
-              render json: { error: 'The logged-in user does not have an associated client.' }, status: :not_found and return
+              render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
             end
             
             ssn_last_four = client.ssn_encrypted[-4..] if client.ssn_encrypted
