@@ -1,21 +1,29 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../../store/users/usersOperations";
+import { Link } from "react-router-dom";
 
 function UserProfile() {
   const dispatch = useDispatch();
 
-  // When the component mounts, fetch the user profile
   useEffect(() => {
     console.log("Fetching user profile from UserProfile...");
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
-  // Retrieve the user data from the Redux store
   const userData = useSelector((state) => state.users);
 
   if (!userData) {
     return <div>Loading...</div>;
+  }
+
+  if (!userData.hasClientProfile) {
+    return (
+      <div className="alert">
+        <h2>You need to create your profile</h2>
+        <Link to="/create-profile">Click here to create your profile</Link>
+      </div>
+    );
   }
 
   return (
