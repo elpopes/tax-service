@@ -1,6 +1,8 @@
 class Client < ApplicationRecord
     attr_encrypted :ssn, key: ENV['ATTR_ENCRYPTION_KEY']
     belongs_to :user
+    has_one :spouse
+    has_many :dependents
   
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
   
