@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_194617) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_194954) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -29,6 +29,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_194617) do
     t.string "ssn_last_four", limit: 4
     t.index ["driver_license_id"], name: "index_clients_on_driver_license_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
+  create_table "dependents", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.date "dob"
+    t.binary "ssn_encrypted"
+    t.string "first_name", null: false
+    t.string "middle_name"
+    t.string "last_name", null: false
+    t.string "relationship_to_client", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_dependents_on_client_id"
   end
 
   create_table "jwt_blacklists", force: :cascade do |t|
@@ -83,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_194617) do
   end
 
   add_foreign_key "clients", "users"
+  add_foreign_key "dependents", "clients"
   add_foreign_key "refresh_tokens", "users"
   add_foreign_key "spouses", "clients"
 end
