@@ -77,7 +77,6 @@ function ProfilePage() {
     <div className="profile-page">
       <h1>Create or Update Your Profile</h1>
       <form onSubmit={handleSubmit}>
-        {/* ... existing fields, just as an example */}
         <label>
           First Name:
           <input
@@ -88,8 +87,83 @@ function ProfilePage() {
             required
           />
         </label>
-        {/* ... other existing fields */}
-        {/* ... new fields */}
+        <label>
+          Last Name:
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Middle Name:
+          <input
+            type="text"
+            name="middleName"
+            value={formData.middleName}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Date of Birth:
+          <input
+            type="date"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Filing Status:
+          <select
+            name="filingStatus"
+            value={formData.filingStatus}
+            onChange={handleChange}
+            required
+          >
+            <option value="">--Please choose an option--</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="marriedFilingSeparately">
+              Married Filing Separately
+            </option>
+            <option value="headOfHousehold">Head of Household</option>
+            <option value="widow">Widow</option>
+          </select>
+        </label>
+        <label>
+          Driver's License ID:
+          <input
+            type="text"
+            name="driverLicenseId"
+            value={formData.driverLicenseId}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Number of Dependents:
+          <input
+            type="number"
+            name="numberOfDependents"
+            value={formData.numberOfDependents}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Marital Status:
+          <select
+            name="maritalStatus"
+            value={formData.maritalStatus}
+            onChange={handleChange}
+          >
+            <option value="">--Please choose an option--</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+          </select>
+        </label>
         <button type="submit">Submit</button>
       </form>
     </div>
