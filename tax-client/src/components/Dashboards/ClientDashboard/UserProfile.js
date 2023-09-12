@@ -21,7 +21,7 @@ function UserProfile() {
     return (
       <div className="alert">
         <h2>You need to create your profile</h2>
-        <Link to="/create-profile">Click here to create your profile</Link>
+        <Link to="/profile">Click here to create your profile</Link>
       </div>
     );
   }
