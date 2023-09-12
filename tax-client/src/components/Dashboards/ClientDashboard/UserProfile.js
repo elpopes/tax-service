@@ -21,7 +21,10 @@ function UserProfile() {
     return (
       <div className="alert">
         <h2>You need to create your profile</h2>
-        <Link to="/profile">Click here to create your profile</Link>
+        <Link to="/profile">
+          Click here to create or update your profile
+        </Link>{" "}
+        {/* Link to ProfilePage */}
       </div>
     );
   }
@@ -41,6 +44,8 @@ function UserProfile() {
         <strong>Date of Birth: </strong>
         {userData.dateOfBirth}
       </div>
+      <Link to="/profile">Edit Profile</Link>{" "}
+      {/* Link to ProfilePage for editing */}
     </div>
   );
 }
