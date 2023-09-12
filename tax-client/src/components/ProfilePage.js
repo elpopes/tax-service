@@ -9,11 +9,13 @@ function ProfilePage() {
     lastName: user.lastName || "",
     middleName: user.middleName || "",
     dob: "",
-    ssnLastFour: "",
     filingStatus: "",
     driverLicenseId: "",
-    // Additional fields like number of dependents, marital status, etc.
+    numberOfDependents: 0,
+    maritalStatus: "",
   });
+
+  const [fullSSN, setFullSSN] = useState("");
 
   useEffect(() => {
     setFormData({
@@ -21,12 +23,16 @@ function ProfilePage() {
       firstName: user.firstName || "",
       lastName: user.lastName || "",
       middleName: user.middleName || "",
-      dob: "",
-      ssnLastFour: "",
-      filingStatus: "",
-      driverLicenseId: "",
     });
   }, [user, formData]);
+
+  useEffect(() => {
+    const lastFour = fullSSN.slice(-4);
+    setFormData({
+      ...formData,
+      ssnLastFour: lastFour,
+    });
+  }, [fullSSN, formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,92 +42,62 @@ function ProfilePage() {
     });
   };
 
+  const handleSSNChange = (e) => {
+    const ssn = e.target.value;
+    setFullSSN(ssn);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit to backend
+    // Submit the form to the backend
   };
 
   return (
     <div className="profile-page">
       <h1>Create or Update Your Profile</h1>
       <form onSubmit={handleSubmit}>
+        {/* Existing Fields */}
+        {/* ... */}
+
         <label>
-          First Name:
+          Full SSN:
           <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
+            type="password"
+            name="fullSSN"
+            value={fullSSN}
+            onChange={handleSSNChange}
             required
           />
         </label>
+
         <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
+          SSN Last Four:
+          <input type="text" readOnly value={formData.ssnLastFour} />
         </label>
+
         <label>
-          Middle Name:
+          Number of Dependents:
           <input
-            type="text"
-            name="middleName"
-            value={formData.middleName}
+            type="number"
+            name="numberOfDependents"
+            value={formData.numberOfDependents}
             onChange={handleChange}
           />
         </label>
+
         <label>
-          Date of Birth:
-          <input
-            type="date"
-            name="dob"
-            value={formData.dob}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Filing Status:
+          Marital Status:
           <select
-            name="filingStatus"
-            value={formData.filingStatus}
+            name="maritalStatus"
+            value={formData.maritalStatus}
             onChange={handleChange}
-            required
           >
             <option value="">--Please choose an option--</option>
             <option value="single">Single</option>
             <option value="married">Married</option>
-            <option value="married-filing-separately">
-              Married Filing Separately
-            </option>
-            <option value="head-of-household">Head of Household</option>
-            <option value="widow">Widow</option>
           </select>
         </label>
-        <label>
-          Driver's License ID:
-          <input
-            type="text"
-            name="driverLicenseId"
-            value={formData.driverLicenseId}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          SSN Last Four:
-          <input
-            type="text"
-            name="ssnLastFour"
-            maxLength="4"
-            value={formData.ssnLastFour}
-            onChange={handleChange}
-          />
-        </label>
-        {/* Additional fields */}
+
         <button type="submit">Submit</button>
       </form>
     </div>
