@@ -25,7 +25,7 @@ function ProfilePage() {
       lastName: user.lastName || "",
       middleName: user.middleName || "",
     });
-  }, [user, formData]);
+  }, [user]);
 
   useEffect(() => {
     const lastFour = fullSSN.slice(-4);
@@ -33,7 +33,7 @@ function ProfilePage() {
       ...formData,
       ssnLastFour: lastFour,
     });
-  }, [fullSSN, formData]);
+  }, [fullSSN]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
