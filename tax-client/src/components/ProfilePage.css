@@ -1,0 +1,45 @@
+.profile-page {
+  margin-left: 400px;
+  margin-right: 100px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.profile-page h1 {
+  grid-column: 1 / -1;
+  font-size: 32px;
+  width: auto;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-page label {
+  border: 1px solid #969595;
+  padding: 20px;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-page button {
+  grid-column: 1 / -1;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .profile-page {
+    grid-template-columns: 1fr;
+    margin-left: 0px;
+    font-size: 18px;
+  }
+
+  .profile-page h1 {
+    font-size: 28px;
+  }
+}

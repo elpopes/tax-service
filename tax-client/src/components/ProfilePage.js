@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getUser } from "../store/users/usersSelectors";
+import "./ProfilePage.css";
 
 function ProfilePage() {
   const user = useSelector(getUser);
