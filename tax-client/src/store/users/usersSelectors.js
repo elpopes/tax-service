@@ -6,6 +6,6 @@ export const getUsers = (state) => {
 };
 
 export const getUser = createSelector(
-  (state, userId) => state.users[userId],
+  (state) => state.users,
   (user) => user
 );
