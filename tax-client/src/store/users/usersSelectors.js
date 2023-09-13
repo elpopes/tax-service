@@ -1,9 +1,11 @@
+import { createSelector } from "reselect";
+
 export const getUsers = (state) => {
   if (!state.users) return [];
   return Object.values(state.users);
 };
 
-export const getUser = (userId) => (state) => {
-  if (!state.users) return null;
-  return state.users[userId];
-};
+export const getUser = createSelector(
+  (state, userId) => state.users[userId],
+  (user) => user
+);
