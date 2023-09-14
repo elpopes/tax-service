@@ -13,7 +13,9 @@ import { fetchUser } from "./store/users/usersOperations";
 function App() {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.sessions.user.id);
+  const userId = useSelector((state) =>
+    state.sessions.user ? state.sessions.user.id : null
+  );
 
   useEffect(() => {
     if (userId) {
