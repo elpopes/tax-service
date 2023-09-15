@@ -7,13 +7,12 @@ class Client < ApplicationRecord
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
   
     validates :user, presence: true
-    validates :ssn, presence: true
-    validates :dob, presence: true
+    validates :ssn, presence: true, if: -> { ssn.present? }
+    validates :dob, presence: true, if: -> { dob.present? }
   
     def full_name
       [first_name, middle_name, last_name].compact.join(' ')
     end
-end
-  
+  end
   
   
