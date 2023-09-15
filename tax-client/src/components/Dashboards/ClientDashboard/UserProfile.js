@@ -17,35 +17,31 @@ function UserProfile() {
     return <div>Loading...</div>;
   }
 
-  if (!userData.hasClientProfile) {
-    return (
-      <div className="alert">
-        <h2>You need to create your profile</h2>
-        <Link to="/profile">
-          Click here to create or update your profile
-        </Link>{" "}
-        {/* Link to ProfilePage */}
-      </div>
-    );
-  }
-
   return (
     <div className="user-profile">
       <h2>User Profile</h2>
       <div>
         <strong>Name: </strong>
-        {userData.name}
+        {userData.name || "Not provided"}
       </div>
       <div>
         <strong>Email: </strong>
-        {userData.email}
+        {userData.email || "Not provided"}
       </div>
       <div>
         <strong>Date of Birth: </strong>
-        {userData.dateOfBirth}
+        {userData.dateOfBirth || (
+          <span style={{ color: "red" }}>Please update your profile</span>
+        )}
       </div>
       <Link to="/profile">Edit Profile</Link>{" "}
       {/* Link to ProfilePage for editing */}
+      {!userData.dateOfBirth && (
+        <div className="alert">
+          <h2>You need to update your profile</h2>
+          <Link to="/profile">Click here to update your profile</Link>
+        </div>
+      )}
     </div>
   );
 }
