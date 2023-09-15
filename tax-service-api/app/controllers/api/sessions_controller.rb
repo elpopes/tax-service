@@ -12,7 +12,7 @@ module Api
                 token = encode_token({user_id: @user.id})
                 refresh_token = @user.refresh_tokens.create!
                 render json: {
-                user: @user.as_json(only: [:id, :email, :role]), 
+                user: @user.as_json(only: [:id, :email, :role, :first_name]), 
                 token: token, 
                 refresh_token: refresh_token.token
                 }, status: :created
