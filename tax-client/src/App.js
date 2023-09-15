@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./components/Dashboards/Dashboard";
@@ -8,21 +7,8 @@ import EmailConfirmed from "./components/EmailConfirmation/EmailConfirmed";
 import EmailConfirmationFailure from "./components/EmailConfirmation/EmailConfirmationFailure";
 import ProfilePage from "./components/ProfilePage";
 import { Route, Routes } from "react-router-dom";
-import { fetchUser } from "./store/users/usersOperations";
 
 function App() {
-  const dispatch = useDispatch();
-
-  const userId = useSelector((state) =>
-    state.sessions.user ? state.sessions.user.id : null
-  );
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(fetchUser(userId));
-    }
-  }, [dispatch, userId]);
-
   return (
     <>
       <div className="App">
