@@ -11,7 +11,7 @@ const ClientDashboard = ({ user }) => {
   return (
     <div className="client-dashboard">
       <div className="client-dashboard__header">
-        <h2>Welcome, {user.email}</h2>
+        <h2>Welcome, {user.first_name}!</h2>
       </div>
       <div className="client-dashboard__item">
         <UserProfile user={user} />

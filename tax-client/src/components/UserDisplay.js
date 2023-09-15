@@ -21,7 +21,7 @@ function UserDisplay() {
 
   return (
     <div>
-      {isValidToken && user ? `Welcome, ${user.email} ` : <SignIn />}
+      {isValidToken && user ? user.email : <SignIn />}
       {isValidToken && user && <SignOut />}
     </div>
   );
