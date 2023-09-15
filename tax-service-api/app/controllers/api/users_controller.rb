@@ -20,7 +20,7 @@ module Api
             render json: {
                 name: client.full_name,
                 email: current_user.email,
-                dateOfBirth: client.dob.strftime('%m-%d-%Y'),
+                dateOfBirth: client.dob ? client.dob.strftime('%m-%d-%Y') : nil,
                 ssnLastFour: ssn_last_four
             }, status: :ok
         end
