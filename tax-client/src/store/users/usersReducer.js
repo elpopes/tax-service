@@ -7,7 +7,7 @@ import {
 } from "./usersActions";
 
 const initialState = {
-  users: {},
+  byId: {},
   error: null,
 };
 
@@ -16,8 +16,8 @@ const usersReducer = (state = initialState, action) => {
     case RECEIVE_USER:
       return {
         ...state,
-        users: {
-          ...state.users,
+        byId: {
+          ...state.byId,
           [action.user.id]: action.user,
         },
         error: null,
@@ -25,14 +25,14 @@ const usersReducer = (state = initialState, action) => {
     case RECEIVE_USERS:
       return {
         ...state,
-        users: {
-          ...state.users,
+        byId: {
+          ...state.byId,
           ...action.users,
         },
       };
     case REMOVE_USER:
       const newState = { ...state };
-      delete newState.users[action.userId];
+      delete newState.byId[action.userId];
       return newState;
     case REGISTRATION_ERROR:
       return {
