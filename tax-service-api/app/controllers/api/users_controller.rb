@@ -5,7 +5,7 @@ module Api
         respond_to :json
 
         def profile
-            debugger
+            # debugger
             
             if current_user.nil?
               render json: { error: 'No user is currently logged in.' }, status: :unauthorized and return
