@@ -22,6 +22,7 @@ module Api
             
             ssn_last_four = client.ssn_encrypted[-4..] if client.ssn_encrypted
             render json: {
+                id: current_user.id,
                 name: client.full_name,
                 email: current_user.email,
                 dateOfBirth: client.dob ? client.dob.strftime('%m-%d-%Y') : nil,
