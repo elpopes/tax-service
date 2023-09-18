@@ -11,7 +11,11 @@ function UserProfile() {
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
-  const userData = useSelector((state) => state.users);
+  const userId = useSelector((state) => state.sessions.user.id);
+
+  const usersState = useSelector((state) => state.users);
+
+  const userData = usersState.byId[userId] || {};
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -34,8 +38,7 @@ function UserProfile() {
           <span style={{ color: "red" }}>Please update your profile</span>
         )}
       </div>
-      <Link to="/profile">Edit Profile</Link>{" "}
-      {/* Link to ProfilePage for editing */}
+      <Link to="/profile">Edit Profile</Link>
       {!userData.dateOfBirth && (
         <div className="alert">
           <h2>You need to update your profile</h2>
