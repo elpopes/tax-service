@@ -5,14 +5,18 @@ module Api
         respond_to :json
 
         def profile
+            debugger
+            
             if current_user.nil?
               render json: { error: 'No user is currently logged in.' }, status: :unauthorized and return
             end
+            
+            puts "DEBUG: Using serializer: #{ActiveModel::Serializer.serializer_for(current_user).name}"
           
             client = current_user.client
-            
+          
             if client.nil?
-              puts "DEBUG: No client associated with the current user." 
+              puts "DEBUG: No client associated with the current user."
               render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
             end
             
