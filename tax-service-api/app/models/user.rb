@@ -31,7 +31,8 @@ class User < ApplicationRecord
       client = create_client(
         first_name: self.first_name,
         last_name: self.last_name,
-        # ... any other required or optional attributes
+        middle_name: self.middle_name,
+        ssn_last_four: self.ssn_last_four
       )
       
       unless client.persisted?
