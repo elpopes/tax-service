@@ -12,10 +12,12 @@ function UserProfile() {
   }, [dispatch]);
 
   const userId = useSelector((state) => state.sessions.user.id);
-
   const usersState = useSelector((state) => state.users);
-
   const userData = usersState.byId[userId] || {};
+
+  const fullName = [userData.firstName, userData.middleName, userData.lastName]
+    .filter(Boolean) // removes null or undefined items
+    .join(" ");
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -26,7 +28,7 @@ function UserProfile() {
       <h2>User Profile</h2>
       <div>
         <strong>Name: </strong>
-        {userData.name || "Not provided"}
+        {fullName || "Not provided"}
       </div>
       <div>
         <strong>Email: </strong>
