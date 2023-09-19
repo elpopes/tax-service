@@ -22,7 +22,9 @@ module Api
           
             render json: {
                 id: current_user.id,
-                name: client.full_name,
+                firstName: client.first_name,
+                middleName: client.middle_name,
+                lastName: client.last_name,
                 email: current_user.email,
                 dateOfBirth: client.dob ? client.dob.strftime('%m-%d-%Y') : nil,
                 ssnLastFour: ssn_last_four
