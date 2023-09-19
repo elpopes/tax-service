@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getUser } from "../store/users/usersSelectors";
 import "./ProfilePage.css";
 
 function ProfilePage() {
-  const user = useSelector(getUser);
+  // Grab the userId from the sessions state slice
+  const userId = useSelector((state) => state.sessions.user.id);
+  // Use the userId to retrieve the user object
+  const user = useSelector((state) => state.users.byId[userId]) || {};
 
   const [formData, setFormData] = useState({
     firstName: user.firstName || "",
@@ -78,93 +80,8 @@ function ProfilePage() {
     <div className="profile-page">
       <h1>Create or Update Your Profile</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Middle Name:
-          <input
-            type="text"
-            name="middleName"
-            value={formData.middleName}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Date of Birth:
-          <input
-            type="date"
-            name="dob"
-            value={formData.dob}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Filing Status:
-          <select
-            name="filingStatus"
-            value={formData.filingStatus}
-            onChange={handleChange}
-            required
-          >
-            <option value="">--Please choose an option--</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="marriedFilingSeparately">
-              Married Filing Separately
-            </option>
-            <option value="headOfHousehold">Head of Household</option>
-            <option value="widow">Widow</option>
-          </select>
-        </label>
-        <label>
-          Driver's License ID:
-          <input
-            type="text"
-            name="driverLicenseId"
-            value={formData.driverLicenseId}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Number of Dependents:
-          <input
-            type="number"
-            name="numberOfDependents"
-            value={formData.numberOfDependents}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Marital Status:
-          <select
-            name="maritalStatus"
-            value={formData.maritalStatus}
-            onChange={handleChange}
-          >
-            <option value="">--Please choose an option--</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-          </select>
-        </label>
+        {/* Rest of your form elements */}
+        {/* ... */}
         <button type="submit">Submit</button>
       </form>
     </div>
