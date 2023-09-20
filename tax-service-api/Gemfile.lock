@@ -114,6 +114,7 @@ GEM
       devise (~> 4.0)
       railties (~> 7.0)
       rotp (~> 6.0)
+    diff-lcs (1.5.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -245,6 +246,23 @@ GEM
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-rails (5.1.2)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.12.1)
     ruby2_keywords (0.0.5)
     ruby_http_client (3.5.5)
     sendgrid-ruby (6.6.2)
@@ -296,6 +314,7 @@ DEPENDENCIES
   rack-attack
   rack-cors
   rails (~> 7.0.5)
+  rspec-rails (~> 5.0)
   sendgrid-ruby
   twilio-ruby
   tzinfo-data
