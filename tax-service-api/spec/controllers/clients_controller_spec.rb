@@ -15,7 +15,7 @@ RSpec.describe Api::ClientsController, type: :controller do
   describe 'PUT #update' do
     context 'when the update is successful' do
       it 'updates the client and user attributes' do
-        put :update, params: { id: some_client.id, client: { first_name: 'NewName' }, user: { email: 'new_email@example.com' } }
+        put :update, params: { id: user.client.id, client: { first_name: 'NewName' }, user: { email: 'new_email@example.com' } }
 
 
         expect(response).to have_http_status(:ok)
@@ -26,7 +26,7 @@ RSpec.describe Api::ClientsController, type: :controller do
 
     context 'when the update fails' do
       it 'returns an error' do
-        put :update, params: { client: { first_name: '' }, user: { email: '' } }
+        put :update, params: { id: user.client.id, client: { first_name: '' }, user: { email: '' } }
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['errors']).to include("First name can't be blank") 
