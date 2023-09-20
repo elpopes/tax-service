@@ -3,12 +3,16 @@ class ClientsController < ApplicationController
     before_action :set_client, only: [:update]
   
     def update
-      if @client.update(client_params) && @client.user.update(user_params)
+        ActiveRecord::Base.transaction do
+          unless @client.update(client_params) && @client.user.update(user_params)
+            raise ActiveRecord::Rollback
+          end
+        end
         render json: @client, status: :ok
-      else
+    rescue ActiveRecord::Rollback
         render json: { errors: @client.errors.full_messages + @client.user.errors.full_messages }, status: :unprocessable_entity
-      end
     end
+      
   
     private
   
