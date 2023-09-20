@@ -21,6 +21,8 @@ Rails.application.routes.draw do
           get :profile
         end
       end
+
+      resources :clients, only: [:update]
     end
 end
   
