@@ -1,6 +1,7 @@
 require 'rails_helper'
+require_relative '../../app/controllers/api/clients_controller'
 
-RSpec.describe ClientsController, type: :controller do
+RSpec.describe Api::ClientsController, type: :controller do
   let(:user) { create(:user, :with_client) }
 
   before do
