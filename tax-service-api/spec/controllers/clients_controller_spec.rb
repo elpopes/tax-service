@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ClientsController, type: :controller do
-  let(:user) { FactoryBot.create(:user, :with_client) }
+  let(:user) { create(:user, :with_client) }
 
   before do
     sign_in user
