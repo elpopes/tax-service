@@ -1,6 +1,6 @@
 module Api
     class ClientsController < ApplicationController
-        before_action :authenticate_user!
+        before_action :authenticate_user, except: [:create]
         before_action :set_client, only: [:update]
     
         def update
