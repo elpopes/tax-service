@@ -15,7 +15,8 @@ RSpec.describe Api::ClientsController, type: :controller do
   describe 'PUT #update' do
     context 'when the update is successful' do
       it 'updates the client and user attributes' do
-        put :update, params: { client: { first_name: 'NewName' }, user: { email: 'new_email@example.com' } }
+        put :update, params: { id: some_client.id, client: { first_name: 'NewName' }, user: { email: 'new_email@example.com' } }
+
 
         expect(response).to have_http_status(:ok)
         expect(json_response['first_name']).to eq('NewName')
