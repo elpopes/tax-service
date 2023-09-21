@@ -6,30 +6,30 @@ import "./ProfilePage.css";
 
 function ProfilePage() {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.sessions.user.id);
-  const user = useSelector((state) => state.users.byId[userId]) || {};
+  const user_id = useSelector((state) => state.sessions.user.id);
+  const user = useSelector((state) => state.users.byId[user_id]) || {};
 
-  // Initialize formData with empty or existing user information
-  const [formData, setFormData] = useState({
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    middleName: user.middleName || "",
+  // Initialize form_data with empty or existing user information
+  const [form_data, setFormData] = useState({
+    first_name: user.firstName || "",
+    last_name: user.lastName || "",
+    middle_name: user.middleName || "",
     dob: "",
-    filingStatus: "",
-    driverLicenseId: "",
-    numberOfDependents: 0,
-    maritalStatus: "",
+    filing_status: "",
+    driver_license_id: "",
+    number_of_dependents: 0,
+    marital_status: "",
   });
 
-  const [fullSSN, setFullSSN] = useState("");
+  const [full_ssn, setFullSSN] = useState("");
 
-  // Update formData whenever the user object changes
+  // Update form_data whenever the user object changes
   useEffect(() => {
     setFormData({
-      ...formData,
-      firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      middleName: user.middleName || "",
+      ...form_data,
+      first_name: user.firstName || "",
+      last_name: user.lastName || "",
+      middle_name: user.middleName || "",
     });
   }, [user]);
 
@@ -37,7 +37,7 @@ function ProfilePage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-      ...formData,
+      ...form_data,
       [name]: value,
     });
   };
@@ -53,16 +53,16 @@ function ProfilePage() {
     e.preventDefault();
     try {
       const payload = {
-        ...formData,
-        fullSSN,
+        ...form_data,
+        full_ssn,
       };
 
       // Dispatch an action to update the client information
       dispatch(updateClientOperation(payload))
-        .then((responseData) => {
+        .then((response_data) => {
           alert("Client information updated successfully");
           // Optionally update the user information in the store
-          dispatch(updateUser(responseData.user));
+          dispatch(updateUser(response_data.user));
         })
         .catch((error) => {
           alert(`Failed to update client information: ${error}`);
@@ -85,7 +85,7 @@ function ProfilePage() {
             <input
               type="text"
               name="firstName"
-              value={formData.firstName}
+              value={form_data.firstName}
               onChange={handleChange}
               required
             />
@@ -95,7 +95,7 @@ function ProfilePage() {
             <input
               type="text"
               name="lastName"
-              value={formData.lastName}
+              value={form_data.lastName}
               onChange={handleChange}
               required
             />
@@ -105,7 +105,7 @@ function ProfilePage() {
             <input
               type="text"
               name="middleName"
-              value={formData.middleName}
+              value={form_data.middleName}
               onChange={handleChange}
             />
           </label>
@@ -119,7 +119,7 @@ function ProfilePage() {
             <input
               type="date"
               name="dob"
-              value={formData.dob}
+              value={form_data.dob}
               onChange={handleChange}
               required
             />
@@ -128,7 +128,7 @@ function ProfilePage() {
             Filing Status:
             <select
               name="filingStatus"
-              value={formData.filingStatus}
+              value={form_data.filingStatus}
               onChange={handleChange}
               required
             >
@@ -148,7 +148,7 @@ function ProfilePage() {
             <input
               type="text"
               name="driverLicenseId"
-              value={formData.driverLicenseId}
+              value={form_data.driverLicenseId}
               onChange={handleChange}
             />
           </label>
@@ -157,7 +157,7 @@ function ProfilePage() {
             <input
               type="number"
               name="numberOfDependents"
-              value={formData.numberOfDependents}
+              value={form_data.numberOfDependents}
               onChange={handleChange}
             />
           </label>
