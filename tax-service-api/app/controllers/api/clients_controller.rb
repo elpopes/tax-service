@@ -25,8 +25,8 @@ module Api
         end
     
         def client_params
-            params.require(:client).permit(:firstName, :lastName, :middleName, :dob, :filingStatus, :driverLicenseId, :numberOfDependents, :maritalStatus, :fullSSN)
-          end
+            params.require(:client).permit(:first_name, :last_name, :middle_name, :dob, :filing_status, :driver_license_id, :number_of_dependents, :full_ssn)
+        end
           
     end
 end

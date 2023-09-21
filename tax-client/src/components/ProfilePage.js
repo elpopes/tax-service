@@ -18,7 +18,6 @@ function ProfilePage() {
     filing_status: "",
     driver_license_id: "",
     number_of_dependents: 0,
-    marital_status: "",
   });
 
   const [full_ssn, setFullSSN] = useState("");
