@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../store/users/usersOperations";
+import { updateClientOperation } from "../store/clients/clientsOperations"; // New import for updating client
 import "./ProfilePage.css";
 
 function ProfilePage() {
@@ -30,14 +31,6 @@ function ProfilePage() {
     });
   }, [user]);
 
-  useEffect(() => {
-    const lastFour = fullSSN.slice(-4);
-    setFormData({
-      ...formData,
-      ssnLastFour: lastFour,
-    });
-  }, [fullSSN]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -54,34 +47,22 @@ function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Construct the payload
       const payload = {
         ...formData,
-        fullSSN, // Ensure this is handled securely
+        fullSSN,
       };
 
-      // Fetch request to update the client information
-      const response = await fetch("/api/createOrUpdateClient", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Add authentication headers as required
-        },
-        body: JSON.stringify(payload),
-      });
-
-      // Check response
-      const responseData = await response.json();
-
-      if (response.ok) {
-        alert("Client information updated successfully");
-        // Update the Redux store
-        dispatch(updateUser(responseData.user));
-      } else {
-        alert(`Failed to update client information: ${responseData.error}`);
-      }
+      // Update the Redux store first (this should handle API call as well)
+      dispatch(updateClientOperation(payload))
+        .then((responseData) => {
+          alert("Client information updated successfully");
+          dispatch(updateUser(responseData.user));
+        })
+        .catch((error) => {
+          alert(`Failed to update client information: ${error}`);
+        });
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      console.error("There was a problem:", error);
       alert("An error occurred while updating client information.");
     }
   };
