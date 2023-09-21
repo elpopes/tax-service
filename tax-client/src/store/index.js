@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
+import { loggingMiddleware } from "../middleware/loggingMiddleware";
 
 const persistConfig = {
   key: "root",
@@ -18,7 +19,7 @@ const store = configureStore({
         ignoredActions: ["persist/PERSIST"],
         ignoredPaths: ["register"],
       },
-    }),
+    }).concat(loggingMiddleware),
 });
 
 let persistor = persistStore(store);
