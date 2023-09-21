@@ -4,13 +4,17 @@ module Api
         before_action :set_client, only: [:update]
     
         def update
+            Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
             ActiveRecord::Base.transaction do
-            unless @client.update(client_params) && @client.user.update(user_params)
-                raise ActiveRecord::Rollback
+                unless @client.update(client_params) && @client.user.update(user_params)
+                    Rails.logger.debug "Update failed for Client or User"
+                    raise ActiveRecord::Rollback
+                end
             end
-            end
+            Rails.logger.debug "Successfully updated Client and User"
             render json: @client, status: :ok
         rescue ActiveRecord::Rollback
+            Rails.logger.debug "Rollback occurred. Errors: #{@client.errors.full_messages + @client.user.errors.full_messages}"
             render json: { errors: @client.errors.full_messages + @client.user.errors.full_messages }, status: :unprocessable_entity
         end
         
@@ -18,15 +22,15 @@ module Api
         private
     
         def set_client
-        @client = current_user.client
+            @client = current_user.client
         end
     
         def client_params
-        params.require(:client).permit(:filing_status, :dob, :driver_license_id, :first_name, :last_name, :middle_name, :ssn_last_four)
+            params.require(:client).permit(:filing_status, :dob, :driver_license_id, :first_name, :last_name, :middle_name, :ssn_last_four)
         end
     
         def user_params
-        params.require(:user).permit(:email, :first_name, :last_name, :middle_name)
+            params.require(:user).permit(:email, :first_name, :last_name, :middle_name)
         end
     end
 end

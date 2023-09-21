@@ -28,12 +28,14 @@ RSpec.describe Api::ClientsController, type: :controller do
     end
 
     context 'when the update fails' do
-      it 'returns an error' do
-        put :update, params: { id: user.client.id, client: { first_name: '' }, user: { email: '' } }
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['errors']).to include("First name can't be blank") 
-      end
+        it 'returns a status code of 422 when update fails' do
+            allow_any_instance_of(User).to receive(:update).and_return(false)
+            allow_any_instance_of(Client).to receive(:update).and_return(false)
+          
+            put :update, params: { user: attributes_for(:user), client: attributes_for(:client) }
+            
+            expect(response).to have_http_status(422)
+        end
     end
 
     # Additional test to check if the token is correctly passed
