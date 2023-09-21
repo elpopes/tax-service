@@ -1,5 +1,6 @@
 class Client < ApplicationRecord
     attr_encrypted :ssn, key: ENV['ATTR_ENCRYPTION_KEY']
+    before_save :set_last_four_of_ssn
     belongs_to :user
     has_one :spouse
     has_many :dependents
@@ -18,11 +19,16 @@ class Client < ApplicationRecord
   
     private
   
-    def update_user(
-        first_name: firstName,
-        last_name: lastName,
-        middle_name: middleName
-    )
+    def update_user
+        user.update(
+            first_name: self.first_name,
+            last_name: self.last_name,
+            middle_name: self.middle_name
+        )
+    end
+
+    def set_last_four_of_ssn
+        self.ssn_last_four = ssn&.last(4)
     end
 end
   

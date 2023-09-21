@@ -20,7 +20,7 @@ function ProfilePage() {
     number_of_dependents: 0,
   });
 
-  const [full_ssn, setFullSSN] = useState("");
+  const [ssn, setFullSSN] = useState("");
 
   // Update form_data whenever the user object changes
   useEffect(() => {
@@ -53,7 +53,7 @@ function ProfilePage() {
     try {
       const payload = {
         ...form_data,
-        full_ssn,
+        ssn,
       };
 
       // Dispatch an action to update the client information
