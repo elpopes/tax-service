@@ -6,19 +6,18 @@ module Api
         def update
             Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
             ActiveRecord::Base.transaction do
-                unless @client.update(client_params) && @client.user.update(user_params)
-                    Rails.logger.debug "Update failed for Client or User"
-                    raise ActiveRecord::Rollback
-                end
+              unless @client.update(client_params)
+                Rails.logger.debug "Update failed for Client"
+                raise ActiveRecord::Rollback
+              end
             end
             Rails.logger.debug "Successfully updated Client and User"
             render json: @client, status: :ok
-        rescue ActiveRecord::Rollback
-            Rails.logger.debug "Rollback occurred. Errors: #{@client.errors.full_messages + @client.user.errors.full_messages}"
-            render json: { errors: @client.errors.full_messages + @client.user.errors.full_messages }, status: :unprocessable_entity
+          rescue ActiveRecord::Rollback
+            Rails.logger.debug "Rollback occurred. Errors: #{@client.errors.full_messages}"
+            render json: { errors: @client.errors.full_messages }, status: :unprocessable_entity
         end
         
-    
         private
     
         def set_client
@@ -26,12 +25,9 @@ module Api
         end
     
         def client_params
-            params.require(:client).permit(:filing_status, :dob, :driver_license_id, :first_name, :last_name, :middle_name, :ssn_last_four)
-        end
-    
-        def user_params
-            params.require(:user).permit(:email, :first_name, :last_name, :middle_name)
-        end
+            params.require(:client).permit(:firstName, :lastName, :middleName, :dob, :filingStatus, :driverLicenseId, :numberOfDependents, :maritalStatus, :fullSSN)
+          end
+          
     end
 end
     

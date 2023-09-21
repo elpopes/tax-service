@@ -9,6 +9,7 @@ function ProfilePage() {
   const userId = useSelector((state) => state.sessions.user.id);
   const user = useSelector((state) => state.users.byId[userId]) || {};
 
+  // Initialize formData with empty or existing user information
   const [formData, setFormData] = useState({
     firstName: user.firstName || "",
     lastName: user.lastName || "",
@@ -22,6 +23,7 @@ function ProfilePage() {
 
   const [fullSSN, setFullSSN] = useState("");
 
+  // Update formData whenever the user object changes
   useEffect(() => {
     setFormData({
       ...formData,
@@ -31,6 +33,7 @@ function ProfilePage() {
     });
   }, [user]);
 
+  // Handles changes to most form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -39,11 +42,13 @@ function ProfilePage() {
     });
   };
 
+  // Handles changes to the SSN field
   const handleSSNChange = (e) => {
     const ssn = e.target.value;
     setFullSSN(ssn);
   };
 
+  // Handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -52,10 +57,11 @@ function ProfilePage() {
         fullSSN,
       };
 
-      // Update the Redux store first (this should handle API call as well)
+      // Dispatch an action to update the client information
       dispatch(updateClientOperation(payload))
         .then((responseData) => {
           alert("Client information updated successfully");
+          // Optionally update the user information in the store
           dispatch(updateUser(responseData.user));
         })
         .catch((error) => {
