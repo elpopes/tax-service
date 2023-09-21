@@ -8,17 +8,14 @@ export const updateClientOperation =
       const token = getState().sessions.token;
 
       // Make the API call to update the client
-      const response = await fetch(
-        `${config.API_BASE_URL}/api/clients/update`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ client: clientData }),
-        }
-      );
+      const response = await fetch(`${config.API_BASE_URL}/clients/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ client: clientData }),
+      });
 
       const json = await response.json();
 
