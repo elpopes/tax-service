@@ -20,5 +20,5 @@ class RefreshToken < ApplicationRecord
     def hash_token
       self.token = Digest::SHA256.hexdigest(token)
     end
-  end
+end
   
