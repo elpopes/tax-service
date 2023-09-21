@@ -84,8 +84,8 @@ function ProfilePage() {
             First Name:
             <input
               type="text"
-              name="firstName"
-              value={form_data.firstName}
+              name="first_name"
+              value={form_data.first_name}
               onChange={handleChange}
               required
             />
@@ -94,8 +94,8 @@ function ProfilePage() {
             Last Name:
             <input
               type="text"
-              name="lastName"
-              value={form_data.lastName}
+              name="last_name"
+              value={form_data.last_name}
               onChange={handleChange}
               required
             />
@@ -104,8 +104,8 @@ function ProfilePage() {
             Middle Name:
             <input
               type="text"
-              name="middleName"
-              value={form_data.middleName}
+              name="middle_name"
+              value={form_data.middle_name}
               onChange={handleChange}
             />
           </label>
@@ -127,8 +127,8 @@ function ProfilePage() {
           <label>
             Filing Status:
             <select
-              name="filingStatus"
-              value={form_data.filingStatus}
+              name="filing_status"
+              value={form_data.filing_status}
               onChange={handleChange}
               required
             >
@@ -147,8 +147,8 @@ function ProfilePage() {
             Driver's License ID:
             <input
               type="text"
-              name="driverLicenseId"
-              value={form_data.driverLicenseId}
+              name="driver_license_id"
+              value={form_data.driver_license_id}
               onChange={handleChange}
             />
           </label>
@@ -156,8 +156,8 @@ function ProfilePage() {
             Number of Dependents:
             <input
               type="number"
-              name="numberOfDependents"
-              value={form_data.numberOfDependents}
+              name="number_of_dependents"
+              value={form_data.number_of_dependents}
               onChange={handleChange}
             />
           </label>
