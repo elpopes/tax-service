@@ -6,9 +6,11 @@ RSpec.describe Api::ClientsController, type: :controller do
 
   before do
     allow_any_instance_of(ApplicationController).to receive(:authenticate_user).and_return(true)
-    token = ApplicationController.new.encode_token({ user_id: user.id }) 
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    token = JsonWebToken.encode({ user_id: user.id })
     request.headers['Authorization'] = "Bearer #{token}"
   end
+  
 
   def json_response
     JSON.parse(response.body)
@@ -36,7 +38,7 @@ RSpec.describe Api::ClientsController, type: :controller do
 
     # Additional test to check if the token is correctly passed
     it 'has a valid token in the Authorization header' do
-      expect(request.headers['Authorization']).to eq("Bearer #{encode_token({ user_id: user.id })}")
+        expect(request.headers['Authorization']).to eq("Bearer #{JsonWebToken.encode({ user_id: user.id })}")
     end
   end
 end
