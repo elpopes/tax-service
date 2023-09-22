@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../store/users/usersOperations";
-import { updateClientOperation } from "../store/clients/clientsOperations"; // New import for updating client
+import { updateClientOperation } from "../store/clients/clientsOperations";
 import "./ProfilePage.css";
 
 function ProfilePage() {
@@ -20,15 +20,13 @@ function ProfilePage() {
     number_of_dependents: 0,
   });
 
-  const [ssn, setFullSSN] = useState("");
-
   // Update form_data whenever the user object changes
   useEffect(() => {
     setFormData({
       ...form_data,
-      first_name: user.firstName || "",
-      last_name: user.lastName || "",
-      middle_name: user.middleName || "",
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      middle_name: user.middle_name || "",
     });
   }, [user]);
 
@@ -42,10 +40,10 @@ function ProfilePage() {
   };
 
   // Handles changes to the SSN field
-  const handleSSNChange = (e) => {
-    const ssn = e.target.value;
-    setFullSSN(ssn);
-  };
+  //   const handleSSNChange = (e) => {
+  //     const ssn = e.target.value;
+  //     setFullSSN(ssn);
+  //   };
 
   // Handles form submission
   const handleSubmit = async (e) => {
@@ -53,14 +51,14 @@ function ProfilePage() {
     try {
       const payload = {
         ...form_data,
-        ssn,
+        // ssn,
       };
 
       // Dispatch an action to update the client information
       dispatch(updateClientOperation(payload))
         .then((response_data) => {
           alert("Client information updated successfully");
-          // Optionally update the user information in the store
+          console.log("Response data:", response_data);
           dispatch(updateUser(response_data.user));
         })
         .catch((error) => {
