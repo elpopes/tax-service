@@ -8,6 +8,8 @@ function ProfilePage() {
   const dispatch = useDispatch();
   const user_id = useSelector((state) => state.sessions.user.id);
   const user = useSelector((state) => state.users.byId[user_id]) || {};
+  const client_id = useSelector((state) => state.client.id);
+  const client = useSelector((state) => state.clients.byId[client_id]) || {};
 
   // Initialize form_data with empty or existing user information
   const [form_data, setFormData] = useState({
@@ -24,11 +26,15 @@ function ProfilePage() {
   useEffect(() => {
     setFormData({
       ...form_data,
-      first_name: user.first_name || "",
-      last_name: user.last_name || "",
-      middle_name: user.middle_name || "",
+      first_name: user.first_name || client.first_name || "",
+      last_name: user.last_name || client.last_name || "",
+      middle_name: user.middle_name || client.middle_name || "",
+      dob: client.dob || "",
+      filing_status: client.filing_status || "",
+      driver_license_id: client.driver_license_id || "",
+      number_of_dependents: client.number_of_dependents || 0,
     });
-  }, [user]);
+  }, [user, client]);
 
   // Handles changes to most form fields
   const handleChange = (e) => {

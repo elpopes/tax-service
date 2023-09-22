@@ -21,6 +21,7 @@ module Api
             ssn_last_four = client.ssn_last_four
           
             render json: {
+                id: current_user.id,
                 client_id: client.id, 
                 first_name: client.first_name,
                 middle_name: client.middle_name,
