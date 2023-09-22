@@ -14,6 +14,9 @@ function UserProfile() {
   const userId = useSelector((state) => state.sessions.user.id);
   const usersState = useSelector((state) => state.users);
   const userData = usersState.byId[userId] || {};
+  if (Object.keys(userData).length === 0) {
+    return <div>Loading...</div>;
+  }
 
   const fullName = [userData.firstName, userData.middleName, userData.lastName]
     .filter(Boolean) // removes null or undefined items

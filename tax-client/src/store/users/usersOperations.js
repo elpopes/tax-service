@@ -78,6 +78,7 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
 
   if (res.ok) {
     const profile = await res.json();
+    profile.id = profile.client_id;
     console.log("Received profile:", profile);
     dispatch(receiveUser(profile));
   }
