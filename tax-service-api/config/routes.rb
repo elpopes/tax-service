@@ -16,13 +16,12 @@ Rails.application.routes.draw do
       post '/refresh', to: 'sessions#refresh'
   
       # Custom route for user management
-      resources :users, only: [:index, :show, :create, :update, :destroy] do
+      resources :users, only: [:index, :show, :create, :update, :destroy]
+      
+      resources :clients, only: [:update] do
         collection do
-          get :profile
+          get :profile  # Moved the profile route here
         end
       end
-
-      resources :clients, only: [:update]
     end
 end
-  
