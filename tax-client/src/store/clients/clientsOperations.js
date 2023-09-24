@@ -1,4 +1,11 @@
-import { updateClient, updateClientError } from "./clientsActions";
+import {
+  updateClient,
+  updateClientError,
+  createClient,
+  deleteClient,
+  clientRequestStarted,
+  clientRequestEnded,
+} from "./clientsActions";
 import config from "../../config";
 
 export const updateClientOperation =
@@ -32,3 +39,38 @@ export const updateClientOperation =
       dispatch(updateClientError(error.message));
     }
   };
+
+export const fetchClient = (clientId) => async (dispatch) => {
+  dispatch(clientRequestStarted());
+  const res = await fetch(`${config.API_BASE_URL}/clients/${clientId}`);
+  dispatch(clientRequestEnded());
+  if (res.ok) {
+    const client = await res.json();
+    dispatch(updateClient(client));
+  }
+};
+
+export const createClientOperation = (client) => async (dispatch) => {
+  dispatch(clientRequestStarted());
+  const res = await fetch(`${config.API_BASE_URL}/clients`, {
+    method: "POST",
+    body: JSON.stringify({ client }),
+    headers: { "Content-Type": "application/json" },
+  });
+  dispatch(clientRequestEnded());
+  if (res.ok) {
+    const newClient = await res.json();
+    dispatch(createClient(newClient));
+  }
+};
+
+export const deleteClientOperation = (clientId) => async (dispatch) => {
+  dispatch(clientRequestStarted());
+  const res = await fetch(`${config.API_BASE_URL}/clients/${clientId}`, {
+    method: "DELETE",
+  });
+  dispatch(clientRequestEnded());
+  if (res.ok) {
+    dispatch(deleteClient(clientId));
+  }
+};
