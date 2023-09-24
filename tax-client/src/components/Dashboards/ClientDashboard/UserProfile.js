@@ -1,30 +1,40 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUserProfile } from "../../../store/users/usersOperations";
+import { fetchClient } from "../../../store/clients/clientsOperations";
 import { Link } from "react-router-dom";
+import {
+  selectClientById,
+  selectClientErrors,
+} from "../../../store/clients/clientsSelectors";
 
 function UserProfile() {
   const dispatch = useDispatch();
+  const clientId = useSelector((state) => state.sessions.user.id);
+  const clientError = useSelector(selectClientErrors);
 
   useEffect(() => {
-    console.log("Fetching user profile from UserProfile...");
-    dispatch(fetchUserProfile());
-  }, [dispatch]);
+    if (!clientId) {
+      return;
+    }
+    dispatch(fetchClient(clientId));
+  }, [dispatch, clientId]);
 
-  const userId = useSelector((state) => state.sessions.user.id);
-  const usersState = useSelector((state) => state.users);
-  const userData = usersState.byId[userId] || {};
-  if (Object.keys(userData).length === 0) {
+  const clientData = useSelector((state) => selectClientById(state, clientId));
+  if (clientError) {
+    return <div>Error: {clientError}</div>;
+  }
+
+  if (!clientData) {
     return <div>Loading...</div>;
   }
 
-  const fullName = [userData.firstName, userData.middleName, userData.lastName]
-    .filter(Boolean) // removes null or undefined items
+  const fullName = [
+    clientData.firstName,
+    clientData.middleName,
+    clientData.lastName,
+  ]
+    .filter(Boolean)
     .join(" ");
-
-  if (!userData) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="user-profile">
@@ -35,16 +45,16 @@ function UserProfile() {
       </div>
       <div>
         <strong>Email: </strong>
-        {userData.email || "Not provided"}
+        {clientData.email || "Not provided"}
       </div>
       <div>
         <strong>Date of Birth: </strong>
-        {userData.dateOfBirth || (
+        {clientData.dateOfBirth || (
           <span style={{ color: "red" }}>Please update your profile</span>
         )}
       </div>
       <Link to="/profile">Edit Profile</Link>
-      {!userData.dateOfBirth && (
+      {!clientData.dateOfBirth && (
         <div className="alert">
           <h2>You need to update your profile</h2>
           <Link to="/profile">Click here to update your profile</Link>
