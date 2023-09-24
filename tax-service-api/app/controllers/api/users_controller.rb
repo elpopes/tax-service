@@ -4,36 +4,36 @@ module Api
         before_action :set_user, only: [:show, :update, :destroy]
         respond_to :json
 
-        def profile
-            if current_user.nil?
-              render json: { error: 'No user is currently logged in.' }, status: :unauthorized and return
-            end
+        # def profile
+        #     if current_user.nil?
+        #       render json: { error: 'No user is currently logged in.' }, status: :unauthorized and return
+        #     end
           
-            puts "DEBUG: Using serializer: #{ActiveModel::Serializer.serializer_for(current_user).name}"
+        #     puts "DEBUG: Using serializer: #{ActiveModel::Serializer.serializer_for(current_user).name}"
           
-            client = current_user.client
+        #     client = current_user.client
           
-            if client.nil?
-              puts "DEBUG: No client associated with the current user."
-              render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
-            end
+        #     if client.nil?
+        #       puts "DEBUG: No client associated with the current user."
+        #       render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
+        #     end
           
-            ssn_last_four = client.ssn_last_four
+        #     ssn_last_four = client.ssn_last_four
           
-            render json: {
-                id: current_user.id,
-                client_id: client.id, 
-                first_name: client.first_name,
-                middle_name: client.middle_name,
-                last_name: client.last_name,
-                email: current_user.email,
-                date_of_birth: client.dob ? client.dob.strftime('%m-%d-%Y') : nil,
-                filing_status: client.filing_status,
-                driver_license_id: client.driver_license_id,
-                number_of_dependents: client.number_of_dependents,
-                ssnLastFour: client.ssn_last_four
-            }, status: :ok
-        end
+        #     render json: {
+        #         id: current_user.id,
+        #         client_id: client.id, 
+        #         first_name: client.first_name,
+        #         middle_name: client.middle_name,
+        #         last_name: client.last_name,
+        #         email: current_user.email,
+        #         date_of_birth: client.dob ? client.dob.strftime('%m-%d-%Y') : nil,
+        #         filing_status: client.filing_status,
+        #         driver_license_id: client.driver_license_id,
+        #         number_of_dependents: client.number_of_dependents,
+        #         ssnLastFour: client.ssn_last_four
+        #     }, status: :ok
+        # end
           
            
   
