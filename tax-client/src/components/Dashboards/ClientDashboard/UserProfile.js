@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchClient } from "../../../store/clients/clientsOperations";
+import { fetchClientProfileOperation } from "../../../store/clients/clientsOperations";
 import { Link } from "react-router-dom";
 import {
   selectClientById,
@@ -9,17 +9,16 @@ import {
 
 function UserProfile() {
   const dispatch = useDispatch();
-  const clientId = useSelector((state) => state.sessions.user.id);
   const clientError = useSelector(selectClientErrors);
 
   useEffect(() => {
-    if (!clientId) {
-      return;
-    }
-    dispatch(fetchClient(clientId));
-  }, [dispatch, clientId]);
+    dispatch(fetchClientProfileOperation());
+  }, [dispatch]);
 
-  const clientData = useSelector((state) => selectClientById(state, clientId));
+  const clientData = useSelector((state) =>
+    selectClientById(state, state.sessions.user.id)
+  ); // Adjust
+
   if (clientError) {
     return <div>Error: {clientError}</div>;
   }

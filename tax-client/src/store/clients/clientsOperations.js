@@ -5,6 +5,8 @@ import {
   deleteClient,
   clientRequestStarted,
   clientRequestEnded,
+  fetchClientProfile,
+  fetchClientProfileError,
 } from "./clientsActions";
 import config from "../../config";
 
@@ -72,5 +74,36 @@ export const deleteClientOperation = (clientId) => async (dispatch) => {
   dispatch(clientRequestEnded());
   if (res.ok) {
     dispatch(deleteClient(clientId));
+  }
+};
+
+export const fetchClientProfileOperation = () => async (dispatch, getState) => {
+  dispatch(clientRequestStarted());
+  try {
+    const token = getState().sessions.token;
+    const response = await fetch(`${config.API_BASE_URL}/api/clients/profile`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const json = await response.json();
+
+    dispatch(clientRequestEnded());
+
+    if (response.ok) {
+      dispatch(fetchClientProfile(json));
+    } else {
+      const errorMessage = json.errors
+        ? json.errors.join(", ")
+        : "Fetch profile failed";
+      dispatch(fetchClientProfileError(errorMessage));
+    }
+  } catch (error) {
+    dispatch(clientRequestEnded());
+    console.error("Fetch profile error:", error);
+    dispatch(fetchClientProfileError(error.message));
   }
 };
