@@ -78,9 +78,13 @@ export const deleteClientOperation = (clientId) => async (dispatch) => {
 };
 
 export const fetchClientProfileOperation = () => async (dispatch, getState) => {
+  console.log("Starting client profile fetch");
   dispatch(clientRequestStarted());
+
   try {
     const token = getState().sessions.token;
+    console.log("Token:", token);
+
     const response = await fetch(`${config.API_BASE_URL}/clients/profile`, {
       method: "GET",
       headers: {
@@ -88,12 +92,15 @@ export const fetchClientProfileOperation = () => async (dispatch, getState) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log("Response:", response);
 
     const json = await response.json();
+    console.log("JSON Response:", json);
 
     dispatch(clientRequestEnded());
 
     if (response.ok) {
+      console.log("Response OK, dispatching fetchClientProfile");
       dispatch(fetchClientProfile(json));
     } else {
       const errorMessage = json.errors
