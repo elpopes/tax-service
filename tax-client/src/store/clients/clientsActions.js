@@ -7,6 +7,8 @@ export const DELETE_CLIENT = "DELETE_CLIENT";
 export const DELETE_CLIENT_ERROR = "DELETE_CLIENT_ERROR";
 export const CLIENT_REQUEST_STARTED = "CLIENT_REQUEST_STARTED";
 export const CLIENT_REQUEST_ENDED = "CLIENT_REQUEST_ENDED";
+export const FETCH_CLIENT_PROFILE = "FETCH_CLIENT_PROFILE";
+export const FETCH_CLIENT_PROFILE_ERROR = "FETCH_CLIENT_PROFILE_ERROR";
 
 // Action creators
 export const updateClient = (client) => ({
@@ -45,4 +47,14 @@ export const clientRequestStarted = () => ({
 
 export const clientRequestEnded = () => ({
   type: CLIENT_REQUEST_ENDED,
+});
+
+export const fetchClientProfile = (clientProfile) => ({
+  type: FETCH_CLIENT_PROFILE,
+  payload: clientProfile,
+});
+
+export const fetchClientProfileError = (error) => ({
+  type: FETCH_CLIENT_PROFILE_ERROR,
+  payload: error,
 });
