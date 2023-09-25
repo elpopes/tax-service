@@ -81,7 +81,7 @@ export const fetchClientProfileOperation = () => async (dispatch, getState) => {
   dispatch(clientRequestStarted());
   try {
     const token = getState().sessions.token;
-    const response = await fetch(`${config.API_BASE_URL}/api/clients/profile`, {
+    const response = await fetch(`${config.API_BASE_URL}/clients/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

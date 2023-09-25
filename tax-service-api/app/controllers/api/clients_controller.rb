@@ -12,14 +12,14 @@ module Api
                 id: current_user.id,
                 client_id: @client.id, 
                 first_name: @client.first_name, 
-                middle_name: client.middle_name,
-                last_name: client.last_name,
-                email: current_user.email,
-                date_of_birth: client.dob ? client.dob.strftime('%m-%d-%Y') : nil,
-                filing_status: client.filing_status,
-                driver_license_id: client.driver_license_id,
-                number_of_dependents: client.number_of_dependents,
-                ssnLastFour: client.ssn_last_four
+                middle_name: @client.middle_name,
+                last_name: @client.last_name,
+                email: @current_user.email,
+                date_of_birth: @client.dob ? @client.dob.strftime('%m-%d-%Y') : nil,
+                filing_status: @client.filing_status,
+                driver_license_id: @client.driver_license_id,
+                number_of_dependents: @client.number_of_dependents,
+                ssnLastFour: @client.ssn_last_four
             }, status: :ok
           end
     

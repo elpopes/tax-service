@@ -17,7 +17,7 @@ function UserProfile() {
 
   const clientData = useSelector((state) =>
     selectClientById(state, state.sessions.user.id)
-  ); // Adjust
+  );
 
   if (clientError) {
     return <div>Error: {clientError}</div>;
