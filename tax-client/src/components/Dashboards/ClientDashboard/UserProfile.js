@@ -7,6 +7,15 @@ import {
   selectClientErrors,
 } from "../../../store/clients/clientsSelectors";
 
+function formatDate(dob) {
+  const date = new Date(dob);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${month}-${day}-${year}`;
+}
+
 function UserProfile() {
   const dispatch = useDispatch();
   const clientError = useSelector(selectClientErrors);
@@ -37,7 +46,7 @@ function UserProfile() {
 
   return (
     <div className="user-profile">
-      <h2>User Profile</h2>
+      <h2>User Profile:</h2>
       <div>
         <strong>Name: </strong>
         {fullName || "Not provided"}
@@ -48,8 +57,10 @@ function UserProfile() {
       </div>
       <div>
         <strong>Date of Birth: </strong>
-        {clientData.dob || (
-          <span style={{ color: "red" }}>Please update your profile</span>
+        {clientData.dob ? (
+          formatDate(clientData.dob)
+        ) : (
+          <span className="red-alert">Please update your profile</span>
         )}
       </div>
       <Link to="/profile">Edit Profile</Link>

@@ -13,25 +13,28 @@ const ClientDashboard = ({ user }) => {
       <div className="client-dashboard__header">
         <h2>Welcome, {user.first_name}!</h2>
       </div>
-      <div className="client-dashboard__item">
-        <UserProfile user={user} />
-      </div>
-      <div className="client-dashboard__item">
-        <Notifications user={user} />
-      </div>
-      <div className="client-dashboard__item">
-        <Status user={user} />
-      </div>
-      <div className="client-dashboard__item">
-        <Uploads user={user} />
-      </div>
-      <div className="client-dashboard__item">
-        <History user={user} />
-      </div>
-      <div className="client-dashboard__item">
-        <Support user={user} />
+      <div className="client-dashboard__grid">
+        <div className="client-dashboard__item">
+          <UserProfile user={user} />
+        </div>
+        <div className="client-dashboard__item">
+          <Notifications user={user} />
+        </div>
+        <div className="client-dashboard__item">
+          <Status user={user} />
+        </div>
+        <div className="client-dashboard__item">
+          <Uploads user={user} />
+        </div>
+        <div className="client-dashboard__item">
+          <History user={user} />
+        </div>
+        <div className="client-dashboard__item">
+          <Support user={user} />
+        </div>
       </div>
     </div>
   );
 };
+
 export default ClientDashboard;
