@@ -48,12 +48,12 @@ function UserProfile() {
       </div>
       <div>
         <strong>Date of Birth: </strong>
-        {clientData.date_of_birth || (
+        {clientData.dob || (
           <span style={{ color: "red" }}>Please update your profile</span>
         )}
       </div>
       <Link to="/profile">Edit Profile</Link>
-      {!clientData.date_of_birth && (
+      {!clientData.dob && (
         <div className="alert">
           <h2>You need to update your profile</h2>
           <Link to="/profile">Click here to update your profile</Link>
