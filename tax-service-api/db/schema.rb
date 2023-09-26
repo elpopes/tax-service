@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_172654) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_215712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_172654) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "middle_name"
-    t.string "ssn_last_four", limit: 4
     t.integer "number_of_dependents"
     t.index ["driver_license_id"], name: "index_clients_on_driver_license_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
@@ -81,8 +80,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_172654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "session_token"
-    t.binary "encrypted_ssn_last_four"
-    t.string "encrypted_ssn_last_four_iv"
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "middle_name"
@@ -92,7 +89,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_172654) do
     t.string "unconfirmed_email"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["encrypted_ssn_last_four_iv"], name: "index_users_on_encrypted_ssn_last_four_iv", unique: true
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
