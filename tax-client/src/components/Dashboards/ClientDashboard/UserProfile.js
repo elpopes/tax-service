@@ -28,9 +28,9 @@ function UserProfile() {
   }
 
   const fullName = [
-    clientData.firstName,
-    clientData.middleName,
-    clientData.lastName,
+    clientData.first_name,
+    clientData.middle_name,
+    clientData.last_name,
   ]
     .filter(Boolean)
     .join(" ");
@@ -48,12 +48,12 @@ function UserProfile() {
       </div>
       <div>
         <strong>Date of Birth: </strong>
-        {clientData.dateOfBirth || (
+        {clientData.date_of_birth || (
           <span style={{ color: "red" }}>Please update your profile</span>
         )}
       </div>
       <Link to="/profile">Edit Profile</Link>
-      {!clientData.dateOfBirth && (
+      {!clientData.date_of_birth && (
         <div className="alert">
           <h2>You need to update your profile</h2>
           <Link to="/profile">Click here to update your profile</Link>

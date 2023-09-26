@@ -1,42 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../store/users/usersOperations";
 import { updateClientOperation } from "../store/clients/clientsOperations";
 import "./ProfilePage.css";
 
 function ProfilePage() {
   const dispatch = useDispatch();
   const user_id = useSelector((state) => state.sessions.user.id);
-  const user = useSelector((state) => state.users.byId[user_id]) || {};
-  const client_id = useSelector((state) => state.client.id);
-  const client = useSelector((state) => state.clients.byId[client_id]) || {};
+  const client = useSelector((state) => state.clients.byId[user_id]) || {};
 
-  // Initialize form_data with empty or existing user information
   const [form_data, setFormData] = useState({
-    first_name: user.first_name || "",
-    last_name: user.last_name || "",
-    middle_name: user.middle_name || "",
+    first_name: "",
+    last_name: "",
+    middle_name: "",
     dob: "",
     filing_status: "",
     driver_license_id: "",
     number_of_dependents: 0,
   });
 
-  // Update form_data whenever the user object changes
   useEffect(() => {
     setFormData({
-      ...form_data,
-      first_name: user.first_name || client.first_name || "",
-      last_name: user.last_name || client.last_name || "",
-      middle_name: user.middle_name || client.middle_name || "",
+      first_name: client.first_name || "",
+      last_name: client.last_name || "",
+      middle_name: client.middle_name || "",
       dob: client.dob || "",
       filing_status: client.filing_status || "",
       driver_license_id: client.driver_license_id || "",
       number_of_dependents: client.number_of_dependents || 0,
     });
-  }, [user, client]);
+  }, [client]);
 
-  // Handles changes to most form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -45,27 +38,12 @@ function ProfilePage() {
     });
   };
 
-  // Handles changes to the SSN field
-  //   const handleSSNChange = (e) => {
-  //     const ssn = e.target.value;
-  //     setFullSSN(ssn);
-  //   };
-
-  // Handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const payload = {
-        ...form_data,
-        // ssn,
-      };
-
-      // Dispatch an action to update the client information
-      dispatch(updateClientOperation(payload))
+      dispatch(updateClientOperation(form_data))
         .then((response_data) => {
           alert("Client information updated successfully");
-          console.log("Response data:", response_data);
-          dispatch(updateUser(response_data.user));
         })
         .catch((error) => {
           alert(`Failed to update client information: ${error}`);
