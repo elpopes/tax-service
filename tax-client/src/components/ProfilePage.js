@@ -19,11 +19,19 @@ function ProfilePage() {
   });
 
   useEffect(() => {
+    const formatDate = (dateStr) => {
+      if (dateStr) {
+        const [day, month, year] = dateStr.split("-");
+        return `${year}-${month}-${day}`;
+      }
+      return "";
+    };
+
     setFormData({
       first_name: client.first_name || "",
       last_name: client.last_name || "",
       middle_name: client.middle_name || "",
-      dob: client.dob || "",
+      dob: formatDate(client.date_of_birth) || "",
       filing_status: client.filing_status || "",
       driver_license_id: client.driver_license_id || "",
       number_of_dependents: client.number_of_dependents || 0,

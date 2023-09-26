@@ -15,7 +15,7 @@ module Api
                 middle_name: @client.middle_name,
                 last_name: @client.last_name,
                 email: @current_user.email,
-                date_of_birth: @client.dob ? @client.dob.strftime('%m-%d-%Y') : nil,
+                dob: @client.dob ? @client.dob.strftime('%Y-%m-%d') : nil,
                 filing_status: @client.filing_status,
                 driver_license_id: @client.driver_license_id,
                 number_of_dependents: @client.number_of_dependents,
