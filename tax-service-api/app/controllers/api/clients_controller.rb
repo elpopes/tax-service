@@ -41,9 +41,9 @@ module Api
         private
     
         def set_client
-            @client = current_user.client
+            @client = current_user&.client
         end
-    
+      
         def client_params
             params.require(:client).permit(:first_name, :last_name, :middle_name, :dob, :filing_status, :driver_license_id, :number_of_dependents, :ssn)
         end
