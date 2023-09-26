@@ -1,6 +1,5 @@
 class Client < ApplicationRecord
     attr_encrypted :ssn, key: ENV['ATTR_ENCRYPTION_KEY']
-    before_save :set_last_four_of_ssn
     belongs_to :user, optional: true 
     has_one :spouse
     has_many :dependents
@@ -27,8 +26,5 @@ class Client < ApplicationRecord
       end
     end
   
-    def set_last_four_of_ssn
-        self.ssn_last_four = ssn&.last(4)
-    end
-  end
+end
   
