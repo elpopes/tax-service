@@ -1,13 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { signOutUser } from "../store/sessions/sessionsOperations";
 import Button from "./Button";
 
 const SignOut = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    dispatch(signOutUser());
+  const handleSignOut = async () => {
+    await dispatch(signOutUser());
+    navigate("/");
   };
 
   return <Button onClick={handleSignOut}>Sign Out</Button>;

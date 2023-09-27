@@ -1,5 +1,6 @@
 import { signIn, signOut, sessionError } from "./sessionsActions";
 import config from "../../config";
+import { persistor } from "../../store";
 
 export const signInUser =
   ({ email, password }) =>
@@ -38,7 +39,8 @@ export const signOutUser = () => async (dispatch, getState) => {
     });
 
     if (response.ok) {
-      dispatch(signOut());
+      dispatch({ type: "RESET_STORE" }); // Reset the Redux store
+      persistor.purge(); // Clear the persisted state
     } else {
       throw new Error("Sign out failed");
     }
