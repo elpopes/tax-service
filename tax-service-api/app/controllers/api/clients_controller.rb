@@ -19,7 +19,7 @@ module Api
                 filing_status: @client.filing_status,
                 driver_license_id: @client.driver_license_id,
                 number_of_dependents: @client.number_of_dependents,
-                ssnLastFour: @client.ssn_last_four
+                # ssnLastFour: @client.ssn_last_four
             }, status: :ok
           end
     
