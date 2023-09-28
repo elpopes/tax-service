@@ -7,7 +7,9 @@ module Api
             unless @client
               render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
             end
-      
+
+            encrypted_ssn = @client.encrypted_ssn_for_frontend
+
             render json: {
                 id: current_user.id,
                 client_id: @client.id, 
@@ -19,13 +21,18 @@ module Api
                 filing_status: @client.filing_status,
                 driver_license_id: @client.driver_license_id,
                 number_of_dependents: @client.number_of_dependents,
-                # ssnLastFour: @client.ssn_last_four
+                encrypted_ssn: encrypted_ssn
             }, status: :ok
           end
     
         def update
             Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
             ActiveRecord::Base.transaction do
+              if params[:client][:encrypted_ssn].present?
+                decrypted_ssn = @client.decrypt_ssn_from_frontend(params[:client][:encrypted_ssn])
+                params[:client][:ssn] = decrypted_ssn
+              end
+
               unless @client.update(client_params)
                 Rails.logger.debug "Update failed for Client"
                 raise ActiveRecord::Rollback
@@ -45,7 +52,7 @@ module Api
         end
       
         def client_params
-            params.require(:client).permit(:first_name, :last_name, :middle_name, :dob, :filing_status, :driver_license_id, :number_of_dependents, :ssn)
+            params.require(:client).permit(:first_name, :last_name, :middle_name, :dob, :filing_status, :driver_license_id, :number_of_dependents, :encrypted_ssn)
         end
           
     end
