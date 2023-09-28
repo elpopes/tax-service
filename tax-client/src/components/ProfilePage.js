@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateClientOperation } from "../store/clients/clientsOperations";
+import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
+import Button from "./Button";
 
 function ProfilePage() {
   const dispatch = useDispatch();
   const user_id = useSelector((state) => state.sessions.user.id);
   const client = useSelector((state) => state.clients.byId[user_id]) || {};
+  const navigate = useNavigate();
+  const returnToDashboard = () => navigate("/");
 
   const [form_data, setFormData] = useState({
     first_name: "",
@@ -146,6 +150,7 @@ function ProfilePage() {
 
         {/* Submit Button */}
         <button type="submit">Submit</button>
+        <Button onClick={returnToDashboard}>Go to Dashboard</Button>
       </form>
     </div>
   );
