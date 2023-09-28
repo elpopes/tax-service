@@ -150,8 +150,8 @@ function ProfilePage() {
 
         {/* Submit Button */}
         <button type="submit">Submit</button>
-        <Button onClick={returnToDashboard}>Go to Dashboard</Button>
       </form>
+      <Button onClick={returnToDashboard}>Go to Dashboard</Button>
     </div>
   );
 }
