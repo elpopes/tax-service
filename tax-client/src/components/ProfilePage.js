@@ -110,6 +110,15 @@ function ProfilePage() {
             />
           </label>
           <label>
+            Social Security Number:
+            <input
+              type="password" // Hide the SSN visually
+              name="ssn"
+              value={form_data.ssn}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
             Filing Status:
             <select
               name="filing_status"
