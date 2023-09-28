@@ -9,6 +9,14 @@ class Client < ApplicationRecord
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
   
     validates :user, presence: true, if: -> { user.present? }
+
+    def encrypted_ssn_for_frontend
+        EncryptionService.encrypt(self.ssn)
+    end
+      
+    def decrypt_ssn_from_frontend(encrypted_data)
+        EncryptionService.decrypt(encrypted_data[:iv], encrypted_data[:cipher_text])
+    end
   
     def full_name
       [first_name, middle_name, last_name].compact.join(' ')
