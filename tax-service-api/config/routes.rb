@@ -23,5 +23,6 @@ Rails.application.routes.draw do
           get :profile  # Moved the profile route here
         end
       end
+      get '/keys/public', to: 'keys#public_key'
     end
 end
