@@ -1,4 +1,4 @@
-import { signIn, signOut, sessionError } from "./sessionsActions";
+import { signIn, sessionError } from "./sessionsActions";
 import config from "../../config";
 import { persistor } from "../../store";
 
