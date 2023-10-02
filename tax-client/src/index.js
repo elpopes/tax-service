@@ -8,6 +8,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store, persistor } from "./store";
 import { Provider } from "react-redux";
+import { fetchPublicKey } from "./store/keys/keysOperations";
+
+(async () => {
+  const success = await fetchPublicKey();
+  if (success) {
+    console.log("Successfully fetched public key");
+  } else {
+    console.error("Failed to fetch public key");
+  }
+})();
 
 const rootElement = document.getElementById("root");
 createRoot(rootElement).render(
