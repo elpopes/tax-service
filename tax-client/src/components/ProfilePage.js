@@ -4,6 +4,7 @@ import { updateClientOperation } from "../store/clients/clientsOperations";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import Button from "./Button";
+import encryptWithPublicKey from "../store/utils/encryption";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -45,7 +46,16 @@ function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(updateClientOperation(form_data))
+      // Encrypt sensitive data before sending it
+      const publicKey = sessionStorage.getItem("public_key");
+      const encryptedSSN = await encryptWithPublicKey(form_data.ssn, publicKey);
+
+      const encryptedFormData = {
+        ...form_data,
+        ssn: encryptedSSN, // Replace the plain SSN with the encrypted one
+      };
+
+      dispatch(updateClientOperation(encryptedFormData))
         .then((response_data) => {
           alert("Client information updated successfully");
         })
