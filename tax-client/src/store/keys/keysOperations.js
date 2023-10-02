@@ -2,7 +2,7 @@ import config from "../../config";
 
 export const fetchPublicKey = async () => {
   try {
-    const response = await fetch(`${config.API_BASE_URL}/public_key`, {
+    const response = await fetch(`${config.API_BASE_URL}/keys/public`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
