@@ -4,6 +4,7 @@ module Api
         before_action :set_client, only: [:update, :profile]
 
         def profile
+            debugger
             unless @client
               render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
             end

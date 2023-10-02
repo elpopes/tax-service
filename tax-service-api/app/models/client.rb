@@ -11,6 +11,8 @@ class Client < ApplicationRecord
     validates :user, presence: true, if: -> { user.present? }
 
     def encrypted_ssn_for_frontend
+        return nil unless self.ssn
+        debugger
         EncryptionService.encrypt(self.ssn)
     end
       
