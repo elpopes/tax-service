@@ -8,8 +8,8 @@ export const fetchPublicKey = async () => {
     });
 
     if (response.ok) {
-      const { public_key } = await response.json();
-      sessionStorage.setItem("public_key", public_key);
+      const { publicKey } = await response.json();
+      sessionStorage.setItem("public_key", publicKey);
       return true;
     } else {
       // Handle error - could dispatch an error action if you want
