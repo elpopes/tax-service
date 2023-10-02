@@ -12,7 +12,6 @@ class Client < ApplicationRecord
 
     def encrypted_ssn_for_frontend
         return nil unless self.ssn
-        debugger
         EncryptionService.encrypt(self.ssn)
     end
       

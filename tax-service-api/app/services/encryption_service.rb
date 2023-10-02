@@ -2,7 +2,6 @@ require 'openssl'
 
 module EncryptionService
   def self.encrypt(data)
-    debugger
     cipher = OpenSSL::Cipher.new('aes-256-gcm')
     cipher.encrypt
     cipher.key = PRIVATE_KEY.public_encrypt(data)
