@@ -1,37 +1,46 @@
-import { pemToArrayBuffer } from "./pemConversion";
+import { pemToArrayBuffer, arrayBufferToBase64 } from "./dataConversion";
 
 async function encryptWithPublicKey(text, publicKey) {
+  // Step 1: Encrypt data with AES-GCM
+  const aesKey = await window.crypto.subtle.generateKey(
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+
+  const iv = window.crypto.getRandomValues(new Uint8Array(12)); // For AES-GCM, IV should be 12 bytes
   const encoder = new TextEncoder();
   const data = encoder.encode(text);
 
-  // Use the pemToArrayBuffer function for PEM to ArrayBuffer conversion
-  const publicKeyArrayBuffer = pemToArrayBuffer(publicKey);
+  const encryptedData = await window.crypto.subtle.encrypt(
+    { name: "AES-GCM", iv: iv },
+    aesKey,
+    data
+  );
 
-  const importedKey = await window.crypto.subtle.importKey(
+  // Step 2: Encrypt AES key with RSA public key
+  const publicKeyArrayBuffer = pemToArrayBuffer(publicKey);
+  const importedPublicKey = await window.crypto.subtle.importKey(
     "spki",
     publicKeyArrayBuffer,
-    {
-      name: "RSA-OAEP",
-      hash: "SHA-256",
-    },
+    { name: "RSA-OAEP", hash: "SHA-256" },
     false,
     ["encrypt"]
   );
 
-  const encrypted = await window.crypto.subtle.encrypt(
-    {
-      name: "RSA-OAEP",
-    },
-    importedKey,
-    data
+  const exportedAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
+  const encryptedAesKey = await window.crypto.subtle.encrypt(
+    { name: "RSA-OAEP" },
+    importedPublicKey,
+    exportedAesKey
   );
 
-  return ab2str(encrypted); // ArrayBuffer to string
-}
-
-// ArrayBuffer to string
-function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint16Array(buf));
+  // Step 3: Return encrypted data and encrypted AES key
+  return {
+    encryptedData: arrayBufferToBase64(encryptedData),
+    encryptedAesKey: arrayBufferToBase64(encryptedAesKey),
+    iv: arrayBufferToBase64(iv),
+  };
 }
 
 export default encryptWithPublicKey;
