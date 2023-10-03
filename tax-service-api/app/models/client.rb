@@ -1,5 +1,5 @@
 class Client < ApplicationRecord
-    attr_encrypted :ssn, key: ENV['ATTR_ENCRYPTION_KEY']
+    attr_encrypted :ssn, key: ENV['ATTR_ENCRYPTION_KEY'], attribute: 'ssn_encrypted'
     belongs_to :user, optional: true 
     has_one :spouse
     has_many :dependents
