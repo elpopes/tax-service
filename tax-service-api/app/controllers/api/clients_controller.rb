@@ -9,6 +9,12 @@ module Api
             end
 
             encrypted_ssn = @client.encrypted_ssn_for_frontend
+            
+            if params[:client][:ssn_encrypted].present?
+                decrypted_ssn = @client.decrypt_ssn_from_frontend(params[:client][:ssn_encrypted])
+                params[:client][:ssn] = decrypted_ssn
+            end
+              
 
             render json: {
                 id: current_user.id,
@@ -28,8 +34,8 @@ module Api
         def update
             Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
             ActiveRecord::Base.transaction do
-              if params[:client][:encrypted_ssn].present?
-                decrypted_ssn = @client.decrypt_ssn_from_frontend(params[:client][:encrypted_ssn])
+              if params[:client][:ssn_encrypted].present?
+                decrypted_ssn = @client.decrypt_ssn_from_frontend(params[:client][:ssn_encrypted])
                 params[:client][:ssn] = decrypted_ssn
               end
 
@@ -52,7 +58,7 @@ module Api
         end
       
         def client_params
-            params.require(:client).permit(:first_name, :last_name, :middle_name, :dob, :filing_status, :driver_license_id, :number_of_dependents, :encrypted_ssn)
+            params.require(:client).permit(:first_name, :last_name, :middle_name, :dob, :filing_status, :driver_license_id, :number_of_dependents, :ssn_encrypted)
         end
           
     end
