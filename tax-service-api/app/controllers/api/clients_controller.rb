@@ -7,14 +7,8 @@ module Api
             unless @client
               render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
             end
-
-            encrypted_ssn = @client.encrypted_ssn_for_frontend
             
-            if params[:client][:ssn_encrypted].present?
-                decrypted_ssn = @client.decrypt_ssn_from_frontend(params[:client][:ssn_encrypted])
-                params[:client][:ssn] = decrypted_ssn
-            end
-              
+            decrypted_ssn = EncryptionService.decrypt(@client.ssn_encrypted)
 
             render json: {
                 id: current_user.id,
@@ -27,18 +21,19 @@ module Api
                 filing_status: @client.filing_status,
                 driver_license_id: @client.driver_license_id,
                 number_of_dependents: @client.number_of_dependents,
-                encrypted_ssn: encrypted_ssn
+                last_four_ssn: last_four_ssn
             }, status: :ok
           end
     
         def update
             Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
             ActiveRecord::Base.transaction do
-              if params[:client][:ssn_encrypted].present?
-                decrypted_ssn = @client.decrypt_ssn_from_frontend(params[:client][:ssn_encrypted])
-                params[:client][:ssn] = decrypted_ssn
+          
+              # Store the encrypted SSN directly
+              if params[:client][:encrypted_ssn].present?
+                params[:client][:ssn_encrypted] = params[:client][:encrypted_ssn]
               end
-
+          
               unless @client.update(client_params)
                 Rails.logger.debug "Update failed for Client"
                 raise ActiveRecord::Rollback
@@ -46,10 +41,11 @@ module Api
             end
             Rails.logger.debug "Successfully updated Client and User"
             render json: @client, status: :ok
-          rescue ActiveRecord::Rollback
+        rescue ActiveRecord::Rollback
             Rails.logger.debug "Rollback occurred. Errors: #{@client.errors.full_messages}"
             render json: { errors: @client.errors.full_messages }, status: :unprocessable_entity
         end
+          
         
         private
     
