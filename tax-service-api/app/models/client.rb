@@ -12,8 +12,8 @@ class Client < ApplicationRecord
     validates :user, presence: true, if: -> { user.present? }
   
     def decrypt_ssn
-        return nil unless encrypted_ssn.present? && iv.present?
-        EncryptionService.decrypt(encrypted_ssn, iv)
+        return nil unless ssn_encrypted.present? && iv.present?
+        EncryptionService.decrypt(ssn_encrypted, iv)
     end
   
     def last_four_ssn
