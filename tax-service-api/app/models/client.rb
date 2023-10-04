@@ -4,6 +4,7 @@ class Client < ApplicationRecord
     has_many :dependents
   
     # Validate presence of iv when encrypted_data is present
+    validates :encrypted_data, presence: true, if: -> { iv.present? }
     validates :iv, presence: true, if: -> { encrypted_data.present? }
     
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
@@ -11,7 +12,8 @@ class Client < ApplicationRecord
     validates :user, presence: true, if: -> { user.present? }
   
     def decrypt_ssn
-      EncryptionService.decrypt(self.iv, self.encrypted_data)
+        return nil unless encrypted_ssn.present? && iv.present?
+        EncryptionService.decrypt(encrypted_ssn, iv)
     end
   
     def last_four_ssn
@@ -34,5 +36,5 @@ class Client < ApplicationRecord
         )
       end
     end
-  end
+end
   
