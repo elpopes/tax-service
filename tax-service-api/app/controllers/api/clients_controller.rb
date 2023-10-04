@@ -21,19 +21,18 @@ module Api
                 filing_status: @client.filing_status,
                 driver_license_id: @client.driver_license_id,
                 number_of_dependents: @client.number_of_dependents,
-                last_four_ssn: last_four_ssn
+                last_four_ssn: @client.last_four_ssn
             }, status: :ok
           end
     
         def update
             Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
             ActiveRecord::Base.transaction do
-          
-              # Store the encrypted SSN directly
-              if params[:client][:encrypted_ssn].present?
-                params[:client][:ssn_encrypted] = params[:client][:encrypted_ssn]
+              if params[:client][:encrypted_data].present? && params[:client][:iv].present?
+                @client.encrypted_data = params[:client][:encrypted_data]
+                @client.iv = params[:client][:iv]
               end
-          
+      
               unless @client.update(client_params)
                 Rails.logger.debug "Update failed for Client"
                 raise ActiveRecord::Rollback
