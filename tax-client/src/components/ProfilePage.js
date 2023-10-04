@@ -52,7 +52,7 @@ function ProfilePage() {
 
       const encryptedFormData = {
         ...form_data,
-        ssn: encryptedSSN, // Replace the plain SSN with the encrypted one
+        encryptedData: encryptedSSN, // Replace the plain SSN with the encrypted one
       };
 
       dispatch(updateClientOperation(encryptedFormData))
