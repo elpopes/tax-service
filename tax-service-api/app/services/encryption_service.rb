@@ -16,35 +16,41 @@ module EncryptionService
   end
 
   def self.decrypt(cipher_text_base64)
-    # Step 3: Log the received Base64 cipher text
-    puts "Received Base64 Cipher Text: #{cipher_text_base64}"
-    
-    # Decode the base64 cipher text
-    cipher_text = Base64.decode64(cipher_text_base64)
-    
-    # Step 2: Log the length of the cipher text
-    puts "Cipher Text Length: #{cipher_text.bytesize * 8} bits"
-    
-    # Decode the private key from Base64 and assume it's in PEM format
-    private_key_pem = Base64.decode64(ENV['PRIVATE_KEY_BASE64'])
-  
-    # Step 4: Log the decoded private key PEM
-    puts "Decoded Private Key PEM: #{private_key_pem}"
-    
-    # Create an RSA private key object
-    private_key = OpenSSL::PKey::RSA.new(private_key_pem)
-    
     begin
-      # Decrypt the cipher text using the RSA private key
-      plain_text = private_key.private_decrypt(cipher_text, OpenSSL::PKey::RSA::PKCS1_OAEP_PADDING)
+      private_key_base64 = ENV['PRIVATE_KEY_BASE64']
+      public_key_base64 = ENV['PUBLIC_KEY_BASE64']
+
+      puts "Base64-Encoded Cipher Text: #{cipher_text_base64}"
+
+      cipher_text = Base64.decode64(cipher_text_base64)
+      private_key = OpenSSL::PKey::RSA.new(Base64.decode64(private_key_base64))
+      public_key = OpenSSL::PKey::RSA.new(Base64.decode64(public_key_base64))
+
+      puts "Decoded Cipher Text: #{cipher_text}"
+      puts "Decoded Private Key: #{private_key_base64}"
+      puts "Private Key Object: #{private_key}"
+
+      # Test encryption and decryption within the method
+      test_text = "Hello World!"
+      cipher = OpenSSL::Cipher::AES.new(256, :CBC)
+      cipher.encrypt
+      encrypted_test_text = public_key.public_encrypt(test_text, OpenSSL::PKey::RSA::PKCS1_OAEP_PADDING)
+      decrypted_test_text = private_key.private_decrypt(encrypted_test_text, OpenSSL::PKey::RSA::PKCS1_OAEP_PADDING)
+      
+      puts "Decrypted Test Text: #{decrypted_test_text}"
+
+      # Actual decryption
+      decrypted_text = private_key.private_decrypt(cipher_text, OpenSSL::PKey::RSA::PKCS1_OAEP_PADDING)
+
+      puts "Successfully decrypted text: #{decrypted_text}"
+      decrypted_text
     rescue OpenSSL::PKey::RSAError => e
-      # Step 5: Log any OpenSSL errors
-      puts "OpenSSL Error: #{e.message}"
-      raise
+      puts "Specific OpenSSL Error: #{e.message}"
+      nil
+    rescue StandardError => e
+      puts "General Error: #{e.message}"
+      nil
     end
-    
-    # Return the last 4 digits of the SSN
-    plain_text[-4..-1]
   end
   
 end
