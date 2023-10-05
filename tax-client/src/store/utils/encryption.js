@@ -26,7 +26,7 @@ async function encryptWithPublicKey(text, publicKey) {
 
   // Return the encrypted data
   return {
-    encryptedData: arrayBufferToBase64(encryptedData),
+    ssn_encrypted: arrayBufferToBase64(encryptedData),
   };
 }
 
