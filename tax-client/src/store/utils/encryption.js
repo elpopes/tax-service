@@ -8,7 +8,7 @@ async function encryptWithPublicKey(text, publicKey) {
   const importedPublicKey = await window.crypto.subtle.importKey(
     "spki",
     publicKeyArrayBuffer,
-    { name: "RSA-OAEP", hash: "SHA-256" },
+    { name: "RSA-OAEP", hash: "SHA-1" }, // Changed from SHA-256 to SHA-1
     false,
     ["encrypt"]
   );
@@ -24,7 +24,7 @@ async function encryptWithPublicKey(text, publicKey) {
     data
   );
 
-  // Return the encrypted data
+  // Convert the encrypted data to Base64 and return
   return {
     ssn_encrypted: arrayBufferToBase64(encryptedData),
   };
