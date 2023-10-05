@@ -48,13 +48,18 @@ function ProfilePage() {
     try {
       // Encrypt sensitive data before sending it
       const publicKey = sessionStorage.getItem("public_key");
-      const encryptedSSN = await encryptWithPublicKey(form_data.ssn, publicKey);
+      const { ssn_encrypted } = await encryptWithPublicKey(
+        form_data.ssn,
+        publicKey
+      ); // Destructure ssn_encrypted directly
 
       // Remove raw SSN from the formData object
       const { ssn, ...restFormData } = form_data;
+
+      // Create the new formData object with the encrypted SSN
       const encryptedFormData = {
         ...restFormData,
-        encrypted_data: encryptedSSN, // Replace the plain SSN with the encrypted one
+        ssn_encrypted, // Add the encrypted SSN directly
       };
 
       dispatch(updateClientOperation(encryptedFormData))
