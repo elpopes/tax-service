@@ -26,9 +26,8 @@ module Api
       def update
         Rails.logger.debug "Update Action Called. Params: #{params.inspect}"
         ActiveRecord::Base.transaction do
-          if params[:client][:encrypted_data].present? && params[:client][:iv].present?
-            @client.encrypted_data = params[:client][:encrypted_data]
-            @client.iv = params[:client][:iv]
+          if params[:client][:ssn_encrypted].present?
+            @client.ssn_encrypted = params[:client][:ssn_encrypted]
           end
   
           unless @client.update(client_params)
@@ -63,6 +62,5 @@ module Api
       end
       
     end
-end
+  end
   
-    
