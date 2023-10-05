@@ -50,9 +50,11 @@ function ProfilePage() {
       const publicKey = sessionStorage.getItem("public_key");
       const encryptedSSN = await encryptWithPublicKey(form_data.ssn, publicKey);
 
+      // Remove raw SSN from the formData object
+      const { ssn, ...restFormData } = form_data;
       const encryptedFormData = {
-        ...form_data,
-        encryptedData: encryptedSSN, // Replace the plain SSN with the encrypted one
+        ...restFormData,
+        encrypted_data: encryptedSSN, // Replace the plain SSN with the encrypted one
       };
 
       dispatch(updateClientOperation(encryptedFormData))
@@ -122,7 +124,7 @@ function ProfilePage() {
           <label>
             Social Security Number:
             <input
-              type="password" // Hide the SSN visually
+              type="text"
               name="ssn"
               value={form_data.ssn}
               onChange={handleChange}
