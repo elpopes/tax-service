@@ -58,11 +58,7 @@ module Api
             :filing_status, 
             :driver_license_id, 
             :number_of_dependents, 
-            encrypted_data: [
-                :encryptedAesKey,
-                :encryptedData,
-                :iv
-            ]
+            :ssn_encrypted
         )
       end
       
