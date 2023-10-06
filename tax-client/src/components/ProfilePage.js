@@ -8,7 +8,7 @@ import encryptWithPublicKey from "../store/utils/encryption";
 
 function ProfilePage() {
   const dispatch = useDispatch();
-  const user_id = useSelector((state) => state.sessions.user.id);
+  const user_id = useSelector((state) => state.sessions.user?.id);
   const client = useSelector((state) => state.clients.byId[user_id]) || {};
   const navigate = useNavigate();
   const returnToDashboard = () => navigate("/");
