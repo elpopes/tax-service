@@ -32,19 +32,30 @@ function ProfilePage() {
       filing_status: client.filing_status || "",
       driver_license_id: client.driver_license_id || "",
       number_of_dependents: client.number_of_dependents || 0,
+      ssn: client.last_four_ssn ? `***-**-${client.last_four_ssn}` : "",
     });
   }, [client]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let formattedValue = value;
+    if (name === "ssn") {
+      formattedValue = value.replace(/^(\d{3}-?\d{2}-?\d{4})$/, "$1-$2-$3");
+    }
     setFormData({
       ...form_data,
-      [name]: value,
+      [name]: formattedValue,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (form_data.ssn && form_data.ssn.replace(/-/g, "").length !== 9) {
+      alert("Please enter a valid 9-digit SSN.");
+      return;
+    }
+
     try {
       // Encrypt sensitive data before sending it
       const publicKey = sessionStorage.getItem("public_key");
@@ -132,6 +143,7 @@ function ProfilePage() {
               type="text"
               name="ssn"
               value={form_data.ssn}
+              placeholder="Please enter your SSN"
               onChange={handleChange}
             />
           </label>
