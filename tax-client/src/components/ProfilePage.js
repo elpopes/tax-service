@@ -13,6 +13,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const returnToDashboard = () => navigate("/");
 
+  const [formattedSSN, setFormattedSSN] = useState(""); // New state for formatted SSN
   const [form_data, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -21,6 +22,7 @@ function ProfilePage() {
     filing_status: "",
     driver_license_id: "",
     number_of_dependents: 0,
+    ssn: "",
   });
 
   useEffect(() => {
@@ -36,41 +38,44 @@ function ProfilePage() {
     });
   }, [client]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    let formattedValue = value;
-    if (name === "ssn") {
-      formattedValue = value.replace(/^(\d{3}-?\d{2}-?\d{4})$/, "$1-$2-$3");
-    }
+  const handleSSNChange = (e) => {
+    const rawSSN = e.target.value.replace(/-/g, "");
+
+    if (rawSSN.length > 9) return; // Do not allow more than 9 digits
+
+    const formatted = [
+      rawSSN.substring(0, 3),
+      rawSSN.substring(3, 5),
+      rawSSN.substring(5, 9),
+    ]
+      .filter(Boolean)
+      .join("-");
+
+    setFormattedSSN(formatted);
     setFormData({
       ...form_data,
-      [name]: formattedValue,
+      ssn: rawSSN,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form_data.ssn && form_data.ssn.replace(/-/g, "").length !== 9) {
+    if (form_data.ssn && form_data.ssn.length !== 9) {
       alert("Please enter a valid 9-digit SSN.");
       return;
     }
 
     try {
-      // Encrypt sensitive data before sending it
       const publicKey = sessionStorage.getItem("public_key");
       const { ssn_encrypted } = await encryptWithPublicKey(
         form_data.ssn,
         publicKey
-      ); // Destructure ssn_encrypted directly
-
-      // Remove raw SSN from the formData object
+      );
       const { ssn, ...restFormData } = form_data;
-
-      // Create the new formData object with the encrypted SSN
       const encryptedFormData = {
         ...restFormData,
-        ssn_encrypted, // Add the encrypted SSN directly
+        ssn_encrypted,
       };
 
       dispatch(updateClientOperation(encryptedFormData))
@@ -99,7 +104,7 @@ function ProfilePage() {
               type="text"
               name="first_name"
               value={form_data.first_name}
-              onChange={handleChange}
+              onChange={handleSSNChange}
               required
             />
           </label>
@@ -109,7 +114,7 @@ function ProfilePage() {
               type="text"
               name="last_name"
               value={form_data.last_name}
-              onChange={handleChange}
+              onChange={handleSSNChange}
               required
             />
           </label>
@@ -119,7 +124,7 @@ function ProfilePage() {
               type="text"
               name="middle_name"
               value={form_data.middle_name}
-              onChange={handleChange}
+              onChange={handleSSNChange}
             />
           </label>
         </div>
@@ -133,7 +138,7 @@ function ProfilePage() {
               type="date"
               name="dob"
               value={form_data.dob}
-              onChange={handleChange}
+              onChange={handleSSNChange}
               required
             />
           </label>
@@ -142,9 +147,9 @@ function ProfilePage() {
             <input
               type="text"
               name="ssn"
-              value={form_data.ssn}
+              value={formattedSSN}
               placeholder="Please enter your SSN"
-              onChange={handleChange}
+              onChange={handleSSNChange}
             />
           </label>
           <label>
@@ -152,7 +157,7 @@ function ProfilePage() {
             <select
               name="filing_status"
               value={form_data.filing_status}
-              onChange={handleChange}
+              onChange={handleSSNChange}
               required
             >
               <option value="">--Please choose an option--</option>
@@ -172,7 +177,7 @@ function ProfilePage() {
               type="text"
               name="driver_license_id"
               value={form_data.driver_license_id}
-              onChange={handleChange}
+              onChange={handleSSNChange}
             />
           </label>
           <label>
@@ -181,7 +186,7 @@ function ProfilePage() {
               type="number"
               name="number_of_dependents"
               value={form_data.number_of_dependents}
-              onChange={handleChange}
+              onChange={handleSSNChange}
             />
           </label>
         </div>
