@@ -10,6 +10,23 @@ import {
 } from "./clientsActions";
 import config from "../../config";
 
+const normalizeClient = (rawClient) => {
+  return {
+    id: rawClient.id, // this is actually the user_id from the profile API
+    user_id: rawClient.client_id,
+    first_name: rawClient.first_name,
+    middle_name: rawClient.middle_name || "",
+    last_name: rawClient.last_name,
+    email: rawClient.email,
+    dob: rawClient.dob || null,
+    filing_status: rawClient.filing_status,
+    driver_license_id: rawClient.driver_license_id,
+    number_of_dependents: rawClient.number_of_dependents,
+    last_four_ssn: rawClient.last_four_ssn,
+    // any other fields you might want to normalize
+  };
+};
+
 export const updateClientOperation =
   (clientData) => async (dispatch, getState) => {
     try {
@@ -29,7 +46,9 @@ export const updateClientOperation =
 
       // Check if the update was successful
       if (response.ok) {
-        dispatch(updateClient(json));
+        const normalizedClient = normalizeClient(json);
+        console.log("Response OK, dispatching fetchClientProfile");
+        dispatch(fetchClientProfile(normalizedClient));
       } else {
         const errorMessage = json.errors
           ? json.errors.join(", ")
@@ -48,7 +67,8 @@ export const fetchClient = (clientId) => async (dispatch) => {
   dispatch(clientRequestEnded());
   if (res.ok) {
     const client = await res.json();
-    dispatch(updateClient(client));
+    const normalizedClient = normalizeClient(client);
+    dispatch(updateClient(normalizedClient));
   }
 };
 
@@ -62,7 +82,8 @@ export const createClientOperation = (client) => async (dispatch) => {
   dispatch(clientRequestEnded());
   if (res.ok) {
     const newClient = await res.json();
-    dispatch(createClient(newClient));
+    const normalizedClient = normalizeClient(newClient);
+    dispatch(createClient(normalizedClient));
   }
 };
 
