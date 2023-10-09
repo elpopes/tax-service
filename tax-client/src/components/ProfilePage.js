@@ -11,9 +11,9 @@ function ProfilePage() {
   const user_id = useSelector((state) => state.sessions.user?.id);
   const client = useSelector((state) => state.clients.byId[user_id]) || {};
   const navigate = useNavigate();
-  const returnToDashboard = () => navigate("/");
 
-  const [formattedSSN, setFormattedSSN] = useState(""); // New state for formatted SSN
+  const [actualSSN, setActualSSN] = useState("");
+  const [formattedSSN, setFormattedSSN] = useState("");
   const [form_data, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -26,6 +26,13 @@ function ProfilePage() {
   });
 
   useEffect(() => {
+    if (client.last_four_ssn) {
+      const lastFourSSN = client.last_four_ssn;
+      const maskedSSN = `***-**-${lastFourSSN}`;
+      setFormattedSSN(maskedSSN);
+      setActualSSN(`000000000${lastFourSSN}`.slice(-9));
+    }
+
     setFormData({
       first_name: client.first_name || "",
       last_name: client.last_name || "",
@@ -34,15 +41,20 @@ function ProfilePage() {
       filing_status: client.filing_status || "",
       driver_license_id: client.driver_license_id || "",
       number_of_dependents: client.number_of_dependents || 0,
-      ssn: client.last_four_ssn ? `***-**-${client.last_four_ssn}` : "",
     });
   }, [client]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...form_data,
+      [name]: value,
+    });
+  };
+
   const handleSSNChange = (e) => {
     const rawSSN = e.target.value.replace(/-/g, "");
-
-    if (rawSSN.length > 9) return; // Do not allow more than 9 digits
-
+    if (rawSSN.length > 9) return;
     const formatted = [
       rawSSN.substring(0, 3),
       rawSSN.substring(3, 5),
@@ -50,36 +62,25 @@ function ProfilePage() {
     ]
       .filter(Boolean)
       .join("-");
-
+    setActualSSN(rawSSN);
     setFormattedSSN(formatted);
-    setFormData({
-      ...form_data,
-      ssn: rawSSN,
-    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (form_data.ssn && form_data.ssn.length !== 9) {
+    if (actualSSN.length !== 9) {
       alert("Please enter a valid 9-digit SSN.");
       return;
     }
-
     try {
       const publicKey = sessionStorage.getItem("public_key");
       const { ssn_encrypted } = await encryptWithPublicKey(
-        form_data.ssn,
+        actualSSN,
         publicKey
       );
-      const { ssn, ...restFormData } = form_data;
-      const encryptedFormData = {
-        ...restFormData,
-        ssn_encrypted,
-      };
-
-      dispatch(updateClientOperation(encryptedFormData))
-        .then((response_data) => {
+      const updatedFormData = { ...form_data, ssn_encrypted };
+      dispatch(updateClientOperation(updatedFormData))
+        .then(() => {
           alert("Client information updated successfully");
         })
         .catch((error) => {
@@ -95,7 +96,6 @@ function ProfilePage() {
     <div className="profile-page">
       <h1>Create or Update Your Profile</h1>
       <form onSubmit={handleSubmit}>
-        {/* Basic Information */}
         <div className="form-section">
           <h2>Basic Information</h2>
           <label>
@@ -104,7 +104,7 @@ function ProfilePage() {
               type="text"
               name="first_name"
               value={form_data.first_name}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
               required
             />
           </label>
@@ -114,7 +114,7 @@ function ProfilePage() {
               type="text"
               name="last_name"
               value={form_data.last_name}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
               required
             />
           </label>
@@ -124,7 +124,7 @@ function ProfilePage() {
               type="text"
               name="middle_name"
               value={form_data.middle_name}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
             />
           </label>
         </div>
@@ -138,7 +138,7 @@ function ProfilePage() {
               type="date"
               name="dob"
               value={form_data.dob}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
               required
             />
           </label>
@@ -157,7 +157,7 @@ function ProfilePage() {
             <select
               name="filing_status"
               value={form_data.filing_status}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
               required
             >
               <option value="">--Please choose an option--</option>
@@ -177,7 +177,7 @@ function ProfilePage() {
               type="text"
               name="driver_license_id"
               value={form_data.driver_license_id}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
             />
           </label>
           <label>
@@ -186,7 +186,7 @@ function ProfilePage() {
               type="number"
               name="number_of_dependents"
               value={form_data.number_of_dependents}
-              onChange={handleSSNChange}
+              onChange={handleInputChange}
             />
           </label>
         </div>
@@ -194,7 +194,7 @@ function ProfilePage() {
         {/* Submit Button */}
         <button type="submit">Submit</button>
       </form>
-      <Button onClick={returnToDashboard}>Go to Dashboard</Button>
+      <Button onClick={() => navigate("/")}>Go to Dashboard</Button>
     </div>
   );
 }
