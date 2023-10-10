@@ -8,19 +8,7 @@ module Api
           render json: { error: 'The logged-in user does not have an associated client.', action_required: true }, status: :not_found and return
         end
   
-        render json: {
-            id: current_user.id,
-            client_id: @client.id, 
-            first_name: @client.first_name, 
-            middle_name: @client.middle_name,
-            last_name: @client.last_name,
-            email: @current_user.email,
-            dob: @client.dob ? @client.dob.strftime('%Y-%m-%d') : nil,
-            filing_status: @client.filing_status,
-            driver_license_id: @client.driver_license_id,
-            number_of_dependents: @client.number_of_dependents,
-            last_four_ssn: @client.last_four_ssn
-        }, status: :ok
+        render json: current_user_client, status: :ok
       end
   
       def update
@@ -36,19 +24,7 @@ module Api
           end
         end
         Rails.logger.debug "Successfully updated Client and User"
-        render json: {
-            id: current_user.id,
-            client_id: @client.id, 
-            first_name: @client.first_name, 
-            middle_name: @client.middle_name,
-            last_name: @client.last_name,
-            email: @current_user.email,
-            dob: @client.dob ? @client.dob.strftime('%Y-%m-%d') : nil,
-            filing_status: @client.filing_status,
-            driver_license_id: @client.driver_license_id,
-            number_of_dependents: @client.number_of_dependents,
-            last_four_ssn: @client.last_four_ssn
-        }, status: :ok
+        render json: current_user_client, status: :ok
       rescue ActiveRecord::Rollback
         Rails.logger.debug "Rollback occurred. Errors: #{@client.errors.full_messages}"
         render json: { errors: @client.errors.full_messages }, status: :unprocessable_entity
@@ -58,6 +34,22 @@ module Api
     
       def set_client
         @client = current_user&.client
+      end
+
+      def current_user_client
+        {
+            id: current_user.id,
+            client_id: @client.id, 
+            first_name: @client.first_name, 
+            middle_name: @client.middle_name,
+            last_name: @client.last_name,
+            email: current_user.email,
+            dob: @client.dob ? @client.dob.strftime('%Y-%m-%d') : nil,
+            filing_status: @client.filing_status,
+            driver_license_id: @client.driver_license_id,
+            number_of_dependents: @client.number_of_dependents,
+            last_four_ssn: @client.last_four_ssn
+        }
       end
       
       def client_params
