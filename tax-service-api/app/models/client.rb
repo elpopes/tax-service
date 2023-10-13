@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
     belongs_to :user, optional: true
-    has_one :spouse
-    has_many :dependents
+    has_one :spouse, class_name: 'Client', foreign_key: 'spouse_id'
+    has_many :dependents, class_name: 'Client', foreign_key: 'caretaker_id'
     
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
     
