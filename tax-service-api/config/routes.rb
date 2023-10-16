@@ -20,7 +20,10 @@ Rails.application.routes.draw do
       
       resources :clients, only: [:update] do
         collection do
-          get :profile  # Moved the profile route here
+          get :profile 
+        end
+        member do
+            post :create_spouse
         end
       end
       get '/keys/public', to: 'keys#public_key'
