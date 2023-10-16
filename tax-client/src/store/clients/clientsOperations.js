@@ -7,6 +7,8 @@ import {
   clientRequestEnded,
   fetchClientProfile,
   fetchClientProfileError,
+  createSpouse,
+  createSpouseError,
 } from "./clientsActions";
 import config from "../../config";
 
@@ -135,3 +137,40 @@ export const fetchClientProfileOperation = () => async (dispatch, getState) => {
     dispatch(fetchClientProfileError(error.message));
   }
 };
+
+export const addSpouseOperation =
+  (clientId, spouseData) => async (dispatch, getState) => {
+    try {
+      dispatch(clientRequestStarted());
+      const token = getState().sessions.token;
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/create_spouse`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ spouse: spouseData }),
+        }
+      );
+
+      const json = await response.json();
+
+      dispatch(clientRequestEnded());
+
+      if (response.ok) {
+        dispatch(createSpouse(json));
+      } else {
+        const errorMessage = json.errors
+          ? json.errors.join(", ")
+          : "Spouse creation failed";
+        dispatch(createSpouseError(errorMessage));
+      }
+    } catch (error) {
+      dispatch(clientRequestEnded());
+
+      console.error("Spouse creation error:", error);
+      dispatch(createSpouseError(error.message));
+    }
+  };
