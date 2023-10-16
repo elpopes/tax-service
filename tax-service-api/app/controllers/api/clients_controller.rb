@@ -64,6 +64,19 @@ module Api
             :ssn_encrypted
         )
       end
+
+      def spouse_params
+        params.require(:spouse).permit(
+            :first_name, 
+            :last_name, 
+            :middle_name, 
+            :dob, 
+            :filing_status, 
+            :driver_license_id, 
+            :number_of_dependents, 
+            :ssn_encrypted,
+            :spouse_of
+        )
       
     end
   end
