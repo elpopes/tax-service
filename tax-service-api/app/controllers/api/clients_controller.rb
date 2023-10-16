@@ -29,6 +29,26 @@ module Api
         Rails.logger.debug "Rollback occurred. Errors: #{@client.errors.full_messages}"
         render json: { errors: @client.errors.full_messages }, status: :unprocessable_entity
       end
+
+      def create_spouse
+        ActiveRecord::Base.transaction do
+          spouse = Client.new(spouse_params)
+          if spouse.save
+            # Find the current client and associate the spouse
+            client = current_user.client
+            client.update!(spouse_id: spouse.id)
+            Rails.logger.info("Spouse successfully created and associated. Spouse ID: #{spouse.id}")
+            render json: { spouse: spouse, message: 'Spouse successfully created and associated.' }, status: :created
+          else
+            Rails.logger.warn("Spouse creation failed. Errors: #{spouse.errors.full_messages}")
+            render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
+            raise ActiveRecord::Rollback
+          end
+        end
+      rescue ActiveRecord::Rollback
+        Rails.logger.error("Transaction rolled back due to an error in spouse creation.")
+        # Additional rollback handling, if necessary
+      end
       
       private
     
