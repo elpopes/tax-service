@@ -34,7 +34,6 @@ module Api
         ActiveRecord::Base.transaction do
           spouse = Client.new(spouse_params)
           if spouse.save
-            # Find the current client and associate the spouse
             client = current_user.client
             client.update!(spouse_id: spouse.id)
             Rails.logger.info("Spouse successfully created and associated. Spouse ID: #{spouse.id}")
@@ -47,7 +46,6 @@ module Api
         end
       rescue ActiveRecord::Rollback
         Rails.logger.error("Transaction rolled back due to an error in spouse creation.")
-        # Additional rollback handling, if necessary
       end
       
       private
