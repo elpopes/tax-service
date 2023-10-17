@@ -5,11 +5,14 @@ import {
   DELETE_CLIENT,
   FETCH_CLIENT_PROFILE,
   FETCH_CLIENT_PROFILE_ERROR,
+  CREATE_SPOUSE,
+  CREATE_SPOUSE_ERROR,
 } from "./clientsActions";
 
 const initialState = {
   byId: {},
   errors: null,
+  spouseErrors: null,
 };
 
 const clientsReducer = (state = initialState, action) => {
@@ -52,6 +55,23 @@ const clientsReducer = (state = initialState, action) => {
           ...state.byId,
           [action.payload.id]: action.payload,
         },
+      };
+    case CREATE_SPOUSE:
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload.id]: {
+            ...state.byId[action.payload.id],
+            spouse: action.payload.spouse,
+          },
+        },
+        spouseErrors: null,
+      };
+    case CREATE_SPOUSE_ERROR:
+      return {
+        ...state,
+        spouseErrors: action.payload,
       };
     case DELETE_CLIENT:
       const newClientsState = { ...state };
