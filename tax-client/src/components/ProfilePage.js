@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import Button from "./Button";
 import encryptWithPublicKey from "../store/utils/encryption";
+import AddSpouse from "./Spouse/AddSpouse";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -195,6 +196,7 @@ function ProfilePage() {
         <button type="submit">Submit</button>
       </form>
       <Button onClick={() => navigate("/")}>Go to Dashboard</Button>
+      <AddSpouse />
     </div>
   );
 }

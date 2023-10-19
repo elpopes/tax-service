@@ -95,6 +95,7 @@ module Api
             :ssn_encrypted,
             :spouse_of
         )
+      end
       
     end
   end
