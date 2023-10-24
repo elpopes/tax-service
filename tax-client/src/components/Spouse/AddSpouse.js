@@ -20,6 +20,8 @@ const AddSpouse = () => {
     ssn_encrypted: "",
   });
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSpouseData({
@@ -34,68 +36,71 @@ const AddSpouse = () => {
   };
 
   return (
-    <Modal title="Add Spouse">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="first_name"
-          placeholder="First Name"
-          value={spouseData.first_name}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="last_name"
-          placeholder="Last Name"
-          value={spouseData.last_name}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="middle_name"
-          placeholder="Middle Name"
-          value={spouseData.middle_name}
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="dob"
-          placeholder="Date of Birth"
-          value={spouseData.dob}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="filing_status"
-          placeholder="Filing Status"
-          value={spouseData.filing_status}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="driver_license_id"
-          placeholder="Driver License ID"
-          value={spouseData.driver_license_id}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="number_of_dependents"
-          placeholder="Number of Dependents"
-          value={spouseData.number_of_dependents}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="ssn_encrypted"
-          placeholder="Social Security Number (Encrypted)"
-          value={spouseData.ssn_encrypted}
-          onChange={handleChange}
-        />
-        <Button type="submit">Add Spouse</Button>
-      </form>
-      {spouseErrors && <div>{spouseErrors.join(", ")}</div>}
-    </Modal>
+    <>
+      <Button onClick={() => setIsModalVisible(true)}>Add Spouse</Button>
+      <Modal isVisible={isModalVisible} title="Add Spouse">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            value={spouseData.first_name}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            value={spouseData.last_name}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="middle_name"
+            placeholder="Middle Name"
+            value={spouseData.middle_name}
+            onChange={handleChange}
+          />
+          <input
+            type="date"
+            name="dob"
+            placeholder="Date of Birth"
+            value={spouseData.dob}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="filing_status"
+            placeholder="Filing Status"
+            value={spouseData.filing_status}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="driver_license_id"
+            placeholder="Driver License ID"
+            value={spouseData.driver_license_id}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="number_of_dependents"
+            placeholder="Number of Dependents"
+            value={spouseData.number_of_dependents}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="ssn_encrypted"
+            placeholder="Social Security Number (Encrypted)"
+            value={spouseData.ssn_encrypted}
+            onChange={handleChange}
+          />
+          <Button type="submit">Add Spouse</Button>
+        </form>
+        {spouseErrors && <div>{spouseErrors.join(", ")}</div>}
+      </Modal>
+    </>
   );
 };
 

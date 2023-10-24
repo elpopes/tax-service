@@ -1,3 +1,4 @@
+import AddSpouse from "../Spouse/AddSpouse";
 function Household({ spouse, dependents, residence }) {
   return (
     <div>
@@ -5,7 +6,7 @@ function Household({ spouse, dependents, residence }) {
 
       <div>
         <h3>Spouse</h3>
-        {/* Spouse details or Add Spouse Button */}
+        <AddSpouse />
       </div>
 
       <div>
