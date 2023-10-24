@@ -1,10 +1,10 @@
 import React from "react";
 import UserProfile from "./UserProfile";
+import Household from "../../Household/Household";
 import Notifications from "./Notifications";
 import Status from "./Status";
 import Uploads from "./Uploads";
 import History from "./History";
-import Support from "./Support";
 import "./ClientDashboard.css";
 
 const ClientDashboard = ({ user }) => {
@@ -18,6 +18,9 @@ const ClientDashboard = ({ user }) => {
           <UserProfile user={user} />
         </div>
         <div className="client-dashboard__item">
+          <Household user={user} />
+        </div>
+        <div className="client-dashboard__item">
           <Notifications user={user} />
         </div>
         <div className="client-dashboard__item">
@@ -28,9 +31,6 @@ const ClientDashboard = ({ user }) => {
         </div>
         <div className="client-dashboard__item">
           <History user={user} />
-        </div>
-        <div className="client-dashboard__item">
-          <Support user={user} />
         </div>
       </div>
     </div>
