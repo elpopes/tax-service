@@ -7,6 +7,7 @@ import { selectSpouseErrors } from "../../store/clients/clientsSelectors";
 
 const AddSpouse = () => {
   const dispatch = useDispatch();
+  const currentUserId = useSelector((state) => state.sessions.user.id);
   const spouseErrors = useSelector(selectSpouseErrors);
 
   const [spouseData, setSpouseData] = useState({
@@ -32,7 +33,7 @@ const AddSpouse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addSpouseOperation(spouseData));
+    dispatch(addSpouseOperation(currentUserId, spouseData));
   };
 
   return (
@@ -98,7 +99,11 @@ const AddSpouse = () => {
           />
           <Button type="submit">Add Spouse</Button>
         </form>
-        {spouseErrors && <div>{spouseErrors.join(", ")}</div>}
+        {Array.isArray(spouseErrors) ? (
+          <div>{spouseErrors.join(", ")}</div>
+        ) : (
+          <div>{spouseErrors}</div>
+        )}
       </Modal>
     </>
   );
