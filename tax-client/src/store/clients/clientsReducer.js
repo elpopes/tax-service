@@ -57,13 +57,14 @@ const clientsReducer = (state = initialState, action) => {
         },
       };
     case CREATE_SPOUSE:
+      const { clientId, spouse } = action.payload;
       return {
         ...state,
         byId: {
           ...state.byId,
-          [action.payload.id]: {
-            ...state.byId[action.payload.id],
-            spouse: action.payload.spouse,
+          [clientId]: {
+            ...state.byId[clientId],
+            spouse: spouse,
           },
         },
         spouseErrors: null,
