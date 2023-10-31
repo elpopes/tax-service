@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_193310) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_31_005237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.integer "filing_status"
     t.date "dob"
     t.bigint "driver_license_id"
