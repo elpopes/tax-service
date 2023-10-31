@@ -6,6 +6,8 @@ class Client < ApplicationRecord
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
     
     validates :user, presence: true, if: -> { user.present? }
+
+    before_destroy :nullify_spouse_id_in_client
   
     def decrypt_ssn
       return nil unless ssn_encrypted.present?
@@ -32,5 +34,10 @@ class Client < ApplicationRecord
         )
       end
     end
+
+    def nullify_spouse_id_in_client
+        client_with_spouse = Client.find_by(spouse_id: self.id)
+        client_with_spouse&.update(spouse_id: nil)
+      end
 end
   
