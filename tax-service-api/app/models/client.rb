@@ -36,8 +36,19 @@ class Client < ApplicationRecord
     end
 
     def nullify_spouse_id_in_client
-        client_with_spouse = Client.find_by(spouse_id: self.id)
-        client_with_spouse&.update(spouse_id: nil)
+        puts "Before destroy is being executed." # Step 1: Check Callback Execution
+      
+        begin
+          client_with_spouse = Client.find_by(spouse_id: self.id)
+          
+          # Step 2: Inspect client_with_spouse
+          puts "Found client with spouse: #{client_with_spouse.inspect}"
+          
+          client_with_spouse&.update(spouse_id: nil)
+        rescue => e
+          # Step 3: Check for Exceptions
+          puts "An exception occurred: #{e.message}"
+        end
       end
 end
   
