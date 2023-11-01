@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import Button from "./Button";
 import encryptWithPublicKey from "../store/utils/encryption";
+import { FILING_STATUS_MAP } from "../store/utils/constants";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -161,9 +162,14 @@ function ProfilePage() {
               required
             >
               <option value="">--Please choose an option--</option>
-              <option value="single">Single</option>
-              <option value="married">Married</option>
-              {/* ... other options */}
+              {Object.keys(FILING_STATUS_MAP).map((humanReadable) => (
+                <option
+                  key={FILING_STATUS_MAP[humanReadable]}
+                  value={FILING_STATUS_MAP[humanReadable]}
+                >
+                  {humanReadable}
+                </option>
+              ))}
             </select>
           </label>
         </div>
