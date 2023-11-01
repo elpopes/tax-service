@@ -73,7 +73,34 @@ const AddSpouse = () => {
       <Button onClick={() => setIsModalVisible(true)}>Add Spouse</Button>
       <Modal isVisible={isModalVisible} title="Add Spouse">
         <form onSubmit={handleSubmit}>
-          {/* ... existing input fields ... */}
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            value={spouseData.first_name}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            value={spouseData.last_name}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="middle_name"
+            placeholder="Middle Name"
+            value={spouseData.middle_name}
+            onChange={handleInputChange}
+          />
+          <input
+            type="date"
+            name="dob"
+            placeholder="Date of Birth"
+            value={spouseData.dob}
+            onChange={handleInputChange}
+          />
 
           <select
             name="filing_status"
