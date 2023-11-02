@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../Button";
 import Modal from "../Modal";
@@ -26,6 +26,12 @@ const AddSpouse = () => {
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (!spouseErrors && isModalVisible) {
+      setIsModalVisible(false);
+    }
+  }, [spouseErrors, isModalVisible]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
