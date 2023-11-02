@@ -55,7 +55,7 @@ module Api
       end
 
       def current_user_client
-        {
+        client_json = {
             id: current_user.id,
             client_id: @client.id, 
             first_name: @client.first_name, 
@@ -69,6 +69,23 @@ module Api
             number_of_dependents: @client.number_of_dependents,
             last_four_ssn: @client.last_four_ssn
         }
+
+        if @client.spouse_id.present?
+            spouse = Client.find_by(id: @client.spouse_id)
+            client_json[:spouse] = {
+                id: spouse.id,
+                first_name: spouse.first_name, 
+                middle_name: spouse.middle_name,
+                last_name: spouse.last_name,
+                email: current_user.email,
+                dob: spouse.dob ? spouse.dob.strftime('%Y-%m-%d') : nil,
+                filing_status: spouse.filing_status,
+                driver_license_id: spouse.driver_license_id,
+                last_four_ssn: spouse.last_four_ssn
+            }
+        end
+
+        client_json
       end
       
       def client_params

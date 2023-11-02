@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../Button";
 import Modal from "../Modal";
@@ -26,12 +26,6 @@ const AddSpouse = () => {
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  useEffect(() => {
-    if (!spouseErrors && isModalVisible) {
-      setIsModalVisible(false);
-    }
-  }, [spouseErrors, isModalVisible]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -68,7 +62,11 @@ const AddSpouse = () => {
         publicKey
       );
       const updatedSpouseData = { ...spouseData, ssn_encrypted };
-      dispatch(addSpouseOperation(currentUserId, updatedSpouseData));
+      await dispatch(addSpouseOperation(currentUserId, updatedSpouseData));
+      // After the action is dispatched, we can check for errors
+      if (!spouseErrors) {
+        setIsModalVisible(false);
+      }
     } catch (error) {
       console.error("There was a problem:", error);
     }
