@@ -37,7 +37,7 @@ module Api
             client = current_user.client
             client.update!(spouse_id: spouse.id)
             Rails.logger.info("Spouse successfully created and associated. Spouse ID: #{spouse.id}")
-            render json: { spouse: spouse, message: 'Spouse successfully created and associated.' }, status: :created
+            render json: { spouse: spouse, clientId: client.id, message: 'Spouse successfully created and associated.' }, status: :created
           else
             Rails.logger.warn("Spouse creation failed. Errors: #{spouse.errors.full_messages}")
             render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity

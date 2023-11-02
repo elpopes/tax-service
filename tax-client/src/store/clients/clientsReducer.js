@@ -59,20 +59,14 @@ const clientsReducer = (state = initialState, action) => {
     case CREATE_SPOUSE:
       const { clientId, spouse } = action.payload;
 
-      // Log the action payload and current state for debugging
-      console.log("Action Payload:", action.payload);
-      console.log("Current State:", state);
-
-      // Ensure that clientId and spouse exist in the payload
       if (clientId == null || spouse == null) {
         console.error("Missing clientId or spouse in action payload.");
-        return state; // Return current state if required data is missing
+        return state;
       }
 
-      // Ensure that a client with the given clientId already exists in the state
       if (!state.byId[clientId]) {
         console.error(`Client with ID ${clientId} not found in state.`);
-        return state; // Return current state if client not found
+        return state;
       }
 
       return {
@@ -81,7 +75,10 @@ const clientsReducer = (state = initialState, action) => {
           ...state.byId,
           [clientId]: {
             ...state.byId[clientId],
-            spouse: spouse,
+            spouse: {
+              ...spouse,
+              id: spouse.id || state.byId[clientId].spouse_id,
+            },
           },
         },
         spouseErrors: null,

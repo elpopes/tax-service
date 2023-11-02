@@ -160,7 +160,7 @@ export const addSpouseOperation =
       dispatch(clientRequestEnded());
 
       if (response.ok) {
-        dispatch(createSpouse(json));
+        dispatch(createSpouse({ clientId, spouse: json.spouse }));
       } else {
         const errorMessage = json.errors
           ? json.errors.join(", ")
@@ -169,7 +169,6 @@ export const addSpouseOperation =
       }
     } catch (error) {
       dispatch(clientRequestEnded());
-
       console.error("Spouse creation error:", error);
       dispatch(createSpouseError(error.message));
     }
