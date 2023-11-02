@@ -5,7 +5,6 @@ function Household({ spouse, dependents, residence }) {
       <h2>Household</h2>
 
       <div>
-        <h3>Spouse</h3>
         <SpouseDetails />
       </div>
 

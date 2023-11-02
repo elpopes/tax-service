@@ -3,16 +3,17 @@ import { useSelector } from "react-redux";
 import AddSpouse from "./AddSpouse";
 
 const SpouseDetails = () => {
-  const client = useSelector((state) => state.clientProfile.data);
-  const hasSpouse = client && client.spouse;
+  const userId = useSelector((state) => state.sessions.user.id);
+  const client = useSelector((state) => state.clients.byId[userId]);
+  const spouse = client && client.spouse;
 
   return (
     <div>
-      {hasSpouse ? (
+      {spouse ? (
         <div>
-          <h3>Spouse Details</h3>
+          <h3>Spouse Details:</h3>
           <p>
-            Name: {client.spouse.first_name} {client.spouse.last_name}
+            Name: {spouse.first_name} {spouse.last_name}
           </p>
           {/* Display other spouse details here */}
         </div>
