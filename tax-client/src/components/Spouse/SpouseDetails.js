@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import AddSpouse from "./AddSpouse";
+import EditSpouse from "./EditSpouse";
 
 const SpouseDetails = () => {
   const userId = useSelector((state) => state.sessions.user.id);
@@ -14,6 +15,7 @@ const SpouseDetails = () => {
           <h3>Spouse Details:</h3>
           <p>
             Name: {spouse.first_name} {spouse.last_name}
+            <EditSpouse />
           </p>
           {/* Display other spouse details here */}
         </div>
