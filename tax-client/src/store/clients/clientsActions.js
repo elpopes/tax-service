@@ -11,6 +11,10 @@ export const FETCH_CLIENT_PROFILE = "FETCH_CLIENT_PROFILE";
 export const FETCH_CLIENT_PROFILE_ERROR = "FETCH_CLIENT_PROFILE_ERROR";
 export const CREATE_SPOUSE = "CREATE_SPOUSE";
 export const CREATE_SPOUSE_ERROR = "CREATE_SPOUSE_ERROR";
+export const UPDATE_SPOUSE = "UPDATE_SPOUSE";
+export const UPDATE_SPOUSE_ERROR = "UPDATE_SPOUSE_ERROR";
+export const DELETE_SPOUSE = "DELETE_SPOUSE";
+export const DELETE_SPOUSE_ERROR = "DELETE_SPOUSE_ERROR";
 
 // Action creators
 export const updateClient = (client) => ({
@@ -68,5 +72,25 @@ export const createSpouse = (spouse) => ({
 
 export const createSpouseError = (error) => ({
   type: CREATE_SPOUSE_ERROR,
+  payload: error,
+});
+
+export const updateSpouse = (clientId, spouse) => ({
+  type: UPDATE_SPOUSE,
+  payload: { clientId, spouse },
+});
+
+export const updateSpouseError = (error) => ({
+  type: UPDATE_SPOUSE_ERROR,
+  payload: error,
+});
+
+export const deleteSpouse = (clientId) => ({
+  type: DELETE_SPOUSE,
+  payload: clientId,
+});
+
+export const deleteSpouseError = (error) => ({
+  type: DELETE_SPOUSE_ERROR,
   payload: error,
 });
