@@ -9,6 +9,10 @@ import {
   fetchClientProfileError,
   createSpouse,
   createSpouseError,
+  updateSpouse,
+  updateSpouseError,
+  deleteSpouse,
+  deleteSpouseError,
 } from "./clientsActions";
 import config from "../../config";
 
@@ -171,5 +175,72 @@ export const addSpouseOperation =
       dispatch(clientRequestEnded());
       console.error("Spouse creation error:", error);
       dispatch(createSpouseError(error.message));
+    }
+  };
+
+export const updateSpouseOperation =
+  (clientId, spouseData) => async (dispatch, getState) => {
+    dispatch(clientRequestStarted());
+    const token = getState().sessions.token;
+
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/update_spouse`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ spouse: spouseData }),
+        }
+      );
+
+      const json = await response.json();
+      dispatch(clientRequestEnded());
+
+      if (response.ok) {
+        dispatch(updateSpouse(clientId, json.spouse));
+      } else {
+        const errorMessage = json.errors
+          ? json.errors.join(", ")
+          : "Update spouse failed";
+        dispatch(updateSpouseError(errorMessage));
+      }
+    } catch (error) {
+      dispatch(clientRequestEnded());
+      console.error("Update spouse error:", error);
+      dispatch(updateSpouseError(error.message));
+    }
+  };
+
+export const deleteSpouseOperation =
+  (clientId) => async (dispatch, getState) => {
+    dispatch(clientRequestStarted());
+    const token = getState().sessions.token;
+
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/destroy_spouse`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(clientRequestEnded());
+
+      if (response.ok) {
+        dispatch(deleteSpouse(clientId));
+      } else {
+        const errorMessage = await response.text();
+        dispatch(deleteSpouseError(errorMessage));
+      }
+    } catch (error) {
+      dispatch(clientRequestEnded());
+      console.error("Delete spouse error:", error);
+      dispatch(deleteSpouseError(error.message));
     }
   };
