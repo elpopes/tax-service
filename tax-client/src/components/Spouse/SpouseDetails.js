@@ -15,9 +15,8 @@ const SpouseDetails = () => {
           <h3>Spouse Details:</h3>
           <p>
             Name: {spouse.first_name} {spouse.last_name}
-            <EditSpouse />
           </p>
-          {/* Display other spouse details here */}
+          <EditSpouse clientId={userId} />
         </div>
       ) : (
         <div>
