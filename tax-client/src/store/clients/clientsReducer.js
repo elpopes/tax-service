@@ -7,6 +7,10 @@ import {
   FETCH_CLIENT_PROFILE_ERROR,
   CREATE_SPOUSE,
   CREATE_SPOUSE_ERROR,
+  UPDATE_SPOUSE,
+  UPDATE_SPOUSE_ERROR,
+  DELETE_SPOUSE,
+  DELETE_SPOUSE_ERROR,
 } from "./clientsActions";
 
 const initialState = {
@@ -94,6 +98,46 @@ const clientsReducer = (state = initialState, action) => {
       return newClientsState;
     default:
       return state;
+
+    case UPDATE_SPOUSE:
+      const updatedClientId = action.payload.clientId;
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [updatedClientId]: {
+            ...state.byId[updatedClientId],
+            spouse: action.payload.spouse,
+          },
+        },
+        errors: null,
+      };
+
+    case UPDATE_SPOUSE_ERROR:
+      return {
+        ...state,
+        errors: action.payload,
+      };
+
+    case DELETE_SPOUSE:
+      const clientIdWithDeletedSpouse = action.payload;
+      const { [clientIdWithDeletedSpouse]: client, ...remainingClients } =
+        state.byId;
+      const updatedClient = { ...client, spouse: null };
+      return {
+        ...state,
+        byId: {
+          ...remainingClients,
+          [clientIdWithDeletedSpouse]: updatedClient,
+        },
+        errors: null,
+      };
+
+    case DELETE_SPOUSE_ERROR:
+      return {
+        ...state,
+        errors: action.payload,
+      };
   }
 };
 
