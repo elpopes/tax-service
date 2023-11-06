@@ -24,6 +24,8 @@ Rails.application.routes.draw do
         end
         member do
             post :create_spouse
+            patch :update_spouse
+            delete :destory_spouse
         end
       end
       get '/keys/public', to: 'keys#public_key'

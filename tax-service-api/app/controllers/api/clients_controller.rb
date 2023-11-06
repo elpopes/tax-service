@@ -47,6 +47,24 @@ module Api
       rescue ActiveRecord::Rollback
         Rails.logger.error("Transaction rolled back due to an error in spouse creation.")
       end
+
+      def update_spouse
+        spouse = Client.find(params[:id])
+        if spouse.update(spouse_params)
+          render json: { message: 'Spouse successfully updated.', spouse: spouse }, status: :ok
+        else
+          render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+  
+      def destroy_spouse
+        spouse = Client.find(params[:id])
+        if spouse.destroy
+          render json: { message: 'Spouse successfully removed.' }, status: :ok
+        else
+          render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
       
       private
     
