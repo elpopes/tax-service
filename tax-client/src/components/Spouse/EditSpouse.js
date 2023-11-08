@@ -7,6 +7,7 @@ import {
   updateSpouseOperation,
   deleteSpouseOperation,
 } from "../../store/clients/clientsOperations";
+import encryptWithPublicKey from "../../store/utils/encryption";
 import { FILING_STATUS_MAP } from "../../store/utils/constants";
 
 const EditSpouse = ({ clientId }) => {
@@ -25,6 +26,8 @@ const EditSpouse = ({ clientId }) => {
     number_of_dependents: 0,
     ssn_encrypted: "",
   });
+  const [actualSSN, setActualSSN] = useState("");
+  const [formattedSSN, setFormattedSSN] = useState("");
 
   useEffect(() => {
     if (spouseDetails) {
@@ -34,14 +37,37 @@ const EditSpouse = ({ clientId }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setSpouseData({
-      ...spouseData,
-      [name]: value,
-    });
+    if (name !== "ssn")
+      setSpouseData({
+        ...spouseData,
+        [name]: value,
+      });
+  };
+
+  const handleSSNChange = (e) => {
+    const rawSSN = e.target.value.replace(/-/g, "");
+    if (rawSSN.length > 9) return;
+    const formatted = [
+      rawSSN.substring(0, 3),
+      rawSSN.substring(3, 5),
+      rawSSN.substring(5, 9),
+    ]
+      .filter(Boolean)
+      .join("-");
+    setActualSSN(rawSSN);
+    setFormattedSSN(formatted);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (actualSSN.length === 9) {
+      const publicKey = sessionStorage.getItem("public_key");
+      const { ssn_encrypted } = await encryptWithPublicKey(
+        actualSSN,
+        publicKey
+      );
+      spouseData.ssn_encrypted = ssn_encrypted;
+    }
     await dispatch(updateSpouseOperation(clientId, spouseData));
     setIsModalVisible(false);
   };
@@ -88,7 +114,13 @@ const EditSpouse = ({ clientId }) => {
             value={spouseData.dob}
             onChange={handleInputChange}
           />
-
+          <input
+            type="text"
+            name="driver_license_id"
+            placeholder="Driver's License ID"
+            value={spouseData.driver_license_id}
+            onChange={handleInputChange}
+          />
           <select
             name="filing_status"
             value={spouseData.filing_status}
@@ -96,22 +128,22 @@ const EditSpouse = ({ clientId }) => {
             required
           >
             <option value="">--Please choose an option--</option>
-            <option value={FILING_STATUS_MAP.single}>Single</option>
             <option value={FILING_STATUS_MAP.married_joint}>
               Married Filing Jointly
             </option>
             <option value={FILING_STATUS_MAP.married_separate}>
               Married Filing Separately
             </option>
-            <option value={FILING_STATUS_MAP.head_of_household}>
-              Head of Household
-            </option>
-            <option value={FILING_STATUS_MAP.widower}>
-              Qualifying Widow(er)
-            </option>
           </select>
 
           <p>Last Four SSN: {spouseData.last_four_ssn}</p>
+          <input
+            type="text"
+            name="ssn"
+            placeholder="Social Security Number"
+            value={formattedSSN}
+            onChange={handleSSNChange}
+          />
 
           <Button type="submit">Save Changes</Button>
         </form>
