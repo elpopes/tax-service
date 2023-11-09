@@ -8,7 +8,6 @@ import {
   deleteSpouseOperation,
 } from "../../store/clients/clientsOperations";
 import encryptWithPublicKey from "../../store/utils/encryption";
-import { FILING_STATUS_MAP } from "../../store/utils/constants";
 
 const EditSpouse = ({ clientId }) => {
   const dispatch = useDispatch();
@@ -21,9 +20,7 @@ const EditSpouse = ({ clientId }) => {
     last_name: "",
     middle_name: "",
     dob: "",
-    filing_status: "",
     driver_license_id: "",
-    number_of_dependents: 0,
     ssn_encrypted: "",
   });
   const [actualSSN, setActualSSN] = useState("");
@@ -38,12 +35,7 @@ const EditSpouse = ({ clientId }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "filing_status") {
-      const enumValue = Object.keys(FILING_STATUS_MAP).find(
-        (key) => FILING_STATUS_MAP[key] === value
-      );
-      setSpouseData({ ...spouseData, [name]: enumValue });
-    } else if (name !== "ssn") {
+    if (name !== "ssn") {
       setSpouseData({ ...spouseData, [name]: value });
     }
   };
@@ -72,7 +64,17 @@ const EditSpouse = ({ clientId }) => {
       );
       spouseData.ssn_encrypted = ssn_encrypted;
     }
-    await dispatch(updateSpouseOperation(clientId, spouseData));
+    const {
+      filing_status,
+      last_four_ssn,
+      ...dataWithoutFilingStatusAndLastFour
+    } = spouseData;
+    await dispatch(
+      updateSpouseOperation(
+        spouseDetails.id,
+        dataWithoutFilingStatusAndLastFour
+      )
+    );
     setIsModalVisible(false);
   };
 
@@ -129,16 +131,6 @@ const EditSpouse = ({ clientId }) => {
             value={spouseData.driver_license_id}
             onChange={handleInputChange}
           />
-          <select
-            name="filing_status"
-            value={FILING_STATUS_MAP[spouseData.filing_status] || ""}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="">--Please choose an option--</option>
-            <option value="married_joint">Married Filing Jointly</option>
-            <option value="married_separate">Married Filing Separately</option>
-          </select>
 
           <p>Last Four SSN: {spouseData.last_four_ssn}</p>
           <input

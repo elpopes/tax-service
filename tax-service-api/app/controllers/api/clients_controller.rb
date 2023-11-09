@@ -125,9 +125,7 @@ module Api
             :last_name, 
             :middle_name,
             :dob, 
-            :filing_status, 
             :driver_license_id, 
-            :last_four_ssn,
             :ssn_encrypted,
             :spouse_of
         )
