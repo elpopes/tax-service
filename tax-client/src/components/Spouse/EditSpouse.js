@@ -38,16 +38,12 @@ const EditSpouse = ({ clientId }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "filing_status") {
-      const enumKey = FILING_STATUS_MAP[value] || value;
-      setSpouseData({
-        ...spouseData,
-        [name]: enumKey,
-      });
+      const enumValue = Object.keys(FILING_STATUS_MAP).find(
+        (key) => FILING_STATUS_MAP[key] === value
+      );
+      setSpouseData({ ...spouseData, [name]: enumValue });
     } else if (name !== "ssn") {
-      setSpouseData({
-        ...spouseData,
-        [name]: value,
-      });
+      setSpouseData({ ...spouseData, [name]: value });
     }
   };
 
