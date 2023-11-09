@@ -1,8 +1,12 @@
 export const selectClientById = (state, clientId) =>
   state.clients.byId[clientId];
 export const selectClientByUserId = (state, userId) => {
+  console.log("All clients:", state.clients.byId);
+  console.log("Current userId:", userId);
   const allClients = Object.values(state.clients.byId);
-  return allClients.find((client) => client.user_id === userId) || null;
+  const client = allClients.find((client) => client.user_id === userId);
+  console.log("Selected client:", client);
+  return client || null;
 };
 
 export const selectClientErrors = (state) => state.clients.errors;
