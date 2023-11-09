@@ -56,24 +56,21 @@ const EditSpouse = ({ clientId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let updatedSpouseData = { ...spouseData };
+
     if (actualSSN.length === 9) {
       const publicKey = sessionStorage.getItem("public_key");
-      const { ssn_encrypted } = await encryptWithPublicKey(
-        actualSSN,
-        publicKey
-      );
-      spouseData.ssn_encrypted = ssn_encrypted;
+      const encryptionResult = await encryptWithPublicKey(actualSSN, publicKey);
+      updatedSpouseData = {
+        ...updatedSpouseData,
+        ssn_encrypted: encryptionResult.ssn_encrypted,
+      };
     }
-    const {
-      filing_status,
-      last_four_ssn,
-      ...dataWithoutFilingStatusAndLastFour
-    } = spouseData;
+
+    const { filing_status, last_four_ssn, ...dataWithoutUnneededFields } =
+      updatedSpouseData;
     await dispatch(
-      updateSpouseOperation(
-        spouseDetails.id,
-        dataWithoutFilingStatusAndLastFour
-      )
+      updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
     );
     setIsModalVisible(false);
   };

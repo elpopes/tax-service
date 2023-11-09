@@ -7,9 +7,14 @@ import { selectClientByUserId } from "../../store/clients/clientsSelectors";
 const SpouseDetails = () => {
   const userId = useSelector((state) => state.sessions.user.id);
   const client = useSelector((state) => selectClientByUserId(state, userId));
-  const spouse = client && client.spouse;
 
   console.log("Client:", client);
+
+  if (!client) {
+    return <div>Loading...</div>;
+  }
+
+  const spouse = client.spouse;
   console.log("Spouse:", spouse);
 
   return (
