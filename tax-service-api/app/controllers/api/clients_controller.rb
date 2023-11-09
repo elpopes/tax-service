@@ -95,7 +95,6 @@ module Api
                 first_name: spouse.first_name, 
                 middle_name: spouse.middle_name,
                 last_name: spouse.last_name,
-                email: current_user.email,
                 dob: spouse.dob ? spouse.dob.strftime('%Y-%m-%d') : nil,
                 filing_status: spouse.filing_status,
                 driver_license_id: spouse.driver_license_id,
