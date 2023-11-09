@@ -30,6 +30,7 @@ const EditSpouse = ({ clientId }) => {
   const [formattedSSN, setFormattedSSN] = useState("");
 
   useEffect(() => {
+    console.log("Spouse Details from Redux:", spouseDetails);
     if (spouseDetails) {
       setSpouseData(spouseDetails);
     }
