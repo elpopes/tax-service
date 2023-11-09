@@ -16,7 +16,7 @@ const SpouseDetails = () => {
           <p>
             Name: {spouse.first_name} {spouse.last_name}
           </p>
-          <EditSpouse clientId={userId} />
+          <EditSpouse clientId={client.client_id} />
         </div>
       ) : (
         <div>

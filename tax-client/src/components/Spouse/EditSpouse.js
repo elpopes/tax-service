@@ -37,11 +37,18 @@ const EditSpouse = ({ clientId }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name !== "ssn")
+    if (name === "filing_status") {
+      const enumKey = FILING_STATUS_MAP[value] || value;
+      setSpouseData({
+        ...spouseData,
+        [name]: enumKey,
+      });
+    } else if (name !== "ssn") {
       setSpouseData({
         ...spouseData,
         [name]: value,
       });
+    }
   };
 
   const handleSSNChange = (e) => {
@@ -77,6 +84,10 @@ const EditSpouse = ({ clientId }) => {
       await dispatch(deleteSpouseOperation(clientId));
       setIsModalVisible(false);
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -123,17 +134,13 @@ const EditSpouse = ({ clientId }) => {
           />
           <select
             name="filing_status"
-            value={spouseData.filing_status}
+            value={FILING_STATUS_MAP[spouseData.filing_status] || ""}
             onChange={handleInputChange}
             required
           >
             <option value="">--Please choose an option--</option>
-            <option value={FILING_STATUS_MAP.married_joint}>
-              Married Filing Jointly
-            </option>
-            <option value={FILING_STATUS_MAP.married_separate}>
-              Married Filing Separately
-            </option>
+            <option value="married_joint">Married Filing Jointly</option>
+            <option value="married_separate">Married Filing Separately</option>
           </select>
 
           <p>Last Four SSN: {spouseData.last_four_ssn}</p>
@@ -146,6 +153,9 @@ const EditSpouse = ({ clientId }) => {
           />
 
           <Button type="submit">Save Changes</Button>
+          <Button type="button" onClick={handleCloseModal}>
+            Cancel
+          </Button>
         </form>
         <Button onClick={handleDelete}>Delete Spouse</Button>
       </Modal>

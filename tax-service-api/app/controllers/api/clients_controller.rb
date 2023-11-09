@@ -121,13 +121,14 @@ module Api
 
       def spouse_params
         params.require(:spouse).permit(
+            :id,
             :first_name, 
             :last_name, 
-            :middle_name, 
+            :middle_name,
             :dob, 
             :filing_status, 
             :driver_license_id, 
-            :number_of_dependents, 
+            :last_four_ssn,
             :ssn_encrypted,
             :spouse_of
         )
