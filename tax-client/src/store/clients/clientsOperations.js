@@ -197,20 +197,26 @@ export const updateSpouseOperation =
       );
 
       const json = await response.json();
+      console.log("Response JSON:", json); // Log the response JSON
       dispatch(clientRequestEnded());
 
       if (response.ok) {
         dispatch(updateSpouse(clientId, json.spouse));
+        console.log("Dispatched updateSpouse:", json.spouse); // Log success case
+        return { success: true, spouse: json.spouse }; // Return success result
       } else {
         const errorMessage = json.errors
           ? json.errors.join(", ")
           : "Update spouse failed";
         dispatch(updateSpouseError(errorMessage));
+        console.log("Dispatched updateSpouseError:", errorMessage); // Log error case
+        return { success: false, error: errorMessage }; // Return error result
       }
     } catch (error) {
       dispatch(clientRequestEnded());
       console.error("Update spouse error:", error);
       dispatch(updateSpouseError(error.message));
+      return { success: false, error: error.message }; // Return error result
     }
   };
 
