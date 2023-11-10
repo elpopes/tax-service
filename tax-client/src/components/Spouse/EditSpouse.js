@@ -61,18 +61,40 @@ const EditSpouse = ({ clientId }) => {
     if (actualSSN.length === 9) {
       const publicKey = sessionStorage.getItem("public_key");
       const encryptionResult = await encryptWithPublicKey(actualSSN, publicKey);
-      updatedSpouseData = {
-        ...updatedSpouseData,
-        ssn_encrypted: encryptionResult.ssn_encrypted,
-      };
+      updatedSpouseData.ssn_encrypted = encryptionResult.ssn_encrypted;
     }
 
     const { filing_status, last_four_ssn, ...dataWithoutUnneededFields } =
       updatedSpouseData;
-    await dispatch(
-      updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
-    );
-    setIsModalVisible(false);
+
+    try {
+      // Dispatch the update operation and handle the promise directly
+      const actionResult = await dispatch(
+        updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
+      );
+
+      // Check if the dispatch was successful based on the action result structure
+      if (!actionResult || actionResult instanceof Error) {
+        throw new Error("Update failed due to unknown error");
+      }
+
+      // Check if there's an error property in the action result
+      if (actionResult.error) {
+        throw new Error(actionResult.error.message);
+      }
+
+      // Clear the SSN fields after a successful update
+      setActualSSN("");
+      setFormattedSSN("");
+
+      // Optionally, update the local state with the new last four digits if needed
+      // ...
+
+      setIsModalVisible(false);
+    } catch (error) {
+      // Handle the error state here
+      console.error("Update spouse failed", error);
+    }
   };
 
   const handleDelete = async () => {
