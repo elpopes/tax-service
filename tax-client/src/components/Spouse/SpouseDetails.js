@@ -15,7 +15,6 @@ const SpouseDetails = () => {
   }
 
   const spouse = client.spouse;
-  console.log("Spouse:", spouse);
 
   return (
     <div>

@@ -10,6 +10,7 @@ import {
 import encryptWithPublicKey from "../../store/utils/encryption";
 
 const EditSpouse = ({ clientId }) => {
+  console.log("ClientId:", clientId);
   const dispatch = useDispatch();
   const spouseDetails = useSelector((state) =>
     selectSpouseByClientId(state, clientId)
@@ -74,7 +75,7 @@ const EditSpouse = ({ clientId }) => {
         dataWithoutUnneededFields
       );
       const actionResult = await dispatch(
-        updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
+        updateSpouseOperation(clientId, dataWithoutUnneededFields)
       );
 
       console.log("ActionResult from updateSpouseOperation:", actionResult);

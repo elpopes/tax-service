@@ -101,7 +101,10 @@ const clientsReducer = (state = initialState, action) => {
 
     case UPDATE_SPOUSE:
       const updatedClientId = action.payload.clientId;
-      return {
+      console.log("Current state before UPDATE_SPOUSE:", state);
+      console.log("Payload received in UPDATE_SPOUSE:", action.payload);
+
+      const newState = {
         ...state,
         byId: {
           ...state.byId,
@@ -112,6 +115,9 @@ const clientsReducer = (state = initialState, action) => {
         },
         errors: null,
       };
+
+      console.log("New state after UPDATE_SPOUSE:", newState);
+      return newState;
 
     case UPDATE_SPOUSE_ERROR:
       return {
