@@ -51,11 +51,14 @@ module Api
       def update_spouse
         spouse = Client.find(params[:id])
         if spouse.update(spouse_params)
-          render json: { message: 'Spouse successfully updated.', spouse: spouse, last_four_ssn: spouse.last_four_ssn }, status: :ok
+          last_four_ssn = spouse.last_four_ssn
+          Rails.logger.info("Spouse updated. Last Four SSN: #{last_four_ssn}")
+          render json: { message: 'Spouse successfully updated.', spouse: spouse, last_four_ssn: last_four_ssn }, status: :ok
         else
           render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
         end
       end
+      
   
       def destroy_spouse
         spouse = Client.find(params[:id])
