@@ -4,15 +4,15 @@ import { updateClientOperation } from "../store/clients/clientsOperations";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import Button from "./Button";
+import { selectClientByUserId } from "../store/clients/clientsSelectors";
 import encryptWithPublicKey from "../store/utils/encryption";
 import { FILING_STATUS_MAP } from "../store/utils/constants";
 
 function ProfilePage() {
   const dispatch = useDispatch();
-  const user_id = useSelector((state) => state.sessions.user?.id);
-  const client = useSelector((state) => state.clients.byId[user_id]) || {};
   const navigate = useNavigate();
-
+  const userId = useSelector((state) => state.sessions.user?.id);
+  const client = useSelector((state) => selectClientByUserId(state, userId));
   const [actualSSN, setActualSSN] = useState("");
   const [formattedSSN, setFormattedSSN] = useState("");
   const [form_data, setFormData] = useState({
