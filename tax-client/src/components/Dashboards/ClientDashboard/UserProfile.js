@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchClientProfileOperation } from "../../../store/clients/clientsOperations";
 import { Link } from "react-router-dom";
 import {
-  selectClientById,
+  selectClientByUserId,
   selectClientErrors,
 } from "../../../store/clients/clientsSelectors";
 
@@ -25,7 +25,7 @@ function UserProfile() {
   }, [dispatch]);
 
   const clientData = useSelector((state) =>
-    selectClientById(state, state.sessions.user.id)
+    selectClientByUserId(state, state.sessions.user.id)
   );
 
   if (clientError) {

@@ -3,7 +3,12 @@ export const selectClientById = (state, clientId) =>
 export const selectClientByUserId = (state, userId) => {
   console.log("All clients:", state.clients.byId);
   console.log("Current userId:", userId);
-  const client = state.clients.byId[userId];
+
+  // Search for the client whose user_id matches the given userId
+  const client = Object.values(state.clients.byId).find(
+    (client) => client.user_id === userId
+  );
+
   console.log("Selected client:", client);
   return client || null;
 };
