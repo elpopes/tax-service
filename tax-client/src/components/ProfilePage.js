@@ -27,22 +27,24 @@ function ProfilePage() {
   });
 
   useEffect(() => {
-    if (client.last_four_ssn) {
-      const lastFourSSN = client.last_four_ssn;
-      const maskedSSN = `***-**-${lastFourSSN}`;
-      setFormattedSSN(maskedSSN);
-      setActualSSN(`000000000${lastFourSSN}`.slice(-9));
-    }
+    if (client) {
+      if (client.last_four_ssn) {
+        const lastFourSSN = client.last_four_ssn;
+        const maskedSSN = `***-**-${lastFourSSN}`;
+        setFormattedSSN(maskedSSN);
+        setActualSSN(`000000000${lastFourSSN}`.slice(-9));
+      }
 
-    setFormData({
-      first_name: client.first_name || "",
-      last_name: client.last_name || "",
-      middle_name: client.middle_name || "",
-      dob: client.dob || "",
-      filing_status: client.filing_status || "",
-      driver_license_id: client.driver_license_id || "",
-      number_of_dependents: client.number_of_dependents || 0,
-    });
+      setFormData({
+        first_name: client.first_name || "",
+        last_name: client.last_name || "",
+        middle_name: client.middle_name || "",
+        dob: client.dob || "",
+        filing_status: client.filing_status || "",
+        driver_license_id: client.driver_license_id || "",
+        number_of_dependents: client.number_of_dependents || 0,
+      });
+    }
   }, [client]);
 
   const handleInputChange = (e) => {
