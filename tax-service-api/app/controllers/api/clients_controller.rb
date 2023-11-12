@@ -78,8 +78,8 @@ module Api
 
       def current_user_client
         client_json = {
-            id: current_user.id,
-            client_id: @client.id, 
+            id: @client.id, 
+            user_id: @client.user_id,
             first_name: @client.first_name, 
             middle_name: @client.middle_name,
             last_name: @client.last_name,
@@ -91,7 +91,7 @@ module Api
             number_of_dependents: @client.number_of_dependents,
             last_four_ssn: @client.last_four_ssn
         }
-
+      
         if @client.spouse_id.present?
             spouse = Client.find_by(id: @client.spouse_id)
             client_json[:spouse] = {
@@ -105,7 +105,7 @@ module Api
                 last_four_ssn: spouse.last_four_ssn
             }
         end
-
+      
         client_json
       end
       
