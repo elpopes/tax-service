@@ -75,7 +75,7 @@ const EditSpouse = ({ clientId }) => {
         dataWithoutUnneededFields
       );
       const actionResult = await dispatch(
-        updateSpouseOperation(clientId, dataWithoutUnneededFields)
+        updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
       );
 
       console.log("ActionResult from updateSpouseOperation:", actionResult);
