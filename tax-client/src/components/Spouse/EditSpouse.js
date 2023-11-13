@@ -69,41 +69,25 @@ const EditSpouse = ({ clientId }) => {
       updatedSpouseData;
 
     try {
-      // Dispatch the update operation and handle the promise directly
-      console.log(
-        "Dispatching updateSpouseOperation with data:",
-        dataWithoutUnneededFields
-      );
       const actionResult = await dispatch(
         updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
       );
 
-      console.log("ActionResult from updateSpouseOperation:", actionResult);
+      if (actionResult && actionResult.success && actionResult.spouse) {
+        console.log("Update successful. ActionResult:", actionResult);
 
-      // Check if the dispatch was successful based on the action result structure
-      if (!actionResult || actionResult instanceof Error) {
-        console.error("ActionResult is null or an instance of Error");
-        throw new Error("Update failed due to unknown error");
-      }
+        setSpouseData(actionResult.spouse);
 
-      // Check if there's an error property in the action result
-      if (actionResult.error) {
+        setActualSSN("");
+        setFormattedSSN("");
+        setIsModalVisible(false);
+      } else if (actionResult && actionResult.error) {
         console.error("Error in ActionResult:", actionResult.error.message);
         throw new Error(actionResult.error.message);
+      } else {
+        throw new Error("Update failed due to unknown error");
       }
-
-      console.log("Update successful. ActionResult:", actionResult);
-
-      // Clear the SSN fields after a successful update
-      setActualSSN("");
-      setFormattedSSN("");
-
-      // Optionally, update the local state with the new last four digits if needed
-      // ...
-
-      setIsModalVisible(false);
     } catch (error) {
-      // Handle the error state here
       console.error("Update spouse failed", error);
     }
   };
