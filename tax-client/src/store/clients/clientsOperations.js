@@ -40,7 +40,7 @@ export const updateClientOperation =
 
       // Make the API call to update the client
       const response = await fetch(`${config.API_BASE_URL}/clients/update`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
