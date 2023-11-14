@@ -26,6 +26,10 @@ Rails.application.routes.draw do
             post :create_spouse
             patch :update_spouse
             delete :destroy_spouse
+
+            post :create_dependent
+            patch :update_dependent, on: :collection
+            delete :destroy_dependent, on: :collection
         end
       end
       get '/keys/public', to: 'keys#public_key'
