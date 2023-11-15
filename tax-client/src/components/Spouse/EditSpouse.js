@@ -94,7 +94,7 @@ const EditSpouse = ({ clientId }) => {
 
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete the spouse details?")) {
-      await dispatch(deleteSpouseOperation(spouseDetails.id));
+      await dispatch(deleteSpouseOperation(clientId));
       setIsModalVisible(false);
     }
   };

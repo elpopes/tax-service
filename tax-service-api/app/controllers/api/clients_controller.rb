@@ -68,13 +68,21 @@ module Api
       
   
       def destroy_spouse
-        spouse = Client.find(params[:id])
+        client = Client.find(params[:id])
+        spouse = Client.find_by(id: client.spouse_id)
+      
+        if spouse.nil?
+          render json: { error: 'No spouse found for this client.' }, status: :not_found and return
+        end
+      
         if spouse.destroy
+          client.update(spouse_id: nil)
           render json: { message: 'Spouse successfully removed.' }, status: :ok
         else
           render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
         end
       end
+      
       
       private
     

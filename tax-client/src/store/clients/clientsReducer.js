@@ -127,14 +127,14 @@ const clientsReducer = (state = initialState, action) => {
 
     case DELETE_SPOUSE:
       const clientIdWithDeletedSpouse = action.payload;
-      const { [clientIdWithDeletedSpouse]: client, ...remainingClients } =
-        state.byId;
-      const updatedClient = { ...client, spouse: null };
       return {
         ...state,
         byId: {
-          ...remainingClients,
-          [clientIdWithDeletedSpouse]: updatedClient,
+          ...state.byId,
+          [clientIdWithDeletedSpouse]: {
+            ...state.byId[clientIdWithDeletedSpouse],
+            spouse: null,
+          },
         },
         errors: null,
       };
