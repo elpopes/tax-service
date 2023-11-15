@@ -20,3 +20,18 @@ export const selectSpouseByClientId = (state, clientId) => {
   return spouse;
 };
 export const selectSpouseErrors = (state) => state.clients.spouseErrors;
+
+export const selectDependentsByClientId = (state, clientId) => {
+  return state.clients.byId[clientId]?.dependents || [];
+};
+
+export const selectDependentById = (state, dependentId) => {
+  const allDependents = Object.values(state.clients.byId).flatMap(
+    (client) => client.dependents || []
+  );
+  return (
+    allDependents.find((dependent) => dependent.id === dependentId) || null
+  );
+};
+
+export const selectDependentErrors = (state) => state.clients.dependentErrors;
