@@ -49,7 +49,13 @@ module Api
       end
 
       def update_spouse
-        spouse = Client.find(params[:id])
+        client = Client.find(params[:id])
+        spouse = client.spouse
+      
+        if spouse.nil?
+          render json: { error: 'Spouse not found' }, status: :not_found and return
+        end
+      
         if spouse.update(spouse_params)
           Rails.logger.info("Spouse updated. Last Four SSN: #{spouse.last_four_ssn}")
           updated_spouse = spouse.attributes.merge(last_four_ssn: spouse.last_four_ssn)
@@ -58,7 +64,6 @@ module Api
           render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
         end
       end
-      
       
   
       def destroy_spouse
