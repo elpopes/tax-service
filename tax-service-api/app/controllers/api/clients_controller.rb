@@ -36,8 +36,9 @@ module Api
           if spouse.save
             client = current_user.client
             client.update!(spouse_id: spouse.id)
+            updated_spouse = spouse.attributes.merge(last_four_ssn: spouse.last_four_ssn)
             Rails.logger.info("Spouse successfully created and associated. Spouse ID: #{spouse.id}")
-            render json: { spouse: spouse, clientId: client.id, message: 'Spouse successfully created and associated.' }, status: :created
+            render json: { spouse: updated_spouse, clientId: client.id, message: 'Spouse successfully created and associated.' }, status: :created
           else
             Rails.logger.warn("Spouse creation failed. Errors: #{spouse.errors.full_messages}")
             render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
