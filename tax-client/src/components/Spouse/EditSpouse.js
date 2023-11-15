@@ -70,7 +70,7 @@ const EditSpouse = ({ clientId }) => {
 
     try {
       const actionResult = await dispatch(
-        updateSpouseOperation(spouseDetails.id, dataWithoutUnneededFields)
+        updateSpouseOperation(clientId, dataWithoutUnneededFields)
       );
 
       if (actionResult && actionResult.success && actionResult.spouse) {

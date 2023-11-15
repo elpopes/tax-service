@@ -49,8 +49,8 @@ module Api
       end
 
       def update_spouse
-        client = Client.find(params[:id])
-        spouse = client.spouse
+        main_client = Client.find(params[:id])
+        spouse = Client.find_by(id: main_client.spouse_id)
       
         if spouse.nil?
           render json: { error: 'Spouse not found' }, status: :not_found and return
@@ -64,6 +64,7 @@ module Api
           render json: { errors: spouse.errors.full_messages }, status: :unprocessable_entity
         end
       end
+      
       
   
       def destroy_spouse
