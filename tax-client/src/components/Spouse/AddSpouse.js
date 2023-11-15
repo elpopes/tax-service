@@ -5,7 +5,6 @@ import Modal from "../Modal";
 import { addSpouseOperation } from "../../store/clients/clientsOperations";
 import { selectSpouseErrors } from "../../store/clients/clientsSelectors";
 import encryptWithPublicKey from "../../store/utils/encryption";
-import { FILING_STATUS_MAP } from "../../store/utils/constants";
 
 const AddSpouse = () => {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ const AddSpouse = () => {
     last_name: "",
     middle_name: "",
     dob: "",
-    filing_status: "",
     driver_license_id: "",
     number_of_dependents: 0,
     ssn_encrypted: "",
@@ -105,21 +103,6 @@ const AddSpouse = () => {
             value={spouseData.dob}
             onChange={handleInputChange}
           />
-
-          <select
-            name="filing_status"
-            value={spouseData.filing_status}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="">--Please choose an option--</option>
-            <option value={FILING_STATUS_MAP["Married Filing Separately"]}>
-              Married Filing Separately
-            </option>
-            <option value={FILING_STATUS_MAP["Married Filing Jointly"]}>
-              Married Filing Jointly
-            </option>
-          </select>
 
           <input
             type="text"

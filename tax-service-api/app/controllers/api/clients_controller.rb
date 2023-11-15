@@ -121,7 +121,6 @@ module Api
                 middle_name: spouse.middle_name,
                 last_name: spouse.last_name,
                 dob: spouse.dob ? spouse.dob.strftime('%Y-%m-%d') : nil,
-                filing_status: spouse.filing_status,
                 driver_license_id: spouse.driver_license_id,
                 last_four_ssn: spouse.last_four_ssn
             }
