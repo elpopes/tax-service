@@ -90,6 +90,43 @@ module Api
         end
       end
       
+      def create_dependent
+        ActiveRecord::Base.transaction do
+          dependent = Client.new(dependent_params)
+          if dependent.save
+            client = current_user.client
+            client.dependents << dependent
+            Rails.logger.info("Dependent successfully created. Dependent ID: #{dependent.id}")
+            render json: { dependent: dependent, clientId: client.id, message: 'Dependent successfully created.' }, status: :created
+          else
+            Rails.logger.warn("Dependent creation failed. Errors: #{dependent.errors.full_messages}")
+            render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
+            raise ActiveRecord::Rollback
+          end
+        end
+      rescue ActiveRecord::Rollback
+        Rails.logger.error("Transaction rolled back due to an error in dependent creation.")
+      end
+  
+      def update_dependent
+        dependent = Client.find(params[:id])
+        if dependent.update(dependent_params)
+          Rails.logger.info("Dependent updated. Last Four SSN: #{dependent.last_four_ssn}")
+          updated_dependent = dependent.attributes.merge(last_four_ssn: dependent.last_four_ssn)
+          render json: { message: 'Dependent successfully updated.', dependent: updated_dependent }, status: :ok
+        else
+          render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+  
+      def destroy_dependent
+        dependent = Client.find(params[:id])
+        if dependent.destroy
+          render json: { message: 'Dependent successfully removed.' }, status: :ok
+        else
+          render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
       
       private
     
@@ -129,43 +166,6 @@ module Api
         client_json
       end
 
-      def create_dependent
-        ActiveRecord::Base.transaction do
-          dependent = Client.new(dependent_params)
-          if dependent.save
-            client = current_user.client
-            client.dependents << dependent
-            Rails.logger.info("Dependent successfully created. Dependent ID: #{dependent.id}")
-            render json: { dependent: dependent, clientId: client.id, message: 'Dependent successfully created.' }, status: :created
-          else
-            Rails.logger.warn("Dependent creation failed. Errors: #{dependent.errors.full_messages}")
-            render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
-            raise ActiveRecord::Rollback
-          end
-        end
-      rescue ActiveRecord::Rollback
-        Rails.logger.error("Transaction rolled back due to an error in dependent creation.")
-      end
-  
-      def update_dependent
-        dependent = Client.find(params[:id])
-        if dependent.update(dependent_params)
-          Rails.logger.info("Dependent updated. Last Four SSN: #{dependent.last_four_ssn}")
-          updated_dependent = dependent.attributes.merge(last_four_ssn: dependent.last_four_ssn)
-          render json: { message: 'Dependent successfully updated.', dependent: updated_dependent }, status: :ok
-        else
-          render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
-        end
-      end
-  
-      def destroy_dependent
-        dependent = Client.find(params[:id])
-        if dependent.destroy
-          render json: { message: 'Dependent successfully removed.' }, status: :ok
-        else
-          render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
-        end
-      end
       
       def client_params
         params.require(:client).permit(
