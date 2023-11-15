@@ -22,6 +22,11 @@ module Api
             Rails.logger.debug "Update failed for Client"
             raise ActiveRecord::Rollback
           end
+
+          if @client.spouse_id.present?
+            spouse = Client.find(@client.spouse_id)
+            spouse.update(filing_status: @client.filing_status)
+          end
         end
         Rails.logger.debug "Successfully updated Client and User"
         render json: current_user_client, status: :ok
