@@ -13,6 +13,12 @@ import {
   updateSpouseError,
   deleteSpouse,
   deleteSpouseError,
+  createDependent,
+  createDependentError,
+  updateDependent,
+  updateDependentError,
+  deleteDependent,
+  deleteDependentError,
 } from "./clientsActions";
 import config from "../../config";
 
@@ -248,5 +254,98 @@ export const deleteSpouseOperation =
       dispatch(clientRequestEnded());
       console.error("Delete spouse error:", error);
       dispatch(deleteSpouseError(error.message));
+    }
+  };
+
+export const createDependentOperation =
+  (clientId, dependentData) => async (dispatch, getState) => {
+    dispatch(clientRequestStarted());
+    const token = getState().sessions.token;
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/create_dependent`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ dependent: dependentData }),
+        }
+      );
+
+      if (response.ok) {
+        const newDependent = await response.json();
+        dispatch(createDependent(clientId, newDependent));
+      } else {
+        const errorMessage = await response.text();
+        dispatch(createDependentError(errorMessage));
+      }
+    } catch (error) {
+      console.error("Create dependent error:", error);
+      dispatch(createDependentError(error.message));
+    } finally {
+      dispatch(clientRequestEnded());
+    }
+  };
+
+export const updateDependentOperation =
+  (clientId, dependentId, dependentData) => async (dispatch, getState) => {
+    dispatch(clientRequestStarted());
+    const token = getState().sessions.token;
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/dependents/${dependentId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ dependent: dependentData }),
+        }
+      );
+
+      if (response.ok) {
+        const updatedDependent = await response.json();
+        dispatch(updateDependent(clientId, dependentId, updatedDependent));
+      } else {
+        const errorMessage = await response.text();
+        dispatch(updateDependentError(errorMessage));
+      }
+    } catch (error) {
+      console.error("Update dependent error:", error);
+      dispatch(updateDependentError(error.message));
+    } finally {
+      dispatch(clientRequestEnded());
+    }
+  };
+
+export const deleteDependentOperation =
+  (clientId, dependentId) => async (dispatch, getState) => {
+    dispatch(clientRequestStarted());
+    const token = getState().sessions.token;
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/dependents/${dependentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        dispatch(deleteDependent(clientId, dependentId));
+      } else {
+        const errorMessage = await response.text();
+        dispatch(deleteDependentError(errorMessage));
+      }
+    } catch (error) {
+      console.error("Delete dependent error:", error);
+      dispatch(deleteDependentError(error.message));
+    } finally {
+      dispatch(clientRequestEnded());
     }
   };
