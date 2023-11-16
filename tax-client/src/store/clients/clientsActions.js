@@ -15,6 +15,12 @@ export const UPDATE_SPOUSE = "UPDATE_SPOUSE";
 export const UPDATE_SPOUSE_ERROR = "UPDATE_SPOUSE_ERROR";
 export const DELETE_SPOUSE = "DELETE_SPOUSE";
 export const DELETE_SPOUSE_ERROR = "DELETE_SPOUSE_ERROR";
+export const CREATE_DEPENDENT = "CREATE_DEPENDENT";
+export const CREATE_DEPENDENT_ERROR = "CREATE_DEPENDENT_ERROR";
+export const UPDATE_DEPENDENT = "UPDATE_DEPENDENT";
+export const UPDATE_DEPENDENT_ERROR = "UPDATE_DEPENDENT_ERROR";
+export const DELETE_DEPENDENT = "DELETE_DEPENDENT";
+export const DELETE_DEPENDENT_ERROR = "DELETE_DEPENDENT_ERROR";
 
 // Action creators
 export const updateClient = (client) => ({
@@ -92,5 +98,35 @@ export const deleteSpouse = (clientId) => ({
 
 export const deleteSpouseError = (error) => ({
   type: DELETE_SPOUSE_ERROR,
+  payload: error,
+});
+
+export const createDependent = (clientId, dependent) => ({
+  type: CREATE_DEPENDENT,
+  payload: { clientId, dependent },
+});
+
+export const createDependentError = (error) => ({
+  type: CREATE_DEPENDENT_ERROR,
+  payload: error,
+});
+
+export const updateDependent = (clientId, dependentId, dependent) => ({
+  type: UPDATE_DEPENDENT,
+  payload: { clientId, dependentId, dependent },
+});
+
+export const updateDependentError = (error) => ({
+  type: UPDATE_DEPENDENT_ERROR,
+  payload: error,
+});
+
+export const deleteDependent = (clientId, dependentId) => ({
+  type: DELETE_DEPENDENT,
+  payload: { clientId, dependentId },
+});
+
+export const deleteDependentError = (error) => ({
+  type: DELETE_DEPENDENT_ERROR,
   payload: error,
 });
