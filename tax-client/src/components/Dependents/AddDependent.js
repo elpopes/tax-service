@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal";
 import Button from "../Button";
-import { addDependentOperation } from "../../store/clients/clientsOperations";
+import { createDependentOperation } from "../../store/clients/clientsOperations";
 import { selectDependentErrors } from "../../store/clients/clientsSelectors";
 import encryptWithPublicKey from "../../store/utils/encryption";
 
@@ -53,7 +53,7 @@ const AddDependent = ({ clientId }) => {
         publicKey
       );
       const updatedDependentData = { ...dependentData, ssn_encrypted };
-      await dispatch(addDependentOperation(clientId, updatedDependentData));
+      await dispatch(createDependentOperation(clientId, updatedDependentData));
       setIsModalVisible(false);
       // Add logic to handle errors
     } catch (error) {

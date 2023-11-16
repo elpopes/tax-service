@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectClientByUserId } from "../../store/clients/clientsSelectors";
 import SpouseDetails from "../Spouse/SpouseDetails";
-// import DependentDetails from "../Dependent/DependentDetails";
+import DependentDetails from "../Dependents/DependentDetails";
 function Household() {
   const userId = useSelector((state) => state.sessions.user.id);
   const client = useSelector((state) => selectClientByUserId(state, userId));
@@ -19,7 +19,9 @@ function Household() {
         <SpouseDetails clientId={client.id} spouse={client.spouse} />
       </div>
 
-      <div></div>
+      <div>
+        <DependentDetails clientId={client.id} />
+      </div>
 
       <div>
         <h3>Residence</h3>
