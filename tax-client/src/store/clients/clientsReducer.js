@@ -11,12 +11,19 @@ import {
   UPDATE_SPOUSE_ERROR,
   DELETE_SPOUSE,
   DELETE_SPOUSE_ERROR,
+  CREATE_DEPENDENT,
+  UPDATE_DEPENDENT,
+  DELETE_DEPENDENT,
+  CREATE_DEPENDENT_ERROR,
+  UPDATE_DEPENDENT_ERROR,
+  DELETE_DEPENDENT_ERROR,
 } from "./clientsActions";
 
 const initialState = {
   byId: {},
   errors: null,
   spouseErrors: null,
+  dependentErrors: null,
 };
 
 const clientsReducer = (state = initialState, action) => {
@@ -143,6 +150,61 @@ const clientsReducer = (state = initialState, action) => {
       return {
         ...state,
         errors: action.payload,
+      };
+
+    case CREATE_DEPENDENT: {
+      const { clientId, dependent } = action.payload;
+      const client = state.byId[clientId] || { dependents: [] };
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [clientId]: {
+            ...client,
+            dependents: [...client.dependents, dependent],
+          },
+        },
+      };
+    }
+
+    case UPDATE_DEPENDENT: {
+      const { clientId, dependentId, dependent } = action.payload;
+      const client = state.byId[clientId] || { dependents: [] };
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [clientId]: {
+            ...client,
+            dependents: client.dependents.map((d) =>
+              d.id === dependentId ? { ...d, ...dependent } : d
+            ),
+          },
+        },
+      };
+    }
+
+    case DELETE_DEPENDENT: {
+      const { clientId, dependentId } = action.payload;
+      const client = state.byId[clientId] || { dependents: [] };
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [clientId]: {
+            ...client,
+            dependents: client.dependents.filter((d) => d.id !== dependentId),
+          },
+        },
+      };
+    }
+
+    case CREATE_DEPENDENT_ERROR:
+    case UPDATE_DEPENDENT_ERROR:
+    case DELETE_DEPENDENT_ERROR:
+      return {
+        ...state,
+        dependentErrors: action.payload,
       };
   }
 };
