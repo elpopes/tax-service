@@ -4,17 +4,11 @@ import AddSpouse from "./AddSpouse";
 import EditSpouse from "./EditSpouse";
 import { selectClientByUserId } from "../../store/clients/clientsSelectors";
 
-const SpouseDetails = () => {
+const SpouseDetails = ({ clientId, spouse }) => {
   const userId = useSelector((state) => state.sessions.user.id);
   const client = useSelector((state) => selectClientByUserId(state, userId));
 
   console.log("Client:", client);
-
-  if (!client) {
-    return <div>Loading...</div>;
-  }
-
-  const spouse = client.spouse;
 
   return (
     <div>
@@ -24,12 +18,12 @@ const SpouseDetails = () => {
           <p>
             Name: {spouse.first_name} {spouse.last_name}
           </p>
-          <EditSpouse clientId={client.id} />
+          <EditSpouse clientId={clientId} />
         </div>
       ) : (
         <div>
           <h3>Add Spouse Details</h3>
-          <AddSpouse clientId={client.id} />
+          <AddSpouse clientId={clientId} />
         </div>
       )}
     </div>
