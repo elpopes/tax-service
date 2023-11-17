@@ -20,8 +20,7 @@ const DependentDetails = ({ clientId }) => {
     return <div>Loading...</div>;
   }
 
-  const dependents = client.dependents || []; // Ensure dependents is always an array
-
+  const dependents = client.dependents || [];
   return (
     <div>
       <h3>Dependent Details</h3>
