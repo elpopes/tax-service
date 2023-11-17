@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import AddDependent from "./AddDependent";
-// import EditDependent from "./EditDependent"; // For future implementation
+import EditDependent from "./EditDependent";
 import { selectClientByUserId } from "../../store/clients/clientsSelectors";
 
 const DependentDetails = ({ clientId }) => {
@@ -29,6 +29,7 @@ const DependentDetails = ({ clientId }) => {
         <div key={dependent.id}>
           <p>Name: {dependent.first_name}</p>
           <p>Birthday: {formatDate(dependent.dob)}</p>
+          <EditDependent clientId={clientId} dependent={dependent} />
         </div>
       ))}
       <div>
