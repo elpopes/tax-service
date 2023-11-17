@@ -119,10 +119,19 @@ module Api
       def update_dependent
         dependent_id = params[:dependent_id] || params[:dependent][:id] 
         dependent = Client.find(dependent_id)
+      
         if dependent.update(dependent_params)
           Rails.logger.info("Dependent updated. Last Four SSN: #{dependent.last_four_ssn}")
-          updated_dependent = dependent.attributes.merge(last_four_ssn: dependent.last_four_ssn)
-          render json: { message: 'Dependent successfully updated.', dependent: updated_dependent }, status: :ok
+      
+          # Render the same structure as in create_dependent
+          render json: {
+            id: dependent.id,
+            first_name: dependent.first_name,
+            middle_name: dependent.middle_name,
+            last_name: dependent.last_name,
+            dob: dependent.dob ? dependent.dob.strftime('%Y-%m-%d') : nil,
+            last_four_ssn: dependent.last_four_ssn
+          }, status: :ok
         else
           render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
         end

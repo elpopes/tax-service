@@ -299,6 +299,7 @@ export const updateDependentOperation =
         dependentId,
         dependentData,
       });
+
       const response = await fetch(
         `${config.API_BASE_URL}/clients/${clientId}/update_dependent`,
         {
@@ -315,8 +316,8 @@ export const updateDependentOperation =
       );
 
       if (response.ok) {
-        const updatedDependent = await response.json();
-        dispatch(updateDependent(clientId, dependentId, updatedDependent));
+        const updatedDependentData = await response.json();
+        dispatch(updateDependent(clientId, dependentId, updatedDependentData));
       } else {
         const errorMessage = await response.text();
         dispatch(updateDependentError(errorMessage));

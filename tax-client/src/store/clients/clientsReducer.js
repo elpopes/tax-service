@@ -171,15 +171,30 @@ const clientsReducer = (state = initialState, action) => {
     case UPDATE_DEPENDENT: {
       const { clientId, dependentId, dependent } = action.payload;
       const client = state.byId[clientId] || { dependents: [] };
+
+      // Log the current and new dependents for comparison
+      console.log("Current dependents:", client.dependents);
+      console.log(
+        "Updating dependentId:",
+        dependentId,
+        "with data:",
+        dependent
+      );
+
+      const updatedDependents = client.dependents.map((d) =>
+        d.id === dependentId ? { ...d, ...dependent } : d
+      );
+
+      // Log the updated dependents to see if the update is correct
+      console.log("Updated dependents:", updatedDependents);
+
       return {
         ...state,
         byId: {
           ...state.byId,
           [clientId]: {
             ...client,
-            dependents: client.dependents.map((d) =>
-              d.id === dependentId ? { ...d, ...dependent } : d
-            ),
+            dependents: updatedDependents,
           },
         },
       };
