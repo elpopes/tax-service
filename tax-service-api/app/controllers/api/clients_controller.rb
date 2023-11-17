@@ -97,7 +97,14 @@ module Api
             client = current_user.client
             client.dependents << dependent
             Rails.logger.info("Dependent successfully created. Dependent ID: #{dependent.id}")
-            render json: { dependent: dependent, clientId: client.id, message: 'Dependent successfully created.' }, status: :created
+            render json: {
+              id: dependent.id,
+              first_name: dependent.first_name,
+              middle_name: dependent.middle_name,
+              last_name: dependent.last_name,
+              dob: dependent.dob ? dependent.dob.strftime('%Y-%m-%d') : nil,
+              last_four_ssn: dependent.last_four_ssn
+            }, status: :created
           else
             Rails.logger.warn("Dependent creation failed. Errors: #{dependent.errors.full_messages}")
             render json: { errors: dependent.errors.full_messages }, status: :unprocessable_entity
@@ -107,6 +114,7 @@ module Api
       rescue ActiveRecord::Rollback
         Rails.logger.error("Transaction rolled back due to an error in dependent creation.")
       end
+      
   
       def update_dependent
         dependent = Client.find(params[:id])
