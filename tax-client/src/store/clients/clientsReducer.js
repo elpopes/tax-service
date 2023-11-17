@@ -154,14 +154,15 @@ const clientsReducer = (state = initialState, action) => {
 
     case CREATE_DEPENDENT: {
       const { clientId, dependent } = action.payload;
-      const client = state.byId[clientId] || { dependents: [] };
+      const client = state.byId[clientId] || {};
+      const currentDependents = client.dependents || [];
       return {
         ...state,
         byId: {
           ...state.byId,
           [clientId]: {
             ...client,
-            dependents: [...client.dependents, dependent],
+            dependents: [...currentDependents, dependent],
           },
         },
       };

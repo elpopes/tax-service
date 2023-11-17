@@ -162,6 +162,20 @@ module Api
                 last_four_ssn: spouse.last_four_ssn
             }
         end
+
+        dependents = Client.where(caretaker_id: @client.id)
+        if dependents.any?
+            client_json[:dependents] = dependents.map do |dependent|
+                {
+                id: dependent.id,
+                first_name: dependent.first_name,
+                middle_name: dependent.middle_name,
+                last_name: dependent.last_name,
+                dob: dependent.dob ? dependent.dob.strftime('%Y-%m-%d') : nil,
+                last_four_ssn: dependent.last_four_ssn
+                }
+            end
+        end
       
         client_json
       end

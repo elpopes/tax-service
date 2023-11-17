@@ -12,21 +12,15 @@ const DependentDetails = ({ clientId }) => {
     return <div>Loading...</div>;
   }
 
-  const dependents = client.dependents;
+  //   const dependents = client.dependents;
 
   return (
     <div>
       <h3>Dependent Details</h3>
-      {dependents && dependents.length > 0 ? (
-        <div>
-          {/* Render details of each dependent - can be a list or individual components */}
-        </div>
-      ) : (
-        <div>
-          <h3>Add Dependent Details</h3>
-          <AddDependent clientId={clientId} />
-        </div>
-      )}
+      <div>
+        <h3>Add Dependent Details</h3>
+        <AddDependent clientId={clientId} />
+      </div>
     </div>
   );
 };
