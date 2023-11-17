@@ -28,7 +28,7 @@ const DependentDetails = ({ clientId }) => {
         <div key={dependent.id}>
           <p>Name: {dependent.first_name}</p>
           <p>Birthday: {formatDate(dependent.dob)}</p>
-          <EditDependent clientId={clientId} dependent={dependent} />
+          <EditDependent clientId={clientId} dependentId={dependent.id} />
         </div>
       ))}
       <div>
