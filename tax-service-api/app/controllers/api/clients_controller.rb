@@ -117,13 +117,12 @@ module Api
       
   
       def update_dependent
-        dependent_id = params[:dependent_id] || params[:dependent][:id] 
+        dependent_id = params[:dependent_id] || params[:id] 
         dependent = Client.find(dependent_id)
       
         if dependent.update(dependent_params)
           Rails.logger.info("Dependent updated. Last Four SSN: #{dependent.last_four_ssn}")
       
-          # Render the same structure as in create_dependent
           render json: {
             id: dependent.id,
             first_name: dependent.first_name,
@@ -138,7 +137,14 @@ module Api
       end
   
       def destroy_dependent
-        dependent = Client.find(params[:id])
+        dependent_id = params[:id]
+        dependent = Client.find_by(id: dependent_id, caretaker_id: current_user.client.id)
+        
+        if dependent.nil?
+          render json: { error: 'Dependent not found.' }, status: :not_found
+          return
+        end
+        
         if dependent.destroy
           render json: { message: 'Dependent successfully removed.' }, status: :ok
         else

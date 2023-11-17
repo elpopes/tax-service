@@ -336,7 +336,7 @@ export const deleteDependentOperation =
     const token = getState().sessions.token;
     try {
       const response = await fetch(
-        `${config.API_BASE_URL}/clients/${clientId}/dependents/${dependentId}`,
+        `${config.API_BASE_URL}/clients/${dependentId}/destroy_dependent`,
         {
           method: "DELETE",
           headers: {
