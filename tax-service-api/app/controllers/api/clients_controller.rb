@@ -117,7 +117,8 @@ module Api
       
   
       def update_dependent
-        dependent = Client.find(params[:id])
+        dependent_id = params[:dependent_id] || params[:dependent][:id] 
+        dependent = Client.find(dependent_id)
         if dependent.update(dependent_params)
           Rails.logger.info("Dependent updated. Last Four SSN: #{dependent.last_four_ssn}")
           updated_dependent = dependent.attributes.merge(last_four_ssn: dependent.last_four_ssn)

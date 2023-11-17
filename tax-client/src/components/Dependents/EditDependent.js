@@ -24,12 +24,20 @@ const EditDependent = ({ clientId, dependentId }) => {
     ssn_encrypted: "",
   });
   const [actualSSN, setActualSSN] = useState("");
-  const [formattedSSN, setFormattedSSN] = useState("");
+  const [formattedSSN, setFormattedSSN] = useState(
+    `***-**-${dependentDetails?.last_four_ssn || ""}`
+  );
 
   useEffect(() => {
     if (dependentDetails) {
-      setDependentData(dependentDetails);
-      setFormattedSSN(dependentDetails.last_four_ssn);
+      setDependentData({
+        first_name: dependentDetails.first_name,
+        middle_name: dependentDetails.middle_name,
+        last_name: dependentDetails.last_name,
+        dob: dependentDetails.dob,
+      });
+      // Set the formatted SSN with a mask and the last four digits
+      setFormattedSSN(`***-**-${dependentDetails.last_four_ssn}`);
     }
   }, [dependentDetails]);
 
@@ -41,12 +49,11 @@ const EditDependent = ({ clientId, dependentId }) => {
   const handleSSNChange = (e) => {
     const rawSSN = e.target.value.replace(/-/g, "");
     if (rawSSN.length > 9) return;
-    const formatted = [
-      rawSSN.substring(0, 3),
-      rawSSN.substring(3, 5),
-      rawSSN.substring(5),
-    ].join("-");
     setActualSSN(rawSSN);
+
+    const formatted = [rawSSN.slice(0, 3), rawSSN.slice(3, 5), rawSSN.slice(5)]
+      .filter(Boolean)
+      .join("-");
     setFormattedSSN(formatted);
   };
 
@@ -64,7 +71,6 @@ const EditDependent = ({ clientId, dependentId }) => {
         updatedDependentData.ssn_encrypted = encryptionResult.ssn_encrypted;
       } catch (error) {
         console.error("Encryption failed", error);
-        // Handle encryption error (e.g., display a notification to the user)
         return;
       }
     }
@@ -135,6 +141,11 @@ const EditDependent = ({ clientId, dependentId }) => {
             placeholder="Social Security Number"
             value={formattedSSN}
             onChange={handleSSNChange}
+            onFocus={(e) => e.target.value === "" && setFormattedSSN("")}
+            onBlur={(e) =>
+              e.target.value === "" &&
+              setFormattedSSN(`***-**-${dependentDetails?.last_four_ssn || ""}`)
+            }
           />
           <Button type="submit">Save Changes</Button>
           <Button onClick={handleDelete}>Delete Dependent</Button>

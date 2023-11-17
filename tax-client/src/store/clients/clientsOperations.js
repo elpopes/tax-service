@@ -294,15 +294,23 @@ export const updateDependentOperation =
     dispatch(clientRequestStarted());
     const token = getState().sessions.token;
     try {
+      console.log("Updating dependent:", {
+        clientId,
+        dependentId,
+        dependentData,
+      });
       const response = await fetch(
-        `${config.API_BASE_URL}/clients/${clientId}/dependents/${dependentId}`,
+        `${config.API_BASE_URL}/clients/${clientId}/update_dependent`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ dependent: dependentData }),
+          body: JSON.stringify({
+            dependent: dependentData,
+            dependent_id: dependentId,
+          }),
         }
       );
 
