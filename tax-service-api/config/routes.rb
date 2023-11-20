@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     get 'home/index'
   
     namespace :api do
-      # Devise routes for user sessions and confirmations
+      # Existing routes for user sessions and confirmations
       devise_for :users, skip: [:registrations], controllers: { 
         sessions: 'api/sessions',
         confirmations: 'api/confirmations'
@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   
       # Routes for client management
       resources :clients, only: [] do
+        # Nested routes for residences
+        resources :residences, only: [:index, :show, :create, :update, :destroy]
+  
         collection do
           get :profile  # GET /api/clients/profile
         end
@@ -39,5 +42,5 @@ Rails.application.routes.draw do
       # Route for public keys
       get '/keys/public', to: 'keys#public_key'
     end
-  end
+end
   
