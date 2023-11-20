@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_31_005237) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_20_203015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -64,6 +64,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_005237) do
     t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
   end
 
+  create_table "residences", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.string "street_address", null: false
+    t.string "apartment_number"
+    t.string "city", null: false
+    t.string "state", null: false
+    t.string "zip_code", null: false
+    t.string "county", null: false
+    t.boolean "is_primary_residence", default: false
+    t.string "property_type"
+    t.string "ownership_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_residences_on_client_id"
+  end
+
   create_table "spouses", force: :cascade do |t|
     t.bigint "client_id", null: false
     t.date "dob"
@@ -97,5 +113,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_005237) do
   add_foreign_key "clients", "users"
   add_foreign_key "dependents", "clients"
   add_foreign_key "refresh_tokens", "users"
+  add_foreign_key "residences", "clients"
   add_foreign_key "spouses", "clients"
 end
