@@ -14,8 +14,8 @@ const AddResidence = ({ clientId }) => {
     zip_code: "",
     county: "",
     is_primary_residence: false,
-    property_type: "", // Assuming this is a string; adjust as needed
-    ownership_status: "", // Assuming this is a string; adjust as needed
+    property_type: "",
+    ownership_status: "",
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
