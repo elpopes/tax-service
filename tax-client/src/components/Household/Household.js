@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectClientByUserId } from "../../store/clients/clientsSelectors";
 import SpouseDetails from "../Spouse/SpouseDetails";
 import DependentDetails from "../Dependents/DependentDetails";
+import AddResidence from "../Residences/AddResidence";
 function Household() {
   const userId = useSelector((state) => state.sessions.user.id);
   const client = useSelector((state) => selectClientByUserId(state, userId));
@@ -25,7 +26,7 @@ function Household() {
 
       <div>
         <h3>Residence</h3>
-        {/* Residence details or Edit Residence Button */}
+        <AddResidence clientId={client.id} />
       </div>
     </div>
   );

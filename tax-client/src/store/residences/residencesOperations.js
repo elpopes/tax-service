@@ -9,13 +9,14 @@ import {
   DELETE_RESIDENCE_ERROR,
   FETCH_RESIDENCE_ERROR,
 } from "./residencesActions";
+import config from "../../config";
 
 // Operation to create a residence
 export const createResidence =
   (clientId, residenceData) => async (dispatch) => {
     try {
       const response = await axios.post(
-        `/api/clients/${clientId}/residences`,
+        `${config.API_BASE_URL}/clients/${clientId}/residences`, // Prepend the base URL
         residenceData
       );
       dispatch({

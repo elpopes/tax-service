@@ -13,7 +13,7 @@ const AddResidence = ({ clientId }) => {
     state: "",
     zip_code: "",
     county: "",
-    is_primary_residence: false,
+    is_primary_residence: true,
     property_type: "",
     ownership_status: "",
   });
