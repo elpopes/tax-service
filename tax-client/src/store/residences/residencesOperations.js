@@ -44,6 +44,22 @@ export const fetchResidences = (clientId) => async (dispatch) => {
   }
 };
 
+export const updateResidence =
+  (clientId, residenceId, residenceData) => async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `${config.API_BASE_URL}/clients/${clientId}/residences/${residenceId}`,
+        residenceData
+      );
+      dispatch({
+        type: UPDATE_RESIDENCE,
+        payload: { clientId, residence: response.data },
+      });
+    } catch (error) {
+      dispatch({ type: UPDATE_RESIDENCE_ERROR, payload: error.message });
+    }
+  };
+
 // Operation to update the primary residence
 export const updatePrimaryResidence =
   (clientId, residenceId, residenceData) => async (dispatch) => {

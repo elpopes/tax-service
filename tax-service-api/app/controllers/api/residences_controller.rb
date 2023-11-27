@@ -33,13 +33,15 @@ module Api
         end
     
     # PATCH/PUT /clients/:client_id/residences/:id
+        # PATCH/PUT /clients/:client_id/residences/:id
         def update
-        if @residence.update(residence_params)
-            redirect_to client_residence_path(@client, @residence), notice: 'Residence was successfully updated.'
-        else
-            render :edit
+            if @residence.update(residence_params)
+                render json: @residence
+            else
+                render json: @residence.errors, status: :unprocessable_entity
+            end
         end
-        end
+  
     
         # DELETE /clients/:client_id/residences/:id
         def destroy
