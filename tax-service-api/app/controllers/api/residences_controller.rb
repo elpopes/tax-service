@@ -31,7 +31,7 @@ module Api
         def edit
         end
     
-        # PATCH/PUT /clients/:client_id/residences/:id
+    # PATCH/PUT /clients/:client_id/residences/:id
         def update
         if @residence.update(residence_params)
             redirect_to client_residence_path(@client, @residence), notice: 'Residence was successfully updated.'
