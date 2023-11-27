@@ -5,8 +5,9 @@ module Api
     
         # GET /clients/:client_id/residences
         def index
-        @residences = @client.residences
-        end
+            @residences = @client.residences
+            render json: @residences
+          end
     
         # GET /clients/:client_id/residences/:id
         def show
