@@ -34,11 +34,10 @@ export const fetchPrimaryResidence = (clientId) => async (dispatch) => {
     const response = await axios.get(
       `${config.API_BASE_URL}/clients/${clientId}/residences`
     );
-    // Assuming the API returns the primary residence as the first item in the response array
-    const primaryResidence = response.data[0];
+    const residences = response.data;
     dispatch({
       type: FETCH_RESIDENCE,
-      payload: { clientId, residence: primaryResidence },
+      payload: { clientId, residences },
     });
   } catch (error) {
     dispatch({ type: FETCH_RESIDENCE_ERROR, payload: error.message });

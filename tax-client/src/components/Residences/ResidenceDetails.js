@@ -25,8 +25,6 @@ const ResidenceDetails = ({ clientId }) => {
       {residences.map((residence) => (
         <div key={residence.id}>
           <p>Address: {residence.street_address}</p>
-          {/* Display other residence details here */}
-          {/* <EditResidence clientId={clientId} residenceId={residence.id} /> */}
         </div>
       ))}
       <div>
