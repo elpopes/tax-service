@@ -29,7 +29,7 @@ export const createResidence =
   };
 
 // Operation to fetch the primary residence
-export const fetchPrimaryResidence = (clientId) => async (dispatch) => {
+export const fetchResidences = (clientId) => async (dispatch) => {
   try {
     const response = await axios.get(
       `${config.API_BASE_URL}/clients/${clientId}/residences`
