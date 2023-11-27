@@ -4,6 +4,7 @@ import { selectClientByUserId } from "../../store/clients/clientsSelectors";
 import SpouseDetails from "../Spouse/SpouseDetails";
 import DependentDetails from "../Dependents/DependentDetails";
 import AddResidence from "../Residences/AddResidence";
+import ResidenceDetails from "../Residences/ResidenceDetails";
 function Household() {
   const userId = useSelector((state) => state.sessions.user.id);
   const client = useSelector((state) => selectClientByUserId(state, userId));
@@ -25,7 +26,7 @@ function Household() {
       </div>
 
       <div>
-        <h3>Residence</h3>
+        <ResidenceDetails clientId={client.id} />
         <AddResidence clientId={client.id} />
       </div>
     </div>
