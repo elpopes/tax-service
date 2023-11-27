@@ -18,6 +18,16 @@ const initialState = {
 const residencesReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_RESIDENCE:
+      const { clientId, residence } = action.payload;
+      return {
+        ...state,
+        byClientId: {
+          ...state.byClientId,
+          [clientId]: [...(state.byClientId[clientId] || []), residence],
+        },
+        loading: false,
+        error: null,
+      };
     case CREATE_RESIDENCE:
     case UPDATE_RESIDENCE:
     case DELETE_RESIDENCE:
