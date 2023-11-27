@@ -8,7 +8,7 @@ import { selectResidenceById } from "../../store/residences/residencesSelectors"
 const EditResidence = ({ clientId, residenceId }) => {
   const dispatch = useDispatch();
   const residenceDetails = useSelector((state) =>
-    selectResidenceById(state, residenceId)
+    selectResidenceById(state, clientId, residenceId)
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [residenceData, setResidenceData] = useState({
