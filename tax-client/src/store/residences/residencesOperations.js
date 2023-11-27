@@ -31,7 +31,9 @@ export const createResidence =
 // Operation to fetch the primary residence
 export const fetchPrimaryResidence = (clientId) => async (dispatch) => {
   try {
-    const response = await axios.get(`/api/clients/${clientId}/residences`);
+    const response = await axios.get(
+      `${config.API_BASE_URL}/clients/${clientId}/residences`
+    );
     // Assuming the API returns the primary residence as the first item in the response array
     const primaryResidence = response.data[0];
     dispatch({

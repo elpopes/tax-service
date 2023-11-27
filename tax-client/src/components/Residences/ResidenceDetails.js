@@ -1,12 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import AddResidence from "./AddResidence";
 // import EditResidence from "./EditResidence";
+import { fetchPrimaryResidence } from "../../store/residences/residencesOperations";
 import { selectResidenceForClient } from "../../store/residences/residencesSelectors";
 
 const ResidenceDetails = ({ clientId }) => {
+  const dispatch = useDispatch();
   const residences =
     useSelector((state) => selectResidenceForClient(state, clientId)) || [];
+
+  useEffect(() => {
+    dispatch(fetchPrimaryResidence(clientId));
+  }, [clientId, dispatch]);
+
+  // Handle loading state if needed
+  if (!residences.length) {
+    return <div>Loading residences...</div>;
+  }
 
   return (
     <div>
