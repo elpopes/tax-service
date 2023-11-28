@@ -31,7 +31,18 @@ const residencesReducer = (state = initialState, action) => {
     }
 
     case CREATE_RESIDENCE:
-    case UPDATE_RESIDENCE:
+    case UPDATE_RESIDENCE: {
+      const { clientId, residence } = action.payload;
+      return {
+        ...state,
+        byClientId: {
+          ...state.byClientId,
+          [clientId]: state.byClientId[clientId].map((r) =>
+            r.id === residence.id ? residence : r
+          ),
+        },
+      };
+    }
     case DELETE_RESIDENCE: {
       const { clientId, residenceId } = action.payload;
       return {
