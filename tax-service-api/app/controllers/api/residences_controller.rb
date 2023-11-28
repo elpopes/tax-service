@@ -32,7 +32,6 @@ module Api
         def edit
         end
     
-    # PATCH/PUT /clients/:client_id/residences/:id
         # PATCH/PUT /clients/:client_id/residences/:id
         def update
             if @residence.update(residence_params)
@@ -45,8 +44,11 @@ module Api
     
         # DELETE /clients/:client_id/residences/:id
         def destroy
-        @residence.destroy
-        redirect_to client_residences_path(@client), notice: 'Residence was successfully destroyed.'
+            if @residence.destroy
+                head :no_content
+            else
+                render json: @residence.errors, status: :unprocessable_entity
+            end
         end
     
         private
