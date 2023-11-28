@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal";
 import Button from "../Button";
-import { updateResidence } from "../../store/residences/residencesOperations";
+import {
+  updateResidence,
+  deleteResidence,
+} from "../../store/residences/residencesOperations";
 import { selectResidenceById } from "../../store/residences/residencesSelectors";
 
 const EditResidence = ({ clientId, residenceId }) => {
@@ -44,6 +47,13 @@ const EditResidence = ({ clientId, residenceId }) => {
     setIsModalVisible(false);
   };
 
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this residence?")) {
+      await dispatch(deleteResidence(clientId, residenceId));
+      setIsModalVisible(false); // Close the modal after deletion
+    }
+  };
+
   return (
     <>
       <Button onClick={() => setIsModalVisible(true)}>
@@ -66,6 +76,7 @@ const EditResidence = ({ clientId, residenceId }) => {
           {/* Add other input fields for residence details */}
           {/* ... */}
           <Button type="submit">Save Changes</Button>
+          <Button onClick={handleDelete}>Delete Residence</Button>
           <Button type="button" onClick={handleCloseModal}>
             Cancel
           </Button>
