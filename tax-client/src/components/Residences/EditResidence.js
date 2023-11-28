@@ -33,8 +33,11 @@ const EditResidence = ({ clientId, residenceId }) => {
   }, [residenceDetails]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setResidenceData({ ...residenceData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setResidenceData({
+      ...residenceData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleSubmit = (e) => {
@@ -50,7 +53,7 @@ const EditResidence = ({ clientId, residenceId }) => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this residence?")) {
       await dispatch(deleteResidence(clientId, residenceId));
-      setIsModalVisible(false); // Close the modal after deletion
+      setIsModalVisible(false);
     }
   };
 
@@ -65,7 +68,6 @@ const EditResidence = ({ clientId, residenceId }) => {
         onClose={handleCloseModal}
       >
         <form onSubmit={handleSubmit}>
-          {/* Input fields for residence data */}
           <input
             type="text"
             name="street_address"
@@ -73,8 +75,66 @@ const EditResidence = ({ clientId, residenceId }) => {
             value={residenceData.street_address}
             onChange={handleInputChange}
           />
-          {/* Add other input fields for residence details */}
-          {/* ... */}
+          <input
+            type="text"
+            name="apartment_number"
+            placeholder="Apartment Number"
+            value={residenceData.apartment_number}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            value={residenceData.city}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            value={residenceData.state}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="zip_code"
+            placeholder="Zip Code"
+            value={residenceData.zip_code}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="county"
+            placeholder="County"
+            value={residenceData.county}
+            onChange={handleInputChange}
+          />
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="is_primary_residence"
+                checked={residenceData.is_primary_residence}
+                onChange={handleInputChange}
+              />
+              Primary Residence
+            </label>
+          </div>
+          <input
+            type="text"
+            name="property_type"
+            placeholder="Property Type"
+            value={residenceData.property_type}
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="ownership_status"
+            placeholder="Ownership Status"
+            value={residenceData.ownership_status}
+            onChange={handleInputChange}
+          />
           <Button type="submit">Save Changes</Button>
           <Button onClick={handleDelete}>Delete Residence</Button>
           <Button type="button" onClick={handleCloseModal}>
