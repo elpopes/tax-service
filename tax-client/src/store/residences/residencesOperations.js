@@ -80,7 +80,9 @@ export const updatePrimaryResidence =
 // Operation to delete a residence
 export const deleteResidence = (clientId, residenceId) => async (dispatch) => {
   try {
-    await axios.delete(`/api/clients/${clientId}/residences/${residenceId}`);
+    await axios.delete(
+      `${config.API_BASE_URL}/clients/${clientId}/residences/${residenceId}`
+    );
     dispatch({ type: DELETE_RESIDENCE, payload: { clientId, residenceId } });
   } catch (error) {
     dispatch({ type: DELETE_RESIDENCE_ERROR, payload: error.message });
