@@ -54,15 +54,15 @@ module Api
         private
     
         def set_client
-        @client = Client.find(params[:client_id])
+            @client = Client.find(params[:client_id])
         end
     
         def set_residence
-        @residence = @client.residences.find(params[:id])
+            @residence = @client.residences.find(params[:id])
         end
     
         def residence_params
-        params.require(:residence).permit(:street_address, :apartment_number, :city, :state, :zip_code, :county, :is_primary_residence, :property_type, :ownership_status)
+            params.require(:residence).permit(:street_address, :apartment_number, :city, :state, :zip_code, :county, :is_primary_residence, :property_type, :ownership_status)
         end
     end
 end

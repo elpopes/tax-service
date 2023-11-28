@@ -14,12 +14,12 @@ class Residence < ApplicationRecord
     end
 
     private
-    
+
     def only_one_primary_residence_per_client
-        if is_primary_residence && Residence.where(client_id: client_id, is_primary_residence: true).exists?
-          errors.add(:is_primary_residence, 'A client can only have one primary residence.')
+        if is_primary_residence && Residence.where(client_id: client_id,is_primary_residence: true).where.not(id: id).exists? 
+            errors.add(:is_primary_residence, "can only be set for one residence per client")
         end
     end
   
-  end
+end
   
