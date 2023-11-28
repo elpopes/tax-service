@@ -17,7 +17,7 @@ const initialState = {
 
 const residencesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_RESIDENCE:
+    case FETCH_RESIDENCE: {
       const { clientId, residences } = action.payload;
       return {
         ...state,
@@ -28,15 +28,23 @@ const residencesReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
+    }
 
     case CREATE_RESIDENCE:
     case UPDATE_RESIDENCE:
-    case DELETE_RESIDENCE:
+    case DELETE_RESIDENCE: {
+      const { clientId, residenceId } = action.payload;
       return {
         ...state,
-        loading: true,
-        error: null,
+        byClientId: {
+          ...state.byClientId,
+          [clientId]: state.byClientId[clientId].filter(
+            (residence) => residence.id !== residenceId
+          ),
+        },
       };
+    }
+
     case FETCH_RESIDENCE_ERROR:
     case CREATE_RESIDENCE_ERROR:
     case UPDATE_RESIDENCE_ERROR:
