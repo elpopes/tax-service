@@ -14,3 +14,4 @@ class CreateClientDocuments < ActiveRecord::Migration[7.0]
     
         add_index :client_documents, :document_type 
     end
+end

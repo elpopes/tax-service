@@ -5,5 +5,5 @@ class ClientDocument < ApplicationRecord
     enum status: { uploaded: 0, processed: 1, failed: 2 }
   
     # Add validations and methods
-  end
+end
   

@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_20_203015) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_30_021205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "client_documents", force: :cascade do |t|
+    t.bigint "client_id"
+    t.integer "document_type"
+    t.string "file_name"
+    t.string "file_path"
+    t.datetime "uploaded_at"
+    t.integer "status"
+    t.integer "tax_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_documents_on_client_id"
+    t.index ["document_type"], name: "index_client_documents_on_document_type"
+  end
 
   create_table "clients", force: :cascade do |t|
     t.bigint "user_id"
@@ -110,6 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_203015) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "client_documents", "clients"
   add_foreign_key "clients", "users"
   add_foreign_key "dependents", "clients"
   add_foreign_key "refresh_tokens", "users"
