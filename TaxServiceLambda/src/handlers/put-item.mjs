@@ -7,7 +7,7 @@ const s3Client = new S3Client({ region: process.env.AWS_REGION });
 /**
  * A Lambda function that uploads a document to an S3 bucket.
  */
-export const uploadDocumentHandler = async (event) => {
+export const putItemHandler = async (event) => {
   // Check for HTTP POST method (if triggered via API Gateway)
   if (event.httpMethod && event.httpMethod !== "POST") {
     return {

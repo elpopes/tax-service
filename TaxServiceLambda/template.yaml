@@ -35,7 +35,5 @@ Resources:
 Globals:
   Function:
     Tracing: Active
-    LoggingConfig:
-      LogFormat: JSON
   Api:
     TracingEnabled: true
