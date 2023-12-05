@@ -18,7 +18,8 @@ Resources:
             BucketName: !Ref S3Bucket
       Environment:
         Variables:
-          S3_BUCKET_NAME: !Ref S3Bucket
+          S3_BUCKET_NAME: "sidney-kahan-tax-documents"
+          AWS_REGION: "us-east-1"
       Events:
         Api:
           Type: Api
