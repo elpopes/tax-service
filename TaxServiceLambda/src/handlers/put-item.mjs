@@ -1,53 +1,54 @@
-// Create clients and set shared const values outside of the handler.
+// Import required AWS SDK clients and commands for Node.js
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-// Create a DocumentClient that represents the query to add an item
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
-const client = new DynamoDBClient({});
-const ddbDocClient = DynamoDBDocumentClient.from(client);
-
-// Get the DynamoDB table name from environment variables
-const tableName = process.env.SAMPLE_TABLE;
+// Create a new S3 client
+const s3Client = new S3Client({ region: process.env.AWS_REGION });
 
 /**
- * A simple example includes a HTTP post method to add one item to a DynamoDB table.
+ * A Lambda function that uploads a document to an S3 bucket.
  */
-export const putItemHandler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    throw new Error(
-      `postMethod only accepts POST method, you tried: ${event.httpMethod} method.`
-    );
+export const uploadDocumentHandler = async (event) => {
+  // Check for HTTP POST method (if triggered via API Gateway)
+  if (event.httpMethod && event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: "Method Not Allowed" }),
+    };
   }
-  // All log statements are written to CloudWatch
-  console.info("received:", event);
-
-  // Get id and name from the body of the request
-  const body = JSON.parse(event.body);
-  const id = body.id;
-  const name = body.name;
-
-  // Creates a new item, or replaces an old item with a new item
-  // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property
-  var params = {
-    TableName: tableName,
-    Item: { id: id, name: name },
-  };
 
   try {
-    const data = await ddbDocClient.send(new PutCommand(params));
-    console.log("Success - item added or updated", data);
+    // Parse the event body to get the document data and key
+    const { documentData, documentKey } = JSON.parse(event.body);
+
+    // Convert the base64-encoded document data back to binary
+    const decodedDocument = Buffer.from(documentData, "base64");
+
+    // Parameters for the S3 putObject command
+    const params = {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: documentKey,
+      Body: decodedDocument,
+      ContentType: "application/pdf", // Change as per document type
+    };
+
+    // Upload the document to S3
+    const data = await s3Client.send(new PutObjectCommand(params));
+
+    // Return success response
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Document uploaded successfully", data }),
+    };
   } catch (err) {
-    console.log("Error", err.stack);
+    console.error("Error uploading document", err);
+
+    // Return error response
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Error uploading document",
+        error: err.message,
+      }),
+    };
   }
-
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify(body),
-  };
-
-  // All log statements are written to CloudWatch
-  console.info(
-    `response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`
-  );
-  return response;
 };
