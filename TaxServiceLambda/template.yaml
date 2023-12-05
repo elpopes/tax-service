@@ -27,10 +27,6 @@ Resources:
             Path: /
             Method: POST
 
-  # Define the S3 bucket resource
-  S3Bucket:
-    Type: AWS::S3::Bucket
-
 # ... other configurations ...
 
 Globals:
