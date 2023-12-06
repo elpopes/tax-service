@@ -1,11 +1,10 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Description: TaxServiceLambda
 Transform:
-  - "AWS::Serverless-2016-10-31"
-
+- AWS::Serverless-2016-10-31
 Resources:
   putItemFunction:
-    Type: "AWS::Serverless::Function"
+    Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-item.putItemHandler
       Runtime: nodejs20.x
@@ -13,19 +12,22 @@ Resources:
       Timeout: 100
       Description: A function to upload documents to an S3 bucket.
       Policies:
-        - S3CrudPolicy:
-            BucketName: "sidney-kahan-tax-documents"
+      - S3CrudPolicy:
+          BucketName:
+            Ref: S3Bucket
       Environment:
         Variables:
-          S3_BUCKET_NAME: "sidney-kahan-tax-documents"
-          AWS_REGION: "us-east-1"
+          S3_BUCKET_NAME: sidney-kahan-tax-documents
+          AWS_REGION: us-east-1
       Events:
         Api:
           Type: Api
           Properties:
             Path: /
             Method: POST
-
+      CodeUri: s3://sidney-kahan-tax-documents/7f2943d5c0474a29e9c85e45fd8ddb22
+    Metadata:
+      SamResourceId: putItemFunction
 Globals:
   Function:
     Tracing: Active
