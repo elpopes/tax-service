@@ -6,21 +6,23 @@ import {
 } from "./documentsActions";
 
 export const uploadDocument = (documentData, clientId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(uploadDocumentRequest());
 
     try {
+      const token = getState().sessions.token;
+
       const formData = new FormData();
-      for (const key in documentData) {
-        formData.append(key, documentData[key]);
-      }
+      formData.append("document", documentData);
 
       const response = await fetch(
         `${config.API_BASE_URL}/clients/${clientId}/client_documents`,
         {
           method: "POST",
           body: formData,
-          headers: {},
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
