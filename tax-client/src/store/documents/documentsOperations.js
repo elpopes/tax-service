@@ -16,7 +16,7 @@ export const uploadDocument = (documentData, clientId) => {
       }
 
       const response = await fetch(
-        `${config.apiBaseUrl}/clients/${clientId}/client_documents`,
+        `${config.API_BASE_URL}/clients/${clientId}/client_documents`,
         {
           method: "POST",
           body: formData,

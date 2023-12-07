@@ -5,11 +5,13 @@ import usersReducer from "./users/usersReducer";
 import sessionsReducer from "./sessions/sessionsReducer";
 import clientsReducer from "./clients/clientsReducer";
 import residencesReducer from "./residences/residencesReducer";
+import { documentsReducer } from "./documents/documentsReducer";
 
 const appReducer = combineReducers({
   users: usersReducer,
   //   households: householdsReducer,
   //   dependents: dependentsReducer,
+  documents: documentsReducer,
   residences: residencesReducer,
   sessions: sessionsReducer,
   clients: clientsReducer,
