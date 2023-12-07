@@ -3,6 +3,7 @@ class Client < ApplicationRecord
     has_one :spouse, class_name: 'Client', foreign_key: 'spouse_id'
     has_many :dependents, class_name: 'Client', foreign_key: 'caretaker_id'
     has_many :residences
+    has_many :client_documents
     enum filing_status: { single: 0, married_joint: 1, married_separate: 2, head_of_household: 3, widower: 4 }
     
     validates :user, presence: true, if: -> { user.present? }
