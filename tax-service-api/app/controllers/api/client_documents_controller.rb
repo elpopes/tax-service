@@ -1,6 +1,5 @@
 module Api
     class ClientDocumentsController < ApplicationController
-      before_action :authenticate_client!
   
       def create
         @client_document = current_client.client_documents.new(client_document_params)
