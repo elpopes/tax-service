@@ -2,4 +2,3 @@
     "httpMethod": "POST",
     "body": "{\"documentData\": \"base64EncodedDocumentData\", \"documentKey\": \"example-document-key\"}"
   }
-  
