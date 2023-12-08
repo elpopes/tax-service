@@ -5,11 +5,10 @@ module Api
   
       def create
         @client_document = @client.client_documents.new(client_document_params)
-    
-        @client_document.document.attach(params[:client_document][:document])
-    
+  
         if @client_document.save
-          if @client_document.upload_to_s3  # No argument should be passed here
+          encoded_document = params[:client_document][:base64]
+          if @client_document.upload_to_s3(encoded_document)
             @client_document.update(status: :processed)
             render json: { message: "Document uploaded and processed successfully" }, status: :ok
           else
