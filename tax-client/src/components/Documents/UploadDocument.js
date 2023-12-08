@@ -9,6 +9,8 @@ const UploadDocument = ({ clientId }) => {
   const dispatch = useDispatch();
   const uploadError = useSelector(selectUploadError);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [documentType, setDocumentType] = useState("");
+  const [taxYear, setTaxYear] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleFileChange = (e) => {
@@ -24,12 +26,14 @@ const UploadDocument = ({ clientId }) => {
 
     const formData = new FormData();
     formData.append("client_document[document]", selectedFile);
+    formData.append("client_document[document_type]", documentType);
+    formData.append("client_document[tax_year]", taxYear);
+    formData.append("client_document[file_name]", selectedFile.name);
 
     try {
       await dispatch(uploadDocument(formData, clientId));
       setIsModalVisible(false);
       setSelectedFile(null);
-      // Add logic to update the UI/notify the user of success
     } catch (error) {
       console.error("There was a problem uploading the document:", error);
     }
@@ -41,10 +45,21 @@ const UploadDocument = ({ clientId }) => {
       <Modal isVisible={isModalVisible} title="Upload Document">
         <form onSubmit={handleSubmit}>
           <input type="file" onChange={handleFileChange} />
+          <input
+            type="text"
+            placeholder="Document Type"
+            value={documentType}
+            onChange={(e) => setDocumentType(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Tax Year"
+            value={taxYear}
+            onChange={(e) => setTaxYear(e.target.value)}
+          />
           {selectedFile && (
             <div className="file-preview">
               <p>Selected File: {selectedFile.name}</p>
-              {/* Implement more sophisticated preview if needed */}
             </div>
           )}
           <Button type="submit">Upload</Button>
