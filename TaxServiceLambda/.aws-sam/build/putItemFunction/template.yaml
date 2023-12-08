@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: TaxServiceLambda
+Transform:
+  - "AWS::Serverless-2016-10-31"
+
+Resources:
+  putItemFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: src/handlers/put-item.putItemHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 100
+      Description: A function to upload documents to an S3 bucket.
+      Policies:
+        - S3CrudPolicy:
+            BucketName: "sidney-kahan-tax-documents"
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: "sidney-kahan-tax-documents"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+
+Globals:
+  Function:
+    Tracing: Active
+  Api:
+    TracingEnabled: true

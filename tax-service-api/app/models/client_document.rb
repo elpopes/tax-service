@@ -24,6 +24,7 @@ class ClientDocument < ApplicationRecord
       documentKey: document_key
     }.to_json
 
+    Rails.logger.info("Sending payload to Lambda: #{payload}")
     # Invoke the Lambda function
     response = lambda_client.invoke({
       function_name: 'TaxServiceLambda-putItemFunction-TIiOEHgUxZjz',
@@ -33,18 +34,27 @@ class ClientDocument < ApplicationRecord
 
     # Interpret the response
     if response.status_code == 200
-      update(file_path: document_key)
-      true
+        update(file_path: document_key)
+        true
     else
-      Rails.logger.error("Error uploading document to S3: #{response.error}")
+        # Log detailed information when an error occurs
+        log_lambda_error(response)
+        false
+    end
+    rescue Aws::Lambda::Errors::ServiceError => e
+      Rails.logger.error("AWS Lambda Service Error: #{e.message}")
+      false
+    rescue => e
+      Rails.logger.error("Exception in upload_to_s3: #{e.message}")
       false
     end
-  rescue Aws::Lambda::Errors::ServiceError => e
-    Rails.logger.error("AWS Lambda Service Error: #{e.message}")
-    false
-  rescue => e
-    Rails.logger.error("Exception in upload_to_s3: #{e.message}")
-    false
-  end
+  
+    private
+  
+    def log_lambda_error(response)
+      Rails.logger.error("Error uploading document to S3. Response status: #{response.status_code}")
+      Rails.logger.error("Response payload: #{response.payload.read}")
+      Rails.logger.error("Complete response: #{response.to_h}")
+    end
 end
 
