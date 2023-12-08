@@ -23,7 +23,7 @@ module Api
       private
   
       def client_document_params
-        params.require(:client_document).permit(:file_name, :document_type, :tax_year)
+        params.require(:client_document).permit(:document, :document_type, :tax_year, :file_name)
       end
       
   
