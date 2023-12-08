@@ -45,12 +45,19 @@ const UploadDocument = ({ clientId }) => {
       <Modal isVisible={isModalVisible} title="Upload Document">
         <form onSubmit={handleSubmit}>
           <input type="file" onChange={handleFileChange} />
-          <input
-            type="text"
-            placeholder="Document Type"
+          <select
             value={documentType}
             onChange={(e) => setDocumentType(e.target.value)}
-          />
+          >
+            <option value="">Select Document Type</option>
+            <option value="id">ID</option>
+            <option value="w2">W2</option>
+            <option value="expenses">Expenses</option>
+            <option value="ss_card">SS Card</option>
+            <option value="stock_earnings_1099b">Stock Earnings 1099b</option>
+            <option value="crypto_earnings">Crypto Earnings</option>
+            <option value="other">Other</option>
+          </select>
           <input
             type="text"
             placeholder="Tax Year"
