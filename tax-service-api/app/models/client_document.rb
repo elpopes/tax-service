@@ -39,17 +39,17 @@ class ClientDocument < ApplicationRecord
           Rails.logger.error("Error uploading document to S3: #{response.error}")
           false
       end
-    rescue Aws::Lambda::Errors::ServiceError => e
-      # Log any AWS Lambda errors
-      Rails.logger.error("AWS Lambda Service Error: #{e.message}")
-      false
-    rescue => e
-      # Log any other errors
-      Rails.logger.error("Exception in upload_to_s3: #{e.message}")
+    else
+      Rails.logger.error("No document file was uploaded")
       false
     end
-  else
-    Rails.logger.error("No document file was uploaded")
+  rescue Aws::Lambda::Errors::ServiceError => e
+    # Log any AWS Lambda errors
+    Rails.logger.error("AWS Lambda Service Error: #{e.message}")
+    false
+  rescue => e
+    # Log any other errors
+    Rails.logger.error("Exception in upload_to_s3: #{e.message}")
     false
   end
 end
