@@ -5,6 +5,7 @@ module Api
   
       def create
         @client_document = @client.client_documents.new(client_document_params)
+        @client_document.document.attach(params[:client_document][:document])
   
         if @client_document.save
           if @client_document.upload_to_s3(params[:document])
@@ -22,7 +23,7 @@ module Api
       private
   
       def client_document_params
-        params.require(:client_document).permit(:file_name, :document_type, :tax_year, :document)
+        params.require(:client_document).permit(:file_name, :document_type, :tax_year)
       end
       
   
