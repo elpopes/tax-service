@@ -12,20 +12,31 @@ const UploadDocument = ({ clientId }) => {
   const [documentType, setDocumentType] = useState("");
   const [taxYear, setTaxYear] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [base64Data, setBase64Data] = useState("");
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setSelectedFile(file); // Keep the file object for file name
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        const base64String = loadEvent.target.result;
+        const base64Encoded = base64String.split(",")[1];
+        setBase64Data(base64Encoded);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedFile) {
+    if (!selectedFile || !base64Data) {
       alert("Please select a file to upload.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("client_document[document]", selectedFile);
+    formData.append("client_document[base64]", base64Data);
     formData.append("client_document[document_type]", documentType);
     formData.append("client_document[tax_year]", taxYear);
     formData.append("client_document[file_name]", selectedFile.name);
@@ -34,6 +45,7 @@ const UploadDocument = ({ clientId }) => {
       await dispatch(uploadDocument(formData, clientId));
       setIsModalVisible(false);
       setSelectedFile(null);
+      setBase64Data(""); // Reset base64 data
     } catch (error) {
       console.error("There was a problem uploading the document:", error);
     }
