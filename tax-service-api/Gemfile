@@ -57,6 +57,8 @@ gem 'active_model_serializers'
 
 gem 'aws-sdk-s3'
 
+gem 'aws-sdk-lambda'
+
 gem 'sendgrid-ruby'
 
 gem 'twilio-ruby'

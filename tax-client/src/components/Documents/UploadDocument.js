@@ -23,13 +23,13 @@ const UploadDocument = ({ clientId }) => {
     }
 
     const formData = new FormData();
-    formData.append("document", selectedFile);
+    formData.append("client_document[document]", selectedFile);
 
     try {
       await dispatch(uploadDocument(formData, clientId));
       setIsModalVisible(false);
-      setSelectedFile(null); // Reset the file input
-      // Add logic to update the UI or notify the user of success
+      setSelectedFile(null);
+      // Add logic to update the UI/notify the user of success
     } catch (error) {
       console.error("There was a problem uploading the document:", error);
     }

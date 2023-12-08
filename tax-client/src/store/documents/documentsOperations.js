@@ -12,14 +12,11 @@ export const uploadDocument = (documentData, clientId) => {
     try {
       const token = getState().sessions.token;
 
-      const formData = new FormData();
-      formData.append("document", documentData);
-
       const response = await fetch(
         `${config.API_BASE_URL}/clients/${clientId}/client_documents`,
         {
           method: "POST",
-          body: formData,
+          body: documentData,
           headers: {
             Authorization: `Bearer ${token}`,
           },
