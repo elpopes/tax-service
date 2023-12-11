@@ -26,6 +26,29 @@ Resources:
       CodeUri: putItemFunction
     Metadata:
       SamResourceId: putItemFunction
+  getItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-by-id.getItemHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 100
+      Description: A function to retrieve documents from an S3 bucket.
+      Policies:
+      - S3ReadPolicy:
+          BucketName: sidney-kahan-tax-documents
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: sidney-kahan-tax-documents
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /get-item
+            Method: GET
+      CodeUri: getItemFunction
+    Metadata:
+      SamResourceId: getItemFunction
 Globals:
   Function:
     Tracing: Active

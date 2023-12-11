@@ -23,7 +23,7 @@ Resources:
           Properties:
             Path: /
             Method: POST
-      CodeUri: s3://sidney-kahan-tax-documents/428e9227f374f69a42c1601cda703c63
+      CodeUri: s3://sidney-kahan-tax-documents/8119a73b36747f89b21f05309763f4c9
     Metadata:
       SamResourceId: putItemFunction
 Globals:
