@@ -49,6 +49,29 @@ Resources:
       CodeUri: getItemFunction
     Metadata:
       SamResourceId: getItemFunction
+  deleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-item.deleteItemHandler
+      Runtime: nodejs20.x
+      MemorySize: 128
+      Timeout: 100
+      Description: A function to delete documents from an S3 bucket.
+      Policies:
+      - S3CrudPolicy:
+          BucketName: sidney-kahan-tax-documents
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: sidney-kahan-tax-documents
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /delete-item
+            Method: DELETE
+      CodeUri: deleteItemFunction
+    Metadata:
+      SamResourceId: deleteItemFunction
 Globals:
   Function:
     Tracing: Active
