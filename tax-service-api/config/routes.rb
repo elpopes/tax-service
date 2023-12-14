@@ -24,7 +24,7 @@ Rails.application.routes.draw do
         resources :residences, only: [:index, :show, :create, :update, :destroy]
 
         # Nested routes for client documents
-        resources :client_documents, only: [:create]
+        resources :client_documents, only: [:create, :show, :destroy]
   
         collection do
           get :profile  # GET /api/clients/profile
