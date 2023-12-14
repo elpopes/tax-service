@@ -88,3 +88,27 @@ export const deleteDocument =
       dispatch(deleteDocumentFailure(error.toString()));
     }
   };
+
+export const showDocument =
+  (clientId, documentId) => async (dispatch, getState) => {
+    dispatch(fetchDocumentRequest());
+    const token = getState().sessions.token;
+
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}/clients/${clientId}/client_documents/${documentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error("Error fetching document");
+
+      const responseData = await response.json();
+      dispatch(fetchDocumentSuccess(responseData));
+    } catch (error) {
+      dispatch(fetchDocumentFailure(error.toString()));
+    }
+  };
