@@ -12,9 +12,14 @@ class ClientDocument < ApplicationRecord
     payload = { documentData: encoded_document, documentKey: document_key }.to_json
 
     response = invoke_lambda('TaxServiceLambda-putItemFunction-TIiOEHgUxZjz', payload)
-
-    process_lambda_response(response) do
+    
+    lambda_response = process_lambda_response(response)
+    if lambda_response[:success]
       update(file_path: document_key)
+      true
+    else
+      Rails.logger.error("Upload to S3 failed: #{lambda_response[:error]}")
+      false
     end
   end
 
@@ -64,16 +69,21 @@ class ClientDocument < ApplicationRecord
   def process_lambda_response(response)
     if response&.status_code == 200
       yield if block_given?
-      true
+      { success: true }
     else
-      log_lambda_error(response)
-      false
+      error_details = {
+        status: response&.status_code,
+        payload: response&.payload&.read,
+        complete_response: response&.to_h
+      }
+      log_lambda_error(error_details)
+      { success: false, error: error_details }
     end
   end
 
-  def log_lambda_error(response)
-    Rails.logger.error("Error interacting with Lambda. Response status: #{response&.status_code}")
-    Rails.logger.error("Response payload: #{response&.payload&.read}")
-    Rails.logger.error("Complete response: #{response&.to_h}")
+  def log_lambda_error(error_details)
+    Rails.logger.error("Error interacting with Lambda. Response status: #{error_details[:status]}")
+    Rails.logger.error("Response payload: #{error_details[:payload]}")
+    Rails.logger.error("Complete response: #{error_details[:complete_response]}")
   end
 end
