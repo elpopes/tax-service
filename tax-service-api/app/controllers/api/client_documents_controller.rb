@@ -2,15 +2,13 @@ module Api
     class ClientDocumentsController < ApplicationController
       before_action :authenticate_user
       before_action :set_client
+      before_action :set_client_document, only: [:show, :destroy]
   
       def create
         @client_document = @client.client_documents.new(client_document_params)
   
         if @client_document.save
-          # Extract the base64-encoded data from the params
           encoded_document = params[:client_document][:base64]
-  
-          # Pass the base64-encoded data to the upload_to_s3 method
           if @client_document.upload_to_s3(encoded_document)
             @client_document.update(status: :processed)
             render json: { message: "Document uploaded and processed successfully" }, status: :ok
@@ -23,15 +21,35 @@ module Api
         end
       end
   
+      def show
+        if @client_document.get_document_by_id
+          # Send doc back to frontside
+        else
+          render json: { message: "Failed to retrieve document" }, status: :not_found
+        end
+      end
+  
+      def destroy
+        if @client_document.delete_document
+          @client_document.destroy
+          render json: { message: "Document deleted successfully" }, status: :ok
+        else
+          render json: { message: "Failed to delete document" }, status: :unprocessable_entity
+        end
+      end
+  
       private
   
       def client_document_params
-        # Ensure that 'base64' is not included in the permitted parameters
         params.require(:client_document).permit(:document_type, :tax_year, :file_name)
       end
   
       def set_client
         @client = Client.find(params[:client_id])
+      end
+  
+      def set_client_document
+        @client_document = @client.client_documents.find(params[:id])
       end
     end
 end
