@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Assuming you have not yet modified this file, each configuration option below
-# is set to its default value. 
+# is set to its default value.
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -36,7 +36,7 @@ Devise.setup do |config|
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
-  # authenticating a user, both parameters are required. 
+  # authenticating a user, both parameters are required.
   # config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
@@ -122,11 +122,11 @@ Devise.setup do |config|
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
-  # confirming their account. 
+  # confirming their account.
   # config.allow_unconfirmed_access_for = 2.days
 
   # A period that the user is allowed to confirm their account before their
-  # token becomes invalid. 
+  # token becomes invalid.
   # config.confirm_within = 3.days
 
   config.jwt do |jwt|
@@ -147,11 +147,11 @@ Devise.setup do |config|
 #     manager.strategies.add(:jwt_strategy, Warden::Strategies::JWT)
 #     manager.default_strategies(:scope => :user).unshift :jwt_strategy
 #   end
-  
+
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
-  # db field (see migrations). 
+  # db field (see migrations).
   config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
