@@ -23,31 +23,32 @@ export const fetchUser = (userId) => async (dispatch) => {
 };
 
 export const createUser = (user) => async (dispatch) => {
+  console.log("Creating user:", user); // Debugging: remove later
+  const endpoint = `${config.API_BASE_URL}/users`;
+
   try {
-    const response = await fetch(`${config.API_BASE_URL}/users`, {
+    const response = await fetch(endpoint, {
       method: "POST",
-      body: JSON.stringify({ user: user }),
+      body: JSON.stringify({ user }),
       headers: { "Content-Type": "application/json" },
     });
 
     const json = await response.json();
 
     if (!response.ok) {
-      const errorMessage = json.errors
-        ? json.errors.join(", ")
-        : "Registration failed";
+      const errorMessage = json.errors?.join(", ") || "Registration failed";
       dispatch(registrationError(errorMessage));
       return { errors: errorMessage };
-    } else {
-      dispatch(receiveUser(json.user));
-      return { user: json.user };
     }
+
+    dispatch(receiveUser(json.user));
+    return { user: json.user };
   } catch (error) {
-    console.error("Registration error:", error);
     dispatch(registrationError(error.message));
     return { errors: error.message };
   }
 };
+
 
 export const updateUser = (user) => (dispatch) => {
   return fetch(`${config.API_BASE_URL}/users/${user.id}`, {
