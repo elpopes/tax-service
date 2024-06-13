@@ -62,7 +62,7 @@ const UploadDocument = ({ clientId }) => {
             onChange={(e) => setDocumentType(e.target.value)}
           >
             <option value="">Select Document Type</option>
-            <option value="id">ID</option>
+            <option value="id_card">ID Card</option>
             <option value="w2">W2</option>
             <option value="expenses">Expenses</option>
             <option value="ss_card">SS Card</option>

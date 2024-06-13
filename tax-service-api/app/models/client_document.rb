@@ -4,7 +4,7 @@ class ClientDocument < ApplicationRecord
   belongs_to :client
   has_one_attached :document
 
-  enum document_type: { id: 0, w2: 1, expenses: 2, ss_card: 3, stock_earnings_1099b: 4, crypto_earnings: 5, other: 6 }
+  enum document_type: { id_card: 0, w2: 1, expenses: 2, ss_card: 3, stock_earnings_1099b: 4, crypto_earnings: 5, other: 6 }
   enum status: { uploaded: 0, processed: 1, failed: 2 }
 
   def upload_to_s3(encoded_document)
