@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.5",
     "jwt-decode": "^3.1.2"
   }
 }

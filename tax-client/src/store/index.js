@@ -16,7 +16,15 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["persist/PERSIST"],
+        // Ignore all redux-persist actions
+        ignoredActions: [
+          "persist/PERSIST",
+          "persist/REHYDRATE",
+          "persist/PAUSE",
+          "persist/PURGE",
+          "persist/REGISTER",
+          "persist/FLUSH",
+        ],
         ignoredPaths: ["register"],
       },
     }).concat(loggingMiddleware),
