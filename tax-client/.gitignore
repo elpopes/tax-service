@@ -22,3 +22,16 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Redux-Persist storage (example, adjust as necessary)
+persistStore/
+
+# IDE and Editor settings (if applicable)
+.vscode/
+.idea/
+
+# MacOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
