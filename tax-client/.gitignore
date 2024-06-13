@@ -23,10 +23,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Redux-Persist storage (example, adjust as necessary)
+# Redux-Persist storage
 persistStore/
 
-# IDE and Editor settings (if applicable)
+# IDE and Editor settings
 .vscode/
 .idea/
 
