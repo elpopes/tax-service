@@ -235,7 +235,7 @@ GEM
     rack (2.2.7)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
-    rack-cors (2.0.1)
+    rack-cors (2.0.2)
       rack (>= 2.0.0)
     rack-protection (3.0.6)
       rack
@@ -360,7 +360,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.6.8)
   rack-attack
-  rack-cors
+  rack-cors (>= 2.0.2)
   rails (>= 7.0.8.4)
   rotp (>= 6.3.0)
   rspec-rails (~> 5.0)
