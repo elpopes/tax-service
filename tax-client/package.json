@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "braces": "^3.0.3",
     "cors": "^2.8.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -46,6 +47,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "nth-check": "^2.1.1",
+    "webpack-dev-middleware": "^5.3.4"
   }
 }
