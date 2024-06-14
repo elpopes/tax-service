@@ -52,6 +52,14 @@ const UploadDocument = ({ clientId }) => {
     }
   };
 
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setSelectedFile(null);
+    setDocumentType("");
+    setTaxYear("");
+    setBase64Data("");
+  };
+
   return (
     <>
       <Button onClick={() => setIsModalVisible(true)}>Upload Document</Button>
@@ -81,6 +89,9 @@ const UploadDocument = ({ clientId }) => {
             <DocumentPreview file={selectedFile} base64Data={base64Data} />
           )}
           <Button type="submit">Upload</Button>
+          <Button type="button" onClick={handleCancel}>
+            Cancel
+          </Button>
         </form>
         {uploadError && (
           <div className="error-messages">
