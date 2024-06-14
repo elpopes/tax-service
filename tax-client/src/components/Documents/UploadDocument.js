@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import Button from "../Button";
 import { uploadDocument } from "../../store/documents/documentsOperations";
 import { selectUploadError } from "../../store/documents/documentsSelectors";
+import DocumentPreview from ".//DocumentPreview";
 
 const UploadDocument = ({ clientId }) => {
   const dispatch = useDispatch();
@@ -77,9 +78,7 @@ const UploadDocument = ({ clientId }) => {
             onChange={(e) => setTaxYear(e.target.value)}
           />
           {selectedFile && (
-            <div className="file-preview">
-              <p>Selected File: {selectedFile.name}</p>
-            </div>
+            <DocumentPreview file={selectedFile} base64Data={base64Data} />
           )}
           <Button type="submit">Upload</Button>
         </form>
