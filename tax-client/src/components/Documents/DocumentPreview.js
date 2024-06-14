@@ -8,6 +8,7 @@ const DocumentPreview = ({ file, base64Data }) => {
         <img
           src={`data:${file.type};base64,${base64Data}`}
           alt="Document Preview"
+          className="preview-image"
         />
       ) : (
         <p>Preview not available for this file type.</p>
