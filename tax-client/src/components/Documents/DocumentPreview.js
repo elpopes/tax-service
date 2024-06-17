@@ -1,8 +1,9 @@
 import React from "react";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import "./Documents.css"; // Import the CSS file
 
-const pdfjsVersion = "2.16.105";
+const pdfjsVersion = "2.16.105"; // Define the pdfjsVersion
 
 const DocumentPreview = ({ file, base64Data }) => {
   const pdfFile = `data:${file.type};base64,${base64Data}`;

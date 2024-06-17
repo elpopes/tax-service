@@ -33,20 +33,3 @@
     grid-template-columns: 1fr;
   }
 }
-
-.file-preview {
-  margin-top: 10px;
-}
-
-.file-preview img.preview-image {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-.file-preview p {
-  margin-top: 10px;
-}
