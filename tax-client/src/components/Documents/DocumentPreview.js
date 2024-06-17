@@ -1,9 +1,14 @@
 import React from "react";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import * as pdfjsLib from "pdfjs-dist/build/pdf";
 import "./Documents.css";
 
 const pdfjsVersion = "3.11.174";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.js`;
+pdfjsLib.PDFJS.disableWorker = true;
+pdfjsLib.PDFJS.isEvalSupported = false;
 
 const DocumentPreview = ({ file, base64Data }) => {
   const pdfFile = `data:${file.type};base64,${base64Data}`;
