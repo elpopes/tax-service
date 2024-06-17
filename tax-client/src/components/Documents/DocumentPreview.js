@@ -3,7 +3,7 @@ import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "./Documents.css";
 
-const pdfjsVersion = "3.0.279";
+const pdfjsVersion = "3.11.174";
 
 const DocumentPreview = ({ file, base64Data }) => {
   const pdfFile = `data:${file.type};base64,${base64Data}`;
