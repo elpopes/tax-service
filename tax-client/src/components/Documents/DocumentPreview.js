@@ -5,10 +5,9 @@ import * as pdfjsLib from "pdfjs-dist/build/pdf";
 import "./Documents.css";
 
 const pdfjsVersion = "3.11.174";
-
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.js`;
-pdfjsLib.PDFJS.disableWorker = true;
-pdfjsLib.PDFJS.isEvalSupported = false;
+pdfjsLib.GlobalWorkerOptions.disableWorker = false;
+pdfjsLib.GlobalWorkerOptions.isEvalSupported = false;
 
 const DocumentPreview = ({ file, base64Data }) => {
   const pdfFile = `data:${file.type};base64,${base64Data}`;
