@@ -1,0 +1,29 @@
+.landing-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.landing-header {
+  background: #f8f9fa;
+  padding: 50px 0;
+}
+
+.cta-button {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.about-section,
+.services-section,
+.contact-section {
+  margin: 20px 0;
+}
+
+.landing-footer {
+  background: #343a40;
+  color: white;
+  padding: 10px 0;
+}
