@@ -32,12 +32,14 @@ const LandingPage = () => {
       </section>
       <section className="contact-section">
         <h2>Contact Us</h2>
-        <p>Give us Call!</p>
+        <p>Give us a Call!</p>
       </section>
       <footer className="landing-footer">
         <p>&copy; 2024 Sidney Kahan Tax. All rights reserved.</p>
       </footer>
-      {isSignInVisible && <SignIn handleClose={handleSignInClose} />}
+      {isSignInVisible && (
+        <SignIn isVisible={isSignInVisible} handleClose={handleSignInClose} />
+      )}
     </div>
   );
 };
