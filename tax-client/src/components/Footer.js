@@ -4,7 +4,7 @@ class Footer extends React.Component {
   render() {
     return (
       <div>
-        <p>© 2023 Sidney Kahan Tax Portal</p>
+        <p>© 2024 Sidney Kahan Tax Portal</p>
       </div>
     );
   }
