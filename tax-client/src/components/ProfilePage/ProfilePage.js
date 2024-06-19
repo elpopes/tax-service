@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateClientOperation } from "../store/clients/clientsOperations";
+import { updateClientOperation } from "../../store/clients/clientsOperations";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
-import Button from "./Button";
-import { selectClientByUserId } from "../store/clients/clientsSelectors";
-import encryptWithPublicKey from "../store/utils/encryption";
-import { FILING_STATUS_MAP } from "../store/utils/constants";
+import Button from "../Button/Button";
+import { selectClientByUserId } from "../../store/clients/clientsSelectors";
+import encryptWithPublicKey from "../../store/utils/encryption";
+import { FILING_STATUS_MAP } from "../../store/utils/constants";
 
 function ProfilePage() {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../Button";
-import Modal from "../Modal";
+import Button from "../Button/Button";
+import Modal from "../Modal/Modal";
 import { addSpouseOperation } from "../../store/clients/clientsOperations";
 import { selectSpouseErrors } from "../../store/clients/clientsSelectors";
 import encryptWithPublicKey from "../../store/utils/encryption";

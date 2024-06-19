@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SignIn from "../SignIn";
+import SignIn from "../Auth/SignIn";
 import "./LandingPage.css";
 
 const LandingPage = () => {

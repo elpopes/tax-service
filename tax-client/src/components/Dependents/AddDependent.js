@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "../Modal";
-import Button from "../Button";
+import Modal from "../Modal/Modal";
+import Button from "../Button/Button";
 import { createDependentOperation } from "../../store/clients/clientsOperations";
 import { selectDependentErrors } from "../../store/clients/clientsSelectors";
 import encryptWithPublicKey from "../../store/utils/encryption";

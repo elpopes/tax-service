@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "../Modal";
-import Button from "../Button";
+import Modal from "../Modal/Modal";
+import Button from "../Button/Button";
 import { uploadDocument } from "../../store/documents/documentsOperations";
 import { selectUploadError } from "../../store/documents/documentsSelectors";
 import DocumentPreview from ".//DocumentPreview";

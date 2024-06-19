@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, selectToken } from "../store/sessions/sessionsSelectors";
-import { isTokenValid } from "../store/utils/auth";
-import SignOut from "./SignOut";
-import SignIn from "./SignIn";
-import { signOut } from "../store/sessions/sessionsActions";
+import {
+  selectUser,
+  selectToken,
+} from "../../store/sessions/sessionsSelectors";
+import { isTokenValid } from "../../store/utils/auth";
+import SignOut from "../Auth/SignOut";
+import SignIn from "../Auth/SignIn";
+import { signOut } from "../../store/sessions/sessionsActions";
 
 function UserDisplay() {
   const dispatch = useDispatch();

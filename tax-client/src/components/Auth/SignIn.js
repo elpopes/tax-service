@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal/Modal";
 import SignUp from "./SignUp";
-import { clearSessionsError } from "../store/sessions/sessionsActions";
+import { clearSessionsError } from "../../store/sessions/sessionsActions";
 import { useDispatch, useSelector } from "react-redux";
-import { signInUser } from "../store/sessions/sessionsOperations";
-import { getSessionsError } from "../store/sessions/sessionsSelectors";
-import Button from "./Button";
+import { signInUser } from "../../store/sessions/sessionsOperations";
+import { getSessionsError } from "../../store/sessions/sessionsSelectors";
+import Button from "../Button/Button";
 
 function SignIn({ isVisible, handleClose }) {
   const [isSignUpVisible, setIsSignUpVisible] = useState(false);

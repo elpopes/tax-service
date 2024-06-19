@@ -3,7 +3,7 @@ import "./Navbar.css";
 import UserDisplay from "./UserDisplay";
 import SearchBar from "./SearchBar";
 import ContactInfo from "./ContactInfo";
-import Button from "./Button";
+import Button from "../Button/Button";
 
 class Navbar extends React.Component {
   render() {

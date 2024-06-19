@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUser } from "../store/users/usersOperations";
-import { clearRegistrationError } from "../store/users/usersActions";
-import Modal from "./Modal";
+import { createUser } from "../../store/users/usersOperations";
+import { clearRegistrationError } from "../../store/users/usersActions";
+import Modal from "../Modal/Modal";
 
 function SignUp({ isVisible, handleClose }) {
   const [firstName, setFirstName] = useState("");

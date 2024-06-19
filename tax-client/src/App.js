@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./components/Dashboards/Dashboard";
 import Footer from "./components/Footer/Footer";
 import EmailConfirmed from "./components/EmailConfirmation/EmailConfirmed";
 import EmailConfirmationFailure from "./components/EmailConfirmation/EmailConfirmationFailure";
-import ProfilePage from "./components/ProfilePage";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 import LandingPage from "./components/LandingPage/LandingPage";
 
 function App() {

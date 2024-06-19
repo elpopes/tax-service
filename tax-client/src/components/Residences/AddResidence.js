@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import Modal from "../Modal";
-import Button from "../Button";
+import Modal from "../Modal/Modal";
+import Button from "../Button/Button";
 import { createResidence } from "../../store/residences/residencesOperations";
 
 const AddResidence = ({ clientId }) => {
