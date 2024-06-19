@@ -34,9 +34,6 @@ const LandingPage = () => {
         <h2>Contact Us</h2>
         <p>Give us a Call!</p>
       </section>
-      <footer className="landing-footer">
-        <p>&copy; 2024 Sidney Kahan Tax. All rights reserved.</p>
-      </footer>
       {isSignInVisible && (
         <SignIn isVisible={isSignInVisible} handleClose={handleSignInClose} />
       )}

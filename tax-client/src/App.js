@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./components/Dashboards/Dashboard";
-import Footer from "./components/Footer";
+import Footer from "./components/Footer/Footer";
 import EmailConfirmed from "./components/EmailConfirmation/EmailConfirmed";
 import EmailConfirmationFailure from "./components/EmailConfirmation/EmailConfirmationFailure";
 import ProfilePage from "./components/ProfilePage";
@@ -32,7 +32,7 @@ function App() {
           element={<EmailConfirmationFailure />}
         />
       </Routes>
-      {isUserLoggedIn && <Footer />}
+      <Footer />
     </div>
   );
 }
