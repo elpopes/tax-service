@@ -4,7 +4,7 @@
   height: 400px;
   background-image: url("./SK_Hero.webp");
   background-size: cover;
-  background-position: top;
+  background-position: center;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -19,12 +19,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(
-    128,
-    128,
-    128,
-    0.9
-  ); /* Opaque background to cover the image */
+  background: rgba(0, 0, 0, 1); /* Make the background completely opaque */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,10 +28,7 @@
 .hero-banner .hero-text {
   font-size: 8rem; /* Increase the font size */
   font-weight: bold;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-image: url("./SK_Hero.webp"); /* The text will show the image through the letters */
+  color: white; /* Set text color to white */
   letter-spacing: 3rem; /* Add more space between letters */
   animation: flyIn 3s ease-out;
   white-space: nowrap;
