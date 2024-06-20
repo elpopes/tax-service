@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SignIn from "../Auth/SignIn";
+import HeroBanner from "./HeroBanner";
 import "./LandingPage.css";
 
 const LandingPage = () => {
@@ -15,6 +16,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
+      <HeroBanner />
       <header className="landing-header">
         <h1>Welcome to Sidney Kahan Tax</h1>
         <p>Over 40 years of Tax Experience</p>
