@@ -9,19 +9,27 @@ const HeroBanner = () => {
       style={{ backgroundImage: `url(${heroImage})` }}
     >
       <div className="hero-overlay">
-        <div className="hero-text">
+        <div className="hero-line hero-text">
           <span>S</span>
           <span>I</span>
           <span>D</span>
           <span>N</span>
           <span>E</span>
           <span>Y</span>
-          <span> </span>
+        </div>
+        <div className="hero-line hero-text">
           <span>K</span>
           <span>A</span>
           <span>H</span>
           <span>A</span>
           <span>N</span>
+        </div>
+        <div className="hero-line hero-text">
+          <span>T</span>
+          <span>A</span>
+          <span>X</span>
+          <span>E</span>
+          <span>S</span>
         </div>
       </div>
     </div>
