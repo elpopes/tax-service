@@ -27,18 +27,20 @@ const HeroBanner = () => {
       style={{ backgroundImage: `url(${heroImage})` }}
     >
       <div className="hero-overlay">
-        {heroLines.map((line, lineIndex) => (
-          <div
-            key={lineIndex}
-            className={`hero-line hero-text ${
-              lineIndex < visibleLines ? "visible" : ""
-            }`}
-          >
-            {line.map((char, charIndex) => (
-              <span key={charIndex}>{char}</span>
-            ))}
-          </div>
-        ))}
+        <div className="hero-text-container">
+          {heroLines.map((line, lineIndex) => (
+            <div
+              key={lineIndex}
+              className={`hero-line hero-text ${
+                lineIndex < visibleLines ? "visible" : ""
+              }`}
+            >
+              {line.map((char, charIndex) => (
+                <span key={charIndex}>{char}</span>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
