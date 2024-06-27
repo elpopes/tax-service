@@ -48,10 +48,6 @@ const LandingPage = () => {
               <h3>Tax Planning</h3>
               <p>Strategic tax planning to optimize your financial future.</p>
             </div>
-            <div className="service-card">
-              <h3>IRS Representation</h3>
-              <p>Professional representation in IRS audits and disputes.</p>
-            </div>
           </div>
         </section>
 

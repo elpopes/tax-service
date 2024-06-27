@@ -10,7 +10,7 @@ const HeroBanner = () => {
       if (visibleLines < 3) {
         setVisibleLines((prev) => prev + 1);
       }
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [visibleLines]);
